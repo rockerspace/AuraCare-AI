@@ -1,8 +1,24 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('Dashboard');
+  const [heartRate, setHeartRate] = useState(72);
+  const [lastSynced, setLastSynced] = useState('Just now');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Simulate real-time sensor fluctuation
+      setHeartRate(prev => {
+        const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+        const newHr = prev + change;
+        return newHr > 76 ? 76 : newHr < 68 ? 68 : newHr;
+      });
+      setLastSynced(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div 
       className="min-h-screen text-neutral-100 font-sans selection:bg-emerald-500/30 bg-cover bg-center bg-no-repeat fixed inset-0 overflow-y-auto"
@@ -44,7 +60,11 @@ export default function Home() {
         <header className="flex justify-between items-center mb-10">
           <div>
             <h2 className="text-2xl font-semibold drop-shadow-md">{activeTab}</h2>
-            {activeTab === 'Dashboard' && <p className="text-neutral-300 text-sm mt-1 drop-shadow-md">Monitoring Jane Doe (Age 82) • Last synced: Just now</p>}
+            {activeTab === 'Dashboard' && (
+              <p className="text-neutral-300 text-sm mt-1 flex items-center gap-1.5 drop-shadow-md">
+                Monitoring Jane Doe (Age 82) • <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Last synced: {lastSynced}
+              </p>
+            )}
           </div>
           <button className="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-full text-sm transition-all duration-300 shadow-lg">
             Export Report
@@ -67,7 +87,7 @@ export default function Home() {
             {/* Key Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {[
-                { label: 'Heart Rate Avg', value: '72 bpm', trend: '+2%', color: 'from-rose-500 to-pink-500' },
+                { label: 'Heart Rate Avg', value: `${heartRate} bpm`, trend: '+2%', color: 'from-rose-500 to-pink-500' },
                 { label: 'Sleep Duration', value: '6h 45m', trend: '-15%', color: 'from-indigo-500 to-purple-500' },
                 { label: 'Mobility Index', value: 'Low', trend: '-40%', color: 'from-amber-500 to-orange-500' },
               ].map((stat, i) => (

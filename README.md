@@ -72,10 +72,32 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js)
 
-## Deploy on Vercel
+## Testing the Application
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To ensure robust code quality, the project includes automated tests using Jest and React Testing Library.
+
+1.  **Install dependencies** (if you haven't already):
+    ```bash
+    npm install
+    ```
+2.  **Run the test suite**:
+    ```bash
+    npm run test
+    ```
+    This will execute unit tests for the UI (Dashboard) and the Mock MCP Server endpoints.
+
+## 🚀 Deployment (Vercel)
+
+AuraCare is optimized for Vercel, ensuring zero-config deployments for your frontend.
+
+### Sharing Your Live Link for the Pitch
+After importing this repository into your Vercel account and deploying:
+1. Go to your **Vercel Dashboard**.
+2. Click on the **AuraCare** project.
+3. Look for the **Domains** section (e.g., `ai-agent-series-builder-finale-2026.vercel.app`).
+4. Click on that link to visit your live site! 
+5. You can share this exact URL with family members, judges at the Google Office in Kyoto/Bengaluru, and beta testers. The dynamic "real-time" dashboard will run perfectly on their mobile phones and laptops!
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
