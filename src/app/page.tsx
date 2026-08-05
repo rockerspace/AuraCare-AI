@@ -30,6 +30,7 @@ export default function Home() {
       <nav className="fixed left-0 top-0 h-full w-64 bg-black/40 backdrop-blur-2xl border-r border-white/10 p-6 flex flex-col justify-between z-10 shadow-2xl">
         <div>
           <div className="flex items-center gap-3 mb-12">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.jpg" alt="AuraCare Logo" className="w-10 h-10 rounded-full shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
             <h1 className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 to-neutral-400">AuraCare</h1>
           </div>
@@ -318,7 +319,7 @@ export default function Home() {
             <div className="flex-1 p-6 overflow-y-auto space-y-6">
               <div className="flex justify-start">
                 <div className="max-w-[70%] bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-4 text-sm text-neutral-200">
-                  Hello! I'm monitoring Jane Doe today. I've synced with her IoT wearables and analyzed the latest Qdrant historical vectors. How can I help you?
+                  Hello! I&apos;m monitoring Jane Doe today. I&apos;ve synced with her IoT wearables and analyzed the latest Qdrant historical vectors. How can I help you?
                 </div>
               </div>
               
