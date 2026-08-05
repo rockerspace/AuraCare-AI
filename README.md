@@ -6,6 +6,41 @@ AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to dete
 *   [Product Requirements Document (PRD)](./PRD.md)
 *   [Architecture Overview](./ARCHITECTURE.md)
 
+## Architecture Diagram
+
+```mermaid
+graph TD
+    subgraph IoT & Home Devices
+        S[Sensors / Wearables] -->|Telemetry| API[Next.js API Routes]
+        Cam[Smart Camera] -->|Audio/Video Stream| VideoSvc[Video Service]
+    end
+
+    subgraph Security & Access
+        Auth[Enkrypt DID] -->|Verification| API
+        API -->|HIPAA Logging| Audit[GCP Cloud Audit Logs]
+    end
+
+    subgraph Data & Storage
+        VideoSvc -->|Snapshots/Recordings| VStore[(Video Storage)]
+        VoiceProfile[(Voice Profile DB)]
+        Qdrant[(Qdrant Vector DB)]
+    end
+
+    subgraph AI Intelligence Layer
+        VideoSvc -->|Real-time Audio| VoiceAI[Voice AI Service]
+        VoiceAI -->|Vocal Tonality| Sentiment[Sentiment Analysis Agent]
+        Sentiment -->|Emotional State| GADK[Behavioral Agent - GADK]
+        API -->|Trigger Analysis| GADK
+        GADK <-->|Fetch Context| MCP[MCP Server]
+        GADK <-->|Similarity Search| Qdrant
+        VoiceAI <-->|Match Identity| VoiceProfile
+    end
+    
+    subgraph Client Application
+        Dashboard[Caregiver Dashboard UI] <-->|Real-time Metrics| API
+    end
+```
+
 ## Tech Stack
 *   **Frontend & API:** Next.js, React, Tailwind CSS
 *   **AI Agents & Orchestration:** Google Agent Development Kit (GADK) & Mastra
