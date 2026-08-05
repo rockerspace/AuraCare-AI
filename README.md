@@ -2,6 +2,10 @@
 
 AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to detect subtle deviations in daily routines (mobility, sleep, heart rate) and alerts caregivers before emergencies occur.
 
+- **Decentralized Caregiver Identity**: Integrated with Enkrypt for immutable identity checks.
+- **HIPAA Audit Log Middleware**: Tracks and logs all sensitive data access.
+- **Instant PDF Exports**: Click the Export Report button to instantly generate a PDF readout of the patient's current metrics for medical filing.
+
 ## Documentation
 *   [Product Requirements Document (PRD)](./PRD.md)
 *   [Architecture Overview](./ARCHITECTURE.md)

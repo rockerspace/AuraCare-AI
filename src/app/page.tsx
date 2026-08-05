@@ -66,7 +66,10 @@ export default function Home() {
               </p>
             )}
           </div>
-          <button className="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-full text-sm transition-all duration-300 shadow-lg">
+          <button 
+            onClick={() => window.print()}
+            className="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-full text-sm transition-all duration-300 shadow-lg"
+          >
             Export Report
           </button>
         </header>
