@@ -78,20 +78,6 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js)
 
-## Testing the Application
-
-To ensure robust code quality, the project includes automated tests using Jest and React Testing Library.
-
-1.  **Install dependencies** (if you haven't already):
-    ```bash
-    npm install
-    ```
-2.  **Run the test suite**:
-    ```bash
-    npm run test
-    ```
-    This will execute unit tests for the UI (Dashboard) and the Mock MCP Server endpoints.
-
 ## 🚀 Deployment (Vercel)
 
 AuraCare is optimized for Vercel, ensuring zero-config deployments for your frontend.
