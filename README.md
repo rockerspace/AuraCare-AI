@@ -109,12 +109,12 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 AuraCare is optimized for Vercel, ensuring zero-config deployments for your frontend.
 
-### Sharing Your Live Link for the Pitch
+### Sharing Your Live Link
 After importing this repository into your Vercel account and deploying:
 1. Go to your **Vercel Dashboard**.
 2. Click on the **AuraCare** project.
 3. Look for the **Domains** section (e.g., `ai-agent-series-builder-finale-2026.vercel.app`).
 4. Click on that link to visit your live site! 
-5. You can share this exact URL with family members, judges at the Google Office in Kyoto/Bengaluru, and beta testers. The dynamic "real-time" dashboard will run perfectly on their mobile phones and laptops!
+5. You can share this exact URL with family members, and beta testers. The dynamic "real-time" dashboard will run perfectly on their mobile phones and laptops!
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
