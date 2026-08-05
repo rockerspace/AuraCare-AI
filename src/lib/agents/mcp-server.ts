@@ -27,6 +27,8 @@ export class MCPServer {
       ],
       baselineMobility: 'Normal, walks without assistance. 4000 steps/day average.',
     };
+  }
+  
   /**
    * Extensible A2A (Agent-to-Agent) Protocol Integration
    * Allows Gemini agents to discover and share available tools dynamically.

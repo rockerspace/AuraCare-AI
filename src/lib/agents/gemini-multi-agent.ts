@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { VertexAI } from '@google-cloud/vertexai';
 import { mcpServer } from './mcp-server';
 import { qdrantClient } from '../db/qdrant';

@@ -9,7 +9,7 @@ export function proxy(request: NextRequest) {
   // Example of capturing access to sensitive routes for HIPAA audit logging
   if (url.startsWith('/api/patients') || url.startsWith('/api/alerts')) {
     const timestamp = new Date().toISOString();
-    const ip = request.headers.get('x-forwarded-for') || request.ip || 'unknown';
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
     const userAgent = request.headers.get('user-agent') || 'unknown';
     
     // In production, this goes to GCP Cloud Audit Logs

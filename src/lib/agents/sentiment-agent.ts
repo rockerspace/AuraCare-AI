@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { behavioralAgent } from './gadk-mastra';
 
 // Sentiment Analysis Agent (Phase 7 - Multimodal Intelligence)

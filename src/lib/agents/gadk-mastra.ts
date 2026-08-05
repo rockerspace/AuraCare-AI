@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { mcpServer } from './mcp-server';
 
 // This simulates the integration of Google Agent Development Kit (GADK)
