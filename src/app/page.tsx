@@ -14,7 +14,7 @@ export default function Home() {
       <nav className="fixed left-0 top-0 h-full w-64 bg-black/40 backdrop-blur-2xl border-r border-white/10 p-6 flex flex-col justify-between z-10 shadow-2xl">
         <div>
           <div className="flex items-center gap-3 mb-12">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500 shadow-[0_0_15px_rgba(52,211,153,0.4)]"></div>
+            <img src="/logo.jpg" alt="AuraCare Logo" className="w-10 h-10 rounded-full shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
             <h1 className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 to-neutral-400">AuraCare</h1>
           </div>
           
