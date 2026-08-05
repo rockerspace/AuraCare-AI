@@ -14,7 +14,7 @@ export class VertexAIAgent {
   constructor() {
     // Initialize Vertex AI with the GCP project details
     this.vertexAi = new VertexAI({
-      project: process.env.GCP_PROJECT_ID || 'auracare-demo',
+      project: process.env.GCP_PROJECT_ID || 'vemarai',
       location: process.env.GCP_LOCATION || 'us-central1',
     });
   }

@@ -58,7 +58,7 @@ graph TD
 *   **Authentication & Security:** Enkrypt (HIPAA Compliant Logging)
 *   **Infrastructure:** GCP Cloud Run
 
-## Getting Started
+## Getting Started (Frontend Dashboard)
 
 First, run the development server:
 
@@ -73,6 +73,28 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the caregiver dashboard.
+
+## Testing Google Cloud Backend Locally (Vertex AI)
+
+If you wish to test the Vertex AI (Gemini 1.5 Pro) integration directly on your local machine using the official `@google-cloud/vertexai` SDK:
+
+1. Install the Google Cloud CLI (`gcloud`) if you haven't already.
+2. Authenticate your local machine:
+   ```bash
+   gcloud auth application-default login
+   ```
+3. Set your project ID to your GCP project (e.g., `vemarai`):
+   ```bash
+   gcloud config set project vemarai
+   ```
+4. Install the Vertex AI SDK (do not push this to Vercel to avoid build size limits):
+   ```bash
+   npm install @google-cloud/vertexai
+   ```
+5. Run the provided test script:
+   ```bash
+   npx ts-node test-vertex.ts
+   ```
 
 ## Learn More
 
