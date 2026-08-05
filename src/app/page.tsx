@@ -127,10 +127,98 @@ export default function Home() {
           </div>
         )}
 
-        {activeTab !== 'Dashboard' && activeTab !== 'Patients' && (
-          <div className="p-12 text-center bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl">
-            <h3 className="text-xl font-medium text-neutral-300 mb-2">{activeTab} Module</h3>
-            <p className="text-neutral-500">This module is currently under development.</p>
+        {activeTab === 'Alerts' && (
+          <div className="space-y-4">
+            {[
+              { id: 'AL-901', patient: 'Jane Doe', type: 'Behavioral Anomaly', time: '10 mins ago', severity: 'High', source: 'Qdrant / Mastra', details: 'Mobility index dropped 40% below historical baseline. Escalated to Medical Triage Agent.' },
+              { id: 'AL-902', patient: 'William Brown', type: 'Emotional Distress', time: '1 hr ago', severity: 'Critical', source: 'Voice AI / Sentiment Agent', details: 'High tremor and flattened pitch detected in voice. Transcript implies confusion about medication.' },
+              { id: 'AL-903', patient: 'Mary Johnson', type: 'Irregular Sleep', time: '3 hrs ago', severity: 'Medium', source: 'IoT Wearable', details: 'Sleep duration significantly shorter than weekly average. Observation recommended.' },
+            ].map((alert) => (
+              <div key={alert.id} className="p-6 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl relative overflow-hidden group hover:bg-black/60 transition-all shadow-lg flex flex-col md:flex-row gap-6 items-start md:items-center">
+                <div className={`absolute left-0 top-0 bottom-0 w-2 ${alert.severity === 'Critical' ? 'bg-red-500' : alert.severity === 'High' ? 'bg-orange-500' : 'bg-amber-400'}`}></div>
+                
+                <div className="flex-1 ml-4">
+                  <div className="flex items-center gap-3 mb-1">
+                    <span className={`px-2.5 py-0.5 rounded text-xs font-semibold ${alert.severity === 'Critical' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : alert.severity === 'High' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}`}>
+                      {alert.severity}
+                    </span>
+                    <span className="text-neutral-400 text-sm font-mono">{alert.id}</span>
+                    <span className="text-neutral-500 text-sm ml-auto">{alert.time}</span>
+                  </div>
+                  <h3 className="text-lg font-medium text-white mb-1">{alert.type} - {alert.patient}</h3>
+                  <p className="text-neutral-300 text-sm mb-2">{alert.details}</p>
+                  <div className="text-xs text-neutral-500 font-medium">Source: {alert.source}</div>
+                </div>
+                
+                <div className="flex gap-3 w-full md:w-auto">
+                  <button className="flex-1 md:flex-none px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-sm font-medium transition-colors">
+                    Acknowledge
+                  </button>
+                  <button className="flex-1 md:flex-none px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 rounded-lg text-sm font-medium transition-colors">
+                    Take Action
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'Settings' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Identity Settings */}
+            <div className="p-8 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-indigo-500 to-purple-600 opacity-10 rounded-full blur-3xl"></div>
+              <h3 className="text-xl font-medium text-white mb-6">Security & Identity</h3>
+              
+              <div className="space-y-6">
+                <div>
+                  <label className="text-sm text-neutral-400 block mb-2">Connected DID (Enkrypt)</label>
+                  <div className="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center text-xs font-bold">DID</div>
+                    <span className="text-sm text-neutral-300 font-mono truncate">did:ethr:0x39fa8a2...</span>
+                    <button className="ml-auto text-xs text-emerald-400 font-medium">Verified</button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-white">HIPAA Audit Logging</div>
+                    <div className="text-xs text-neutral-400">Log all PHI access to GCP Cloud Audit Logs</div>
+                  </div>
+                  <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
+                    <div className="absolute right-1 top-1 bottom-1 w-4 bg-white rounded-full shadow"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* AI Preferences */}
+            <div className="p-8 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-cyan-500 to-blue-600 opacity-10 rounded-full blur-3xl"></div>
+              <h3 className="text-xl font-medium text-white mb-6">AI Agent Preferences</h3>
+              
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-white">Multimodal Processing</div>
+                    <div className="text-xs text-neutral-400">Enable Voice AI & Sentiment Analysis</div>
+                  </div>
+                  <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
+                    <div className="absolute right-1 top-1 bottom-1 w-4 bg-white rounded-full shadow"></div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-white">Agent-to-Agent (A2A)</div>
+                    <div className="text-xs text-neutral-400">Allow agents to autonomously share tools</div>
+                  </div>
+                  <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
+                    <div className="absolute right-1 top-1 bottom-1 w-4 bg-white rounded-full shadow"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </main>
