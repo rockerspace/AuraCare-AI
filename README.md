@@ -1,4 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AuraCare - Proactive Elderly Caregiver Support
+
+AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to detect subtle deviations in daily routines (mobility, sleep, heart rate) and alerts caregivers before emergencies occur.
+
+## Documentation
+*   [Product Requirements Document (PRD)](./PRD.md)
+*   [Architecture Overview](./ARCHITECTURE.md)
+
+## Tech Stack
+*   **Frontend & API:** Next.js, React, Tailwind CSS
+*   **AI Agents & Orchestration:** Google Agent Development Kit (GADK) & Mastra
+*   **Context Management:** Model Context Protocol (MCP)
+*   **Vector Database:** Qdrant
+*   **Authentication & Security:** Enkrypt (HIPAA Compliant Logging)
+*   **Infrastructure:** GCP Cloud Run
 
 ## Getting Started
 
@@ -14,11 +28,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the caregiver dashboard.
 
 ## Learn More
 
