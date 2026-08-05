@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// HIPAA Audit Logger Middleware
-export function middleware(request: NextRequest) {
+// HIPAA Audit Logger Middleware (now Proxy)
+export function proxy(request: NextRequest) {
   // Phase 2: Security & Authentication Setup
   const url = request.nextUrl.pathname;
   
