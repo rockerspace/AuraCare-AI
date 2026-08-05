@@ -5,6 +5,8 @@ AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to dete
 - **Decentralized Caregiver Identity**: Integrated with Enkrypt for immutable identity checks.
 - **HIPAA Audit Log Middleware**: Tracks and logs all sensitive data access.
 - **Instant PDF Exports**: Click the Export Report button to instantly generate a PDF readout of the patient's current metrics for medical filing.
+- **AI Agent Chat**: An interactive chat interface for caregivers to converse with the Medical Triage Agent (Gemini 1.5 Pro concept) regarding patient status and historical data.
+- **Room View (Video Analysis)**: Simulates Gemini 1.5 Pro's video understanding capabilities with real-time bounding boxes and multimodal environment logs for fall risk detection.
 
 ## Documentation
 *   [Product Requirements Document (PRD)](./PRD.md)

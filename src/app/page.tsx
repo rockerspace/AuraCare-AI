@@ -35,7 +35,7 @@ export default function Home() {
           </div>
           
           <div className="space-y-2">
-            {['Dashboard', 'Patients', 'Alerts', 'Settings'].map((item) => (
+            {['Dashboard', 'Patients', 'Alerts', 'Room View', 'Agent Chat', 'Settings'].map((item) => (
               <button 
                 key={item} 
                 onClick={() => setActiveTab(item)}
@@ -240,6 +240,128 @@ export default function Home() {
                     <div className="absolute right-1 top-1 bottom-1 w-4 bg-white rounded-full shadow"></div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'Room View' && (
+          <div className="flex flex-col gap-6">
+            <div className="p-1 bg-gradient-to-br from-emerald-500/50 to-blue-500/50 rounded-3xl overflow-hidden shadow-2xl relative group">
+              <div className="absolute top-4 left-4 z-20 flex gap-2">
+                <span className="px-3 py-1 bg-red-500/80 backdrop-blur-md rounded-full text-xs font-bold text-white flex items-center gap-2 shadow-lg">
+                  <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span> LIVE
+                </span>
+                <span className="px-3 py-1 bg-black/60 backdrop-blur-md rounded-full text-xs font-medium text-white border border-white/20">
+                  Cam 01: Living Room
+                </span>
+              </div>
+              <div className="absolute bottom-4 left-4 z-20">
+                <span className="px-3 py-1 bg-black/60 backdrop-blur-md rounded-full text-xs font-medium text-emerald-400 border border-emerald-500/30 flex items-center gap-2">
+                  Gemini 1.5 Pro Video Analysis Active
+                </span>
+              </div>
+              
+              {/* Simulated Camera Feed with Analysis Overlays */}
+              <div className="w-full h-[600px] bg-black rounded-[22px] relative overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('/caregiver_background_1785918209195.jpg')" }}>
+                <div className="absolute inset-0 bg-black/40"></div>
+                
+                {/* Gemini Bounding Box Simulation */}
+                <div className="absolute top-1/4 left-1/3 w-1/3 h-1/2 border-2 border-emerald-400/80 rounded-xl bg-emerald-400/10 shadow-[0_0_15px_rgba(52,211,153,0.5)] transition-all duration-1000 ease-in-out">
+                  <div className="absolute -top-7 left-0 px-2 py-1 bg-emerald-500 text-white text-xs font-bold rounded-t-md">
+                    Subject Detected (Jane Doe)
+                  </div>
+                  <div className="absolute -bottom-10 left-0 right-0 flex gap-2">
+                    <span className="px-2 py-1 bg-black/80 backdrop-blur-md text-emerald-400 border border-emerald-500/30 text-xs rounded-md">Posture: Stable</span>
+                    <span className="px-2 py-1 bg-black/80 backdrop-blur-md text-emerald-400 border border-emerald-500/30 text-xs rounded-md">Fall Risk: 2%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl">
+                <h3 className="text-lg font-medium text-white mb-4">Real-time Multimodal Logs</h3>
+                <div className="space-y-3 font-mono text-xs text-neutral-400 h-40 overflow-y-auto pr-2">
+                  <div className="flex gap-3"><span className="text-emerald-500">14:02:11</span> <span>[Gemini] Frame 4022 processed. No hazards detected in walking path.</span></div>
+                  <div className="flex gap-3"><span className="text-emerald-500">14:02:12</span> <span>[Audio AI] Normal ambient noise level. No vocal distress identified.</span></div>
+                  <div className="flex gap-3"><span className="text-emerald-500">14:02:14</span> <span>[Mastra] Correlating video posture with Qdrant historical baseline... Normal.</span></div>
+                  <div className="flex gap-3"><span className="text-emerald-500">14:02:15</span> <span>[Gemini] Frame 4026 processed. Subject sitting down. Posture stable.</span></div>
+                </div>
+              </div>
+              <div className="p-6 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl">
+                <h3 className="text-lg font-medium text-white mb-4">Environment Scan</h3>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center"><span className="text-sm text-neutral-300">Lighting</span><span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-medium border border-emerald-500/30">Adequate</span></div>
+                  <div className="flex justify-between items-center"><span className="text-sm text-neutral-300">Trip Hazards</span><span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-medium border border-emerald-500/30">Clear</span></div>
+                  <div className="flex justify-between items-center"><span className="text-sm text-neutral-300">Room Temp</span><span className="text-sm font-medium text-white">72°F</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'Agent Chat' && (
+          <div className="flex flex-col h-[70vh] bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-xl">
+            <div className="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500 flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-lg">AI</span>
+                </div>
+                <div>
+                  <h3 className="text-white font-medium">Medical Triage Agent</h3>
+                  <p className="text-xs text-emerald-400 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Online & Context-Aware</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex-1 p-6 overflow-y-auto space-y-6">
+              <div className="flex justify-start">
+                <div className="max-w-[70%] bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-4 text-sm text-neutral-200">
+                  Hello! I'm monitoring Jane Doe today. I've synced with her IoT wearables and analyzed the latest Qdrant historical vectors. How can I help you?
+                </div>
+              </div>
+              
+              <div className="flex justify-end">
+                <div className="max-w-[70%] bg-emerald-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg">
+                  Has Jane taken her medication yet this morning?
+                </div>
+              </div>
+              
+              <div className="flex justify-start">
+                <div className="max-w-[70%] bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-4 text-sm text-neutral-200">
+                  <p className="mb-2">Yes, based on the video analysis logs from the kitchen camera at 08:14 AM, Jane successfully accessed her pill organizer and ingested her morning dosage.</p>
+                  <p className="text-xs text-neutral-400 font-mono bg-black/40 p-2 rounded-lg border border-white/5">Source: Gemini 1.5 Pro Video Analytics</p>
+                </div>
+              </div>
+              
+              <div className="flex justify-end">
+                <div className="max-w-[70%] bg-emerald-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg">
+                  What about her mobility alert from last night?
+                </div>
+              </div>
+              
+              <div className="flex justify-start">
+                <div className="max-w-[70%] bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-4 text-sm text-neutral-200">
+                  <p className="mb-2">The alert triggered because her step count dropped 40% below her 30-day baseline. However, after correlating with ambient temperature sensors and sleep data, I determined she simply went to bed 2 hours earlier than usual. No immediate fall risk or health degradation is suspected.</p>
+                  <div className="flex gap-2 mt-3">
+                    <button className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium hover:bg-white/10 transition-colors">View Qdrant Vectors</button>
+                    <button className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium hover:bg-white/10 transition-colors">Dismiss Alert</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-4 border-t border-white/10 bg-white/5">
+              <div className="relative">
+                <input 
+                  type="text" 
+                  placeholder="Ask the Medical Triage Agent..." 
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-emerald-500/50 transition-colors"
+                />
+                <button className="absolute right-2 top-2 p-1.5 bg-emerald-500 rounded-lg text-white shadow-md hover:bg-emerald-400 transition-colors">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                </button>
               </div>
             </div>
           </div>
