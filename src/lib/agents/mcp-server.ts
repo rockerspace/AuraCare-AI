@@ -27,6 +27,25 @@ export class MCPServer {
       ],
       baselineMobility: 'Normal, walks without assistance. 4000 steps/day average.',
     };
+  /**
+   * Extensible A2A (Agent-to-Agent) Protocol Integration
+   * Allows Gemini agents to discover and share available tools dynamically.
+   */
+  public async getAvailableTools(agentId: string) {
+    console.log(`[MCP Server] A2A Protocol: Serving available tools to agent ${agentId}`);
+    
+    return [
+      {
+        name: 'query_qdrant_history',
+        description: 'Queries the vector database for historical behavioral baselines.',
+        parameters: { vector: 'array of floats' }
+      },
+      {
+        name: 'verify_enkrypt_session',
+        description: 'Validates a decentralized caregiver identity before taking action.',
+        parameters: { signature: 'string' }
+      }
+    ];
   }
 }
 
