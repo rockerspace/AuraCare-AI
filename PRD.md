@@ -46,6 +46,16 @@ AuraCare is an intelligent distributed system comprising an edge IoT hub and clo
 **Acceptance Criteria:** All sensor streams must be ingested into **Google BigQuery** for historical analysis and dashboard querying.
 **Priority:** Medium
 
+#### FR-006: WebRTC Video Streaming & Spatial Audio
+**Description:** The system must support low-latency, real-time media ingestion for the AI models.
+**Acceptance Criteria:** Secure **WebRTC** pipelines must be established to stream live video and **spatial audio** from the IoT cameras directly into Vertex AI (Gemini 1.5 Pro) for multimodal context processing.
+**Priority:** High
+
+#### FR-007: Real-Time Emergency Escalation
+**Description:** The system must act instantly upon detection of severe distress (e.g., falls or cries for help).
+**Acceptance Criteria:** The A2A Coordinator must trigger a **real-time emergency escalation** sequence that bypasses the standard polling interval and instantly fires a High Priority Alert and family chat notification via the Cloud Run API.
+**Priority:** High
+
 ### 3.2 Non-Functional Requirements
 
 #### NFR-001: LLM Observability & Tracing
