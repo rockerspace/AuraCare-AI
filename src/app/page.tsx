@@ -3,19 +3,30 @@
 
 import React, { useState, useEffect } from 'react';
 import { logTelemetryToBigQuery, runVertexAITriage, fetchDashboardMetrics } from './actions';
+import { auth, ConfirmationResult } from '@/lib/gcp/firebase';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('Dashboard');
+  const [messages, setMessages] = useState<{role: 'user' | 'assistant', text: string}[]>([]);
+  const [chatInput, setChatInput] = useState('');
   const [heartRate, setHeartRate] = useState(72);
   const [lastSynced, setLastSynced] = useState('Just now');
   const [isRefreshing, setIsRefreshing] = useState(false);
   
+  // Auth State
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authStep, setAuthStep] = useState<'phone' | 'otp'>('phone');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
+  
   // Agent Chat State
   const [agentChatInput, setAgentChatInput] = useState('');
   const [agentMessages, setAgentMessages] = useState<any[]>([
-    { role: 'ai', text: "Hello Dr. Smith. I am the Medical Triage Agent (powered by Gemini 1.5 Pro). I am monitoring Jane Doe's telemetry. How can I assist you today?", source: null, actions: [] },
+    { role: 'ai', text: "Hello Dr. Smith. I am the Medical Triage Agent (powered by Gemini 1.5 Pro via ADK). I coordinate with the A2A network and MCP to fetch real-time and historical context. How can I assist you today?", source: "ADK / A2A Network", actions: [] },
     { role: 'user', text: "Why did the behavioral anomaly alert trigger 10 minutes ago?", source: null, actions: [] },
-    { role: 'ai', text: "The alert triggered because her step count dropped 40% below her 30-day baseline. However, after correlating with ambient temperature sensors and sleep data, I determined she simply went to bed 2 hours earlier than usual. No immediate fall risk or health degradation is suspected.", source: null, actions: ['View Qdrant Vectors', 'Dismiss Alert'] }
+    { role: 'ai', text: "The alert triggered because her step count dropped 40% below her 30-day baseline. I used the MCP tool to query Qdrant vectors, and the Nano Banana tool to process the raw sensor feed. After correlating with ambient temperature sensors, I determined she simply went to bed 2 hours earlier than usual.", source: "Gemini 1.5 Pro + Nano Banana", actions: ['View Qdrant Vectors', 'Dismiss Alert'] }
   ]);
 
   // Family Chat State
@@ -61,8 +72,47 @@ export default function Home() {
     
     // Add the user's message
     const newMessage = { role: 'family', author: 'You', text: familyChatInput };
-    setFamilyMessages([...familyMessages, newMessage]);
+    setFamilyMessages(prev => [...prev, newMessage]);
     setFamilyChatInput('');
+    
+    // Auto-Responder simulation for Family Member
+    setTimeout(() => {
+      setFamilyMessages(prev => [...prev, { 
+        role: 'family', 
+        author: 'Family Member', 
+        text: "Got it! Thanks for the update. We'll be there soon." 
+      }]);
+    }, 2000);
+  };
+
+  const handleSendOTP = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+      const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+      setConfirmationResult(confirmation);
+      setAuthStep('otp');
+    } catch (error) {
+      console.error("Firebase SMS error:", error);
+      alert("Failed to send real SMS (Check Firebase Config). Logging in for demo purposes.");
+      setIsAuthenticated(true); // Fallback for hackathon demo
+    }
+  };
+
+  const handleVerifyOTP = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (confirmationResult) {
+      try {
+        await confirmationResult.confirm(otp);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error("OTP Verification error:", error);
+        alert("Invalid OTP");
+      }
+    } else {
+      // Fallback if bypassed
+      setIsAuthenticated(true);
+    }
   };
 
   useEffect(() => {
@@ -74,6 +124,63 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  if (!isAuthenticated) {
+    return (
+      <div className="flex h-screen bg-black text-white items-center justify-center relative overflow-hidden font-sans">
+        {/* Background Gradients */}
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-900/40 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-900/40 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
+
+        <div className="z-10 w-full max-w-md p-8 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl">
+          <div className="flex items-center gap-3 mb-8 justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.jpg" alt="AuraCare Logo" className="w-10 h-10 rounded-full shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
+            <h1 className="text-3xl font-bold tracking-tight">Aura<span className="text-neutral-400">Care</span></h1>
+          </div>
+
+          <h2 className="text-2xl font-bold mb-6 text-center">Customer Login</h2>
+          <div id="recaptcha-container"></div>
+          
+          {authStep === 'phone' ? (
+            <form onSubmit={handleSendOTP} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-neutral-400 mb-1">Phone Number</label>
+                <input 
+                  type="tel" 
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="+1 (555) 000-0000" 
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                  required
+                />
+              </div>
+              <button type="submit" className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold shadow-[0_0_15px_rgba(52,211,153,0.4)] transition-all">
+                Send SMS OTP
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleVerifyOTP} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-neutral-400 mb-1">Enter OTP</label>
+                <input 
+                  type="text" 
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  placeholder="123456" 
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors tracking-widest text-center text-xl"
+                  required
+                />
+              </div>
+              <button type="submit" className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 rounded-xl font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
+                Verify & Login
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div 
       className="min-h-screen text-neutral-100 font-sans selection:bg-emerald-500/30 bg-cover bg-center bg-no-repeat fixed inset-0 overflow-y-auto"
@@ -84,7 +191,10 @@ export default function Home() {
       {/* Sidebar / Navigation */}
       <nav className="fixed left-0 top-0 h-full w-64 bg-black/40 backdrop-blur-2xl border-r border-white/10 p-6 flex flex-col justify-between z-10 shadow-2xl">
         <div>
-          <div className="flex items-center gap-3 mb-12">
+          <div 
+            className="flex items-center gap-3 mb-12 cursor-pointer transition-transform hover:scale-105"
+            onClick={() => setActiveTab('Dashboard')}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.jpg" alt="AuraCare Logo" className="w-10 h-10 rounded-full shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
             <h1 className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 to-neutral-400">AuraCare</h1>
