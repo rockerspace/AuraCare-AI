@@ -12,12 +12,19 @@ export default function Home() {
   
   // Agent Chat State
   const [agentChatInput, setAgentChatInput] = useState('');
-  const [agentMessages, setAgentMessages] = useState([
-    { role: 'ai', text: "Hello! I'm monitoring Jane Doe today. I've synced with her IoT wearables and analyzed the latest Qdrant historical vectors. How can I help you?", source: null, actions: [] },
-    { role: 'user', text: "Has Jane taken her medication yet this morning?", source: null, actions: [] },
-    { role: 'ai', text: "Yes, based on the video analysis logs from the kitchen camera at 08:14 AM, Jane successfully accessed her pill organizer and ingested her morning dosage.", source: "Gemini 1.5 Pro Video Analytics", actions: [] },
-    { role: 'user', text: "What about her mobility alert from last night?", source: null, actions: [] },
+  const [agentMessages, setAgentMessages] = useState<any[]>([
+    { role: 'ai', text: "Hello Dr. Smith. I am the Medical Triage Agent (powered by Gemini 1.5 Pro). I am monitoring Jane Doe's telemetry. How can I assist you today?", source: null, actions: [] },
+    { role: 'user', text: "Why did the behavioral anomaly alert trigger 10 minutes ago?", source: null, actions: [] },
     { role: 'ai', text: "The alert triggered because her step count dropped 40% below her 30-day baseline. However, after correlating with ambient temperature sensors and sleep data, I determined she simply went to bed 2 hours earlier than usual. No immediate fall risk or health degradation is suspected.", source: null, actions: ['View Qdrant Vectors', 'Dismiss Alert'] }
+  ]);
+
+  // Family Chat State
+  const [familyChatInput, setFamilyChatInput] = useState('');
+  const [familyMessages, setFamilyMessages] = useState<any[]>([
+    { role: 'md', author: 'Dr. Smith (Caregiver)', text: "Good morning. Jane's latest Qdrant telemetry indicates a minor deviation in her gait today. We are monitoring her closely, but her baseline vitals remain stable." },
+    { role: 'ai', author: 'AI Translator (Gemini)', text: "The doctor says Jane is walking slightly differently today, but her heart rate and other health signs are completely normal. There is no immediate cause for concern.", isTranslation: true },
+    { role: 'family', author: 'Family Member', text: "Thank you! Is it okay if we visit her around 4 PM today?" },
+    { role: 'md', author: 'Dr. Smith (Caregiver)', text: "Yes, 4 PM is perfect." }
   ]);
 
   const loadMetrics = async () => {
@@ -46,6 +53,16 @@ export default function Home() {
         actions: [] 
       }]);
     }, 1200);
+  };
+
+  const handleFamilyChatSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!familyChatInput.trim()) return;
+    
+    // Add the user's message
+    const newMessage = { role: 'family', author: 'You', text: familyChatInput };
+    setFamilyMessages([...familyMessages, newMessage]);
+    setFamilyChatInput('');
   };
 
   useEffect(() => {
@@ -404,7 +421,7 @@ export default function Home() {
                     
                     {msg.actions && msg.actions.length > 0 && (
                       <div className="flex gap-2 mt-3">
-                        {msg.actions.map(action => (
+                        {msg.actions.map((action: string) => (
                           <button key={action} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium hover:bg-white/10 transition-colors">{action}</button>
                         ))}
                       </div>
@@ -451,60 +468,61 @@ export default function Home() {
                 <span className="text-xs text-neutral-500 bg-white/5 px-3 py-1 rounded-full">Today</span>
               </div>
               
-              <div className="flex justify-start">
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center text-xs font-bold text-white mt-1">MD</div>
-                  <div className="max-w-[80%]">
-                    <div className="text-xs text-neutral-400 mb-1 ml-1">Dr. Smith (Caregiver)</div>
-                    <div className="bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-3 text-sm text-neutral-200">
-                      Good morning. Jane&apos;s latest Qdrant telemetry indicates a minor deviation in her gait today. We are monitoring her closely, but her baseline vitals remain stable.
+              {familyMessages.map((msg, i) => {
+                if (msg.role === 'family') {
+                  return (
+                    <div key={i} className="flex justify-end">
+                      <div className="max-w-[70%] bg-purple-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg">
+                        {msg.text}
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex justify-start">
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500 flex items-center justify-center text-xs font-bold text-white mt-1">AI</div>
-                  <div className="max-w-[80%]">
-                    <div className="text-xs text-emerald-400 mb-1 ml-1">AI Translator (Gemini)</div>
-                    <div className="bg-emerald-900/30 border border-emerald-500/20 rounded-2xl rounded-tl-sm p-3 text-sm text-emerald-100">
-                      <strong>AI Translation:</strong> The doctor says Jane is walking slightly differently today, but her heart rate and other health signs are completely normal. There is no immediate cause for concern.
+                  );
+                } else if (msg.role === 'ai') {
+                  return (
+                    <div key={i} className="flex justify-start">
+                      <div className="flex gap-3">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500 flex items-center justify-center text-xs font-bold text-white mt-1">AI</div>
+                        <div className="max-w-[80%]">
+                          <div className="text-xs text-emerald-400 mb-1 ml-1">{msg.author}</div>
+                          <div className="bg-emerald-900/30 border border-emerald-500/20 rounded-2xl rounded-tl-sm p-3 text-sm text-emerald-100">
+                            {msg.isTranslation && <strong>AI Translation: </strong>}
+                            {msg.text}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex justify-end">
-                <div className="max-w-[70%] bg-purple-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg">
-                  Thank you! Is it okay if we visit her around 4 PM today?
-                </div>
-              </div>
-              
-              <div className="flex justify-start">
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center text-xs font-bold text-white mt-1">MD</div>
-                  <div className="max-w-[80%]">
-                    <div className="text-xs text-neutral-400 mb-1 ml-1">Dr. Smith (Caregiver)</div>
-                    <div className="bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-3 text-sm text-neutral-200">
-                      Yes, 4 PM is perfect.
+                  );
+                } else {
+                  return (
+                    <div key={i} className="flex justify-start">
+                      <div className="flex gap-3">
+                        <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center text-xs font-bold text-white mt-1">MD</div>
+                        <div className="max-w-[80%]">
+                          <div className="text-xs text-neutral-400 mb-1 ml-1">{msg.author}</div>
+                          <div className="bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-3 text-sm text-neutral-200">
+                            {msg.text}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                  );
+                }
+              })}
             </div>
             
             <div className="p-4 border-t border-white/10 bg-white/5">
-              <div className="relative">
+              <form onSubmit={handleFamilyChatSubmit} className="relative">
                 <input 
                   type="text" 
+                  value={familyChatInput}
+                  onChange={(e) => setFamilyChatInput(e.target.value)}
                   placeholder="Message Family Chat..." 
                   className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                 />
-                <button className="absolute right-2 top-2 p-1.5 bg-purple-500 rounded-lg text-white shadow-md hover:bg-purple-400 transition-colors">
+                <button type="submit" className="absolute right-2 top-2 p-1.5 bg-purple-500 rounded-lg text-white shadow-md hover:bg-purple-400 transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         )}
