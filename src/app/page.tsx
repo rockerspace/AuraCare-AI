@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { logTelemetryToBigQuery } from './actions';
+import { logTelemetryToBigQuery, runVertexAITriage } from './actions';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('Dashboard');
@@ -130,12 +130,31 @@ export default function Home() {
                 className="group relative px-6 py-4 bg-red-600 hover:bg-red-500 rounded-full text-white font-bold tracking-widest shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:shadow-[0_0_35px_rgba(239,68,68,0.8)] transition-all duration-300 border-2 border-red-400/50 flex items-center gap-3"
               >
                 <div className="absolute inset-0 bg-red-400/20 rounded-full animate-ping opacity-75"></div>
-                <svg className="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <svg className="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 <span className="relative z-10">SIMULATE SOS PANIC</span>
               </button>
             </div>
 
-            {/* Key Metrics Grid */}
+            {/* Vertex AI Agent Trigger Simulation */}
+            <div className="mb-8 flex justify-end">
+              <button 
+                onClick={async () => {
+                  alert('🧠 Triggering Vertex AI Triage Agent... Check console or UI for response.');
+                  const res = await runVertexAITriage('patient_01', [{ value: 30, type: 'mobility' }]);
+                  console.log('Vertex AI Triage Result:', res);
+                  if (res.success) {
+                    alert(`Vertex AI Response:\nDecision: ${res.result.decision}\nPriority: ${res.result.priority}\nSummary: ${res.result.summary}`);
+                  }
+                }}
+                className="group relative px-6 py-4 bg-purple-600 hover:bg-purple-500 rounded-full text-white font-bold tracking-widest shadow-[0_0_20px_rgba(147,51,234,0.6)] hover:shadow-[0_0_35px_rgba(168,85,247,0.8)] transition-all duration-300 border-2 border-purple-400/50 flex items-center gap-3"
+              >
+                <div className="absolute inset-0 bg-purple-400/20 rounded-full animate-pulse opacity-75"></div>
+                <svg className="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span className="relative z-10">RUN VERTEX AI TRIAGE</span>
+              </button>
+            </div>
+
+            {/* Main Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {[
                 { label: 'Heart Rate Avg', value: `${heartRate} bpm`, trend: '+2%', color: 'from-rose-500 to-pink-500' },

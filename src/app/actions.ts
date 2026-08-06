@@ -19,3 +19,15 @@ export async function logTelemetryToBigQuery(patientId: string, eventType: strin
     return { success: false, error: String(error) };
   }
 }
+
+import { multiAgentFlow } from '@/lib/agents/gemini-multi-agent';
+
+export async function runVertexAITriage(patientId: string, sensorData: any[]) {
+  try {
+    const result = await multiAgentFlow.analyzeStream(patientId, sensorData);
+    return { success: true, result };
+  } catch (error) {
+    console.error("Failed to run Vertex AI Triage via Server Action:", error);
+    return { success: false, error: String(error) };
+  }
+}

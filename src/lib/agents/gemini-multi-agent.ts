@@ -1,32 +1,58 @@
-/* eslint-disable */
+import { VertexAI } from '@google-cloud/vertexai';
 import { mcpServer } from './mcp-server';
 import { qdrantClient } from '../db/qdrant';
 
-// Mock VertexAI for MVP to avoid missing module errors on Vercel
-const vertexAi = {
-  preview: {
-    getGenerativeModel: () => ({
-      generateContent: async () => ({ response: { text: () => 'Mock response' } })
-    })
-  }
-};
+// Initialize Vertex AI with the actual project
+const vertexAi = new VertexAI({
+  project: process.env.GCP_PROJECT_ID || 'vemarai',
+  location: process.env.GCP_REGION || 'us-central1'
+});
 
-const generativeModel = vertexAi.preview.getGenerativeModel();
+// Use Gemini 1.5 Pro for advanced medical reasoning
+const generativeModel = vertexAi.getGenerativeModel({
+  model: 'gemini-1.5-pro',
+});
 
 export class MedicalTriageAgent {
   public async evaluateAnomaly(anomalyData: any, patientContext: any) {
     console.log(`[Triage Agent] Evaluating anomaly for ${patientContext.name}...`);
-    // Simulated Gemini call using Vertex AI
-    const prompt = `Evaluate medical severity for patient ${patientContext.age} years old. Anomaly: ${JSON.stringify(anomalyData)}`;
     
-    // In production, we'd use generativeModel.generateContent(prompt)
-    console.log(`[Vertex AI / Gemini] Analyzing prompt: ${prompt}`);
+    const prompt = `
+      You are an expert Medical Triage Agent analyzing an IoT anomaly for an elderly patient.
+      Patient Context: ${JSON.stringify(patientContext)}
+      Anomaly Data: ${JSON.stringify(anomalyData)}
+      
+      Respond with ONLY a valid JSON object matching this schema, no markdown blocks:
+      {
+        "decision": "ESCALATE_TO_NURSE" | "MONITOR_LOCALLY" | "DISMISS",
+        "priority": "HIGH" | "MEDIUM" | "LOW",
+        "summary": "String explaining your reasoning"
+      }
+    `;
     
-    return {
-      decision: 'ESCALATE_TO_NURSE',
-      priority: 'HIGH',
-      summary: 'Patient shows severe mobility drop correlated with age. Immediate nurse follow-up required.',
-    };
+    console.log(`[Vertex AI / Gemini] Analyzing prompt using real Gemini 1.5 Pro model...`);
+    
+    try {
+      const resp = await generativeModel.generateContent(prompt);
+      const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+      
+      // Clean up markdown in case it was returned
+      const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      const result = JSON.parse(cleanText);
+      
+      return {
+        decision: result.decision || 'ESCALATE_TO_NURSE',
+        priority: result.priority || 'HIGH',
+        summary: result.summary || 'Fallback summary due to parse error',
+      };
+    } catch (e) {
+      console.error("[Vertex AI / Gemini] Error analyzing prompt:", e);
+      return {
+        decision: 'ESCALATE_TO_NURSE',
+        priority: 'HIGH',
+        summary: 'Fallback: Patient shows severe mobility drop. Error reaching Gemini API.',
+      };
+    }
   }
 }
 
