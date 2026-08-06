@@ -33,8 +33,34 @@ export class BigQueryService {
       console.log(`[BigQuery] Successfully inserted ${rows.length} rows.`);
       return { status: 'success', rowsInserted: rows.length };
     } catch (error) {
-      console.error(`[BigQuery] Failed to insert rows:`, error);
+      console.error('ERROR streaming data to BigQuery:', error);
       throw error;
+    }
+  }
+
+  // Uses Google Cloud SQL to calculate analytics instead of TypeScript
+  public async getAverageHeartRate(): Promise<number> {
+    try {
+      const query = `
+        SELECT AVG(heart_rate) as avg_hr
+        FROM \`${this.datasetId}.${this.tableId}\`
+        WHERE event_type != 'TEST'
+      `;
+      const options = {
+        query: query,
+        location: 'US',
+      };
+      
+      const [job] = await this.bigquery.createQueryJob(options);
+      const [rows] = await job.getQueryResults();
+      
+      if (rows && rows.length > 0 && rows[0].avg_hr) {
+        return Math.round(rows[0].avg_hr);
+      }
+      return 72; // Default if empty
+    } catch (error) {
+      console.error('ERROR querying BigQuery:', error);
+      return 72;
     }
   }
 }

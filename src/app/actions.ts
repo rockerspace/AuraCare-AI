@@ -32,3 +32,13 @@ export async function runVertexAITriage(patientId: string, sensorData: any[]) {
     return { success: false, error: String(error) };
   }
 }
+
+export async function fetchDashboardMetrics() {
+  try {
+    const avgHeartRate = await bigQuery.getAverageHeartRate();
+    return { success: true, avgHeartRate };
+  } catch (error) {
+    console.error("Failed to fetch dashboard metrics via Server Action:", error);
+    return { success: false, error: String(error) };
+  }
+}

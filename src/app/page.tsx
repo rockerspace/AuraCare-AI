@@ -2,12 +2,13 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { logTelemetryToBigQuery, runVertexAITriage } from './actions';
+import { logTelemetryToBigQuery, runVertexAITriage, fetchDashboardMetrics } from './actions';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [heartRate, setHeartRate] = useState(72);
   const [lastSynced, setLastSynced] = useState('Just now');
+  const [isRefreshing, setIsRefreshing] = useState(false);
   
   // Agent Chat State
   const [agentChatInput, setAgentChatInput] = useState('');
@@ -18,6 +19,15 @@ export default function Home() {
     { role: 'user', text: "What about her mobility alert from last night?", source: null, actions: [] },
     { role: 'ai', text: "The alert triggered because her step count dropped 40% below her 30-day baseline. However, after correlating with ambient temperature sensors and sleep data, I determined she simply went to bed 2 hours earlier than usual. No immediate fall risk or health degradation is suspected.", source: null, actions: ['View Qdrant Vectors', 'Dismiss Alert'] }
   ]);
+
+  const loadMetrics = async () => {
+    setIsRefreshing(true);
+    const res = await fetchDashboardMetrics();
+    if (res.success && res.avgHeartRate) {
+      setHeartRate(res.avgHeartRate);
+    }
+    setIsRefreshing(false);
+  };
 
   const handleAgentChatSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -39,13 +49,8 @@ export default function Home() {
   };
 
   useEffect(() => {
+    loadMetrics();
     const interval = setInterval(() => {
-      // Simulate real-time sensor fluctuation
-      setHeartRate(prev => {
-        const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
-        const newHr = prev + change;
-        return newHr > 76 ? 76 : newHr < 68 ? 68 : newHr;
-      });
       setLastSynced(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     }, 2500);
     return () => clearInterval(interval);
@@ -125,8 +130,9 @@ export default function Home() {
               <button 
                 onClick={async () => {
                   alert('🚨 SOS PANIC BUTTON TRIGGERED! 🚨\nReal-time escalation sequence initiated via Cloud Run. Caregivers and Family Chat notified immediately.');
-                  await logTelemetryToBigQuery('patient_01', 'SOS_PANIC_TRIGGERED');
-                  console.log('Successfully logged SOS to BigQuery');
+                  const res = await logTelemetryToBigQuery('patient_01', 'SOS_PANIC_TRIGGERED');
+                  console.log('Successfully logged SOS to BigQuery:', res);
+                  loadMetrics();
                 }}
                 className="group relative px-6 py-4 bg-red-600 hover:bg-red-500 rounded-full text-white font-bold tracking-widest shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:shadow-[0_0_35px_rgba(239,68,68,0.8)] transition-all duration-300 border-2 border-red-400/50 flex items-center gap-3"
               >
@@ -146,6 +152,7 @@ export default function Home() {
                   if (res.success && res.result) {
                     const result = res.result as any;
                     alert(`Vertex AI Response:\nDecision: ${result.decision || result.status}\nPriority: ${result.priority || 'N/A'}\nSummary: ${result.summary || 'Normal Baseline'}`);
+                    loadMetrics();
                   }
                 }}
                 className="group relative px-6 py-4 bg-purple-600 hover:bg-purple-500 rounded-full text-white font-bold tracking-widest shadow-[0_0_20px_rgba(147,51,234,0.6)] hover:shadow-[0_0_35px_rgba(168,85,247,0.8)] transition-all duration-300 border-2 border-purple-400/50 flex items-center gap-3"
@@ -159,8 +166,8 @@ export default function Home() {
             {/* Main Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {[
-                { label: 'Heart Rate Avg', value: `${heartRate} bpm`, trend: '+2%', color: 'from-rose-500 to-pink-500' },
-                { label: 'Sleep Duration', value: '6h 45m', trend: '-15%', color: 'from-indigo-500 to-purple-500' },
+                { label: 'Heart Rate Avg (BigQuery SQL)', value: isRefreshing ? '...' : `${heartRate} bpm`, trend: '+2%', color: 'from-rose-500 to-pink-500' },
+                { label: 'Sleep Duration', value: '6h 45m', trend: '-15%', color: 'from-blue-500 to-cyan-500' },
                 { label: 'Mobility Index', value: 'Low', trend: '-40%', color: 'from-amber-500 to-orange-500' },
               ].map((stat, i) => (
                 <div key={i} className="p-6 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl relative overflow-hidden group hover:border-white/20 hover:bg-black/50 transition-all shadow-xl">
