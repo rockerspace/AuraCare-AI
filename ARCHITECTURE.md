@@ -42,7 +42,6 @@ graph TD
     end
 ```
 
-## Component Breakdown (Mandatory Hackathon Stack)
 
 1.  **Gemma 2B (Edge Processing):** Runs locally on the home IoT gateway to analyze real-time telemetry from wearables, preserving privacy and ensuring offline functionality for baseline monitoring.
 2.  **WebRTC & Spatial Audio Ingestion:** Secure, low-latency WebRTC pipelines stream live video and spatial audio from IoT cameras directly into the edge and cloud processing layers for immediate context.
