@@ -2,7 +2,7 @@
 
 AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to detect subtle deviations in daily routines (mobility, sleep, heart rate) and alerts caregivers before emergencies occur.
 
-## Key Features & Hackathon Integrations 🏆
+## Key Features
 
 - **Google Identity Platform (Firebase Auth):** Beautiful glassmorphic SMS OTP customer login portal. Built with the official `@firebase/auth` SDK, strictly locking down the dashboard using Google's secure phone verification infrastructure.
 - **Vertex AI (Gemini 1.5 Pro):** True multimodal medical reasoning running in the cloud. The AI evaluates real-time IoT anomalies (e.g., mobility drops) and generates clinical triage decisions in deterministic JSON format via the `@google-cloud/vertexai` SDK.
