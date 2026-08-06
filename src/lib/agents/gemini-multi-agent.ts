@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { VertexAI } from '@google-cloud/vertexai';
 import { mcpServer } from './mcp-server';
 import { qdrantClient } from '../db/qdrant';
