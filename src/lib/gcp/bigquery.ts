@@ -1,3 +1,5 @@
+import { BigQuery } from '@google-cloud/bigquery';
+
 /**
  * Google BigQuery Analytics Module
  * 
@@ -8,20 +10,32 @@
 export class BigQueryService {
   private datasetId = 'auracare_analytics';
   private tableId = 'sensor_telemetry_historical';
+  private bigquery: BigQuery;
+
+  constructor() {
+    this.bigquery = new BigQuery({
+      projectId: process.env.GCP_PROJECT_ID || 'vemarai',
+    });
+  }
 
   /**
-   * Simulates streaming a batch of rows to BigQuery.
+   * Streams a batch of rows to BigQuery.
    */
   public async streamData(rows: Record<string, unknown>[]) {
     console.log(`[BigQuery] Streaming ${rows.length} rows to ${this.datasetId}.${this.tableId}...`);
     
-    // Simulate network latency for BQ ingestion
-    await new Promise(resolve => setTimeout(resolve, 200));
-
-    // In production, this would use the @google-cloud/bigquery SDK:
-    // await bigquery.dataset(this.datasetId).table(this.tableId).insert(rows);
-
-    return { status: 'success', rowsInserted: rows.length };
+    try {
+      await this.bigquery
+        .dataset(this.datasetId)
+        .table(this.tableId)
+        .insert(rows);
+      
+      console.log(`[BigQuery] Successfully inserted ${rows.length} rows.`);
+      return { status: 'success', rowsInserted: rows.length };
+    } catch (error) {
+      console.error(`[BigQuery] Failed to insert rows:`, error);
+      throw error;
+    }
   }
 }
 

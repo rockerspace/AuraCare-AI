@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { logTelemetryToBigQuery } from './actions';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('Dashboard');
@@ -121,7 +122,11 @@ export default function Home() {
             {/* Hardware SOS Panic Button Simulation */}
             <div className="mb-8 flex justify-end">
               <button 
-                onClick={() => alert('🚨 SOS PANIC BUTTON TRIGGERED! 🚨\nReal-time escalation sequence initiated via Cloud Run. Caregivers and Family Chat notified immediately.')}
+                onClick={async () => {
+                  alert('🚨 SOS PANIC BUTTON TRIGGERED! 🚨\nReal-time escalation sequence initiated via Cloud Run. Caregivers and Family Chat notified immediately.');
+                  await logTelemetryToBigQuery('patient_01', 'SOS_PANIC_TRIGGERED');
+                  console.log('Successfully logged SOS to BigQuery');
+                }}
                 className="group relative px-6 py-4 bg-red-600 hover:bg-red-500 rounded-full text-white font-bold tracking-widest shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:shadow-[0_0_35px_rgba(239,68,68,0.8)] transition-all duration-300 border-2 border-red-400/50 flex items-center gap-3"
               >
                 <div className="absolute inset-0 bg-red-400/20 rounded-full animate-ping opacity-75"></div>
