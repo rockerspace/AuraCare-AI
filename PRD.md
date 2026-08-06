@@ -51,9 +51,19 @@ AuraCare is an intelligent distributed system comprising an edge IoT hub and clo
 **Acceptance Criteria:** Secure **WebRTC** pipelines must be established to stream live video and **spatial audio** from the IoT cameras directly into Vertex AI (Gemini 1.5 Pro) for multimodal context processing.
 **Priority:** High
 
-#### FR-007: Real-Time Emergency Escalation
-**Description:** The system must act instantly upon detection of severe distress (e.g., falls or cries for help).
-**Acceptance Criteria:** The A2A Coordinator must trigger a **real-time emergency escalation** sequence that bypasses the standard polling interval and instantly fires a High Priority Alert and family chat notification via the Cloud Run API.
+#### FR-007: Real-Time Emergency Escalation & SOS Panic Button
+**Description:** The system must act instantly upon detection of severe distress or manual trigger.
+**Acceptance Criteria:** A physical/simulated **SOS Panic Button** and the A2A Coordinator must both be able to trigger a real-time emergency escalation sequence that bypasses standard polling intervals and instantly fires a High Priority Alert.
+**Priority:** High
+
+#### FR-008: Voice AI & Sentiment Analysis
+**Description:** The system must analyze vocal biomarkers for emotional distress.
+**Acceptance Criteria:** The cloud multimodal agent must provide dedicated **Voice AI** and **Sentiment Analysis**, scoring emotional states from spatial audio feeds.
+**Priority:** High
+
+#### FR-009: Family Chat & Collaboration
+**Description:** Caregivers and family members must be able to communicate securely.
+**Acceptance Criteria:** The application must include a **Family Chat** module where family members can collaborate, and the AI agent can translate medical jargon into plain language.
 **Priority:** High
 
 ### 3.2 Non-Functional Requirements
