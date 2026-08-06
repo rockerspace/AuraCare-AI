@@ -88,6 +88,7 @@ export default function Home() {
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      console.log("Using API Key:", auth.app.options.apiKey?.substring(0, 10) + "...");
       const recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
       const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
       setConfirmationResult(confirmation);

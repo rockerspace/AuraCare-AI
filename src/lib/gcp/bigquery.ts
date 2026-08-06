@@ -48,7 +48,7 @@ export class BigQueryService {
       `;
       const options = {
         query: query,
-        location: 'US',
+        location: 'us-central1',
       };
       
       const [job] = await this.bigquery.createQueryJob(options);
