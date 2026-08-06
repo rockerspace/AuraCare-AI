@@ -7,24 +7,24 @@ AuraCare leverages a modern, serverless Google Tech Stack combined with AI Agent
 
 ```mermaid
 graph TD
-    subgraph IoT Edge Gateway (Local Home)
+    subgraph IoT_Edge_Gateway ["IoT Edge Gateway (Local Home)"]
         S[Sensors / Wearables] -->|Telemetry| Gemma[Gemma 2B - Local Behavioral Agent]
         Cam[Smart Camera] -->|WebRTC Video & Spatial Audio| Gemma
         SOS[Hardware SOS Panic Button] -->|Instant Trigger| A2A
         Gemma -->|Offline Baseline & Anomaly Check| A2A[A2A Coordinator]
     end
 
-    subgraph Security & Access
+    subgraph Security_Access ["Security & Access"]
         Auth[Enkrypt DID] -->|Verification| API
         API[Next.js API Routes / Cloud Run] -->|HIPAA Logging| Audit[GCP Cloud Audit Logs]
     end
 
-    subgraph Data & Analytics (Google Cloud)
+    subgraph Data_Analytics ["Data & Analytics (Google Cloud)"]
         API -->|Stream Sensor Data| BQ[(BigQuery)]
         Qdrant[(Qdrant Vector DB)]
     end
 
-    subgraph AI Intelligence Layer (Cloud)
+    subgraph AI_Intelligence_Layer ["AI Intelligence Layer (Cloud)"]
         A2A -->|Escalate Anomaly| MCP[MCP Server - Context Standardization]
         MCP -->|Fetch Patient History| ADK[Agent Development Kit Orchestrator]
         ADK -->|Video/Audio Analytics| Vertex[Gemini 1.5 Pro via Vertex AI & AI Studio]
@@ -32,11 +32,11 @@ graph TD
         Explain -->|Trigger Real-Time Emergency Escalation| API
     end
     
-    subgraph Observability
+    subgraph Observability ["Observability"]
         Vertex -->|Token/Latency Metrics| OTel[OpenTelemetry LLM Tracer]
     end
     
-    subgraph Client Application
+    subgraph Client_Application ["Client Application"]
         Dashboard[Caregiver Dashboard UI] <-->|Real-time Metrics| API
         Dashboard <-->|Family Chat & Collaboration| API
     end
