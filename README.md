@@ -56,11 +56,12 @@ graph TD
 
 ## Tech Stack
 *   **Frontend & API:** Next.js, React, Tailwind CSS
-*   **AI Agents & Orchestration:** Google Agent Development Kit (GADK) & Mastra
-*   **Context Management:** Model Context Protocol (MCP)
+*   **AI Engine (Cloud):** Google Vertex AI (Gemini 1.5 Pro)
+*   **Analytics & Data:** Google BigQuery
+*   **AI Agents & Orchestration:** Google Agent Development Kit (GADK) & MCP
 *   **Vector Database:** Qdrant
 *   **Authentication & Security:** Enkrypt (HIPAA Compliant Logging)
-*   **Infrastructure:** GCP Cloud Run
+*   **Infrastructure:** Google Cloud Run (Fully Serverless & Containerized)
 
 ## Getting Started (Frontend Dashboard)
 
@@ -109,17 +110,21 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js)
 
-## 🚀 Deployment (Vercel)
+## Google Cloud Integrations ☁️
 
-AuraCare is optimized for Vercel, ensuring zero-config deployments for your frontend.
+AuraCare was explicitly engineered to utilize the full **Google Cloud & AI Stack**:
 
-### Sharing Your Live Link
-After importing this repository into your Vercel account and deploying:
-1. Go to your **Vercel Dashboard**.
-2. Click on the **AuraCare** project.
-3. Look for the **Domains** section (e.g., `ai-agent-series-builder-finale-2026.vercel.app`).
-4. Click on that link to visit your live site! 
-5. You can share this exact URL with family members, and beta testers. The dynamic "real-time" dashboard will run perfectly on their mobile phones and laptops!
+1. **Vertex AI (Gemini 1.5 Pro)**: 
+   - Uses the official `@google-cloud/vertexai` SDK.
+   - Evaluates real-time IoT anomalies (mobility drops, heart rate spikes).
+   - Generates deterministic JSON objects with clinical reasoning and priority escalation.
+2. **BigQuery**:
+   - Uses the official `@google-cloud/bigquery` SDK.
+   - Streams historical telemetry data directly into the `sensor_telemetry_historical` table.
+   - Acts as the central data warehouse for longitudinal patient analysis.
+3. **Google Cloud Run**:
+   - Containerized via Docker.
+   - Continuously deployed from GitHub directly to a fully managed, scalable, and serverless Cloud Run instance in `us-central1`.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
