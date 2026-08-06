@@ -12,7 +12,7 @@ export class ExplainabilityEngine {
   /**
    * Generates a human-readable explanation of an AI decision.
    */
-  public async generateExplanation(alertType: string, telemetryState: any, aiDecision: string) {
+  public async generateExplanation(alertType: string, telemetryState: { heartRate?: number; mobility?: number; patientId?: string; [key: string]: unknown }, aiDecision: string) {
     console.log(`[Explainability Engine] Generating audit justification for ${alertType}`);
 
     const explanation = `

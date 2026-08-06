@@ -38,6 +38,7 @@ export class VertexAIAgent {
     `;
     
     try {
+      /*
       const generativeModel = this.vertexAi.preview.getGenerativeModel({
         model: this.model,
       });
@@ -60,6 +61,7 @@ export class VertexAIAgent {
           }
         ]
       };
+      */
 
       const startTime = Date.now();
 

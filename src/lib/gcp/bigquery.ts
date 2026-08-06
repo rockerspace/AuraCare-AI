@@ -12,7 +12,7 @@ export class BigQueryService {
   /**
    * Simulates streaming a batch of rows to BigQuery.
    */
-  public async streamData(rows: any[]) {
+  public async streamData(rows: Record<string, unknown>[]) {
     console.log(`[BigQuery] Streaming ${rows.length} rows to ${this.datasetId}.${this.tableId}...`);
     
     // Simulate network latency for BQ ingestion

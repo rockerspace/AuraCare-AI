@@ -13,7 +13,7 @@ export class A2ACoordinator {
    * Model Context Protocol (MCP) Formatter
    * Standardizes the payload from the edge device before cloud escalation.
    */
-  private formatMCPContext(patientId: string, edgeContext: any) {
+  private formatMCPContext(patientId: string, edgeContext: unknown) {
     return {
       mcpVersion: "1.0",
       entityId: patientId,
@@ -26,7 +26,7 @@ export class A2ACoordinator {
   /**
    * ADK Orchestrator: Triggers cloud reasoning based on edge escalation.
    */
-  public async handleEdgeEscalation(patientId: string, edgePayload: any) {
+  public async handleEdgeEscalation(patientId: string, edgePayload: { localContext: unknown; [key: string]: unknown }) {
     console.log(`[A2A Coordinator] Received escalation from Gemma Edge Agent.`);
     
     // 1. Standardize context via MCP

@@ -12,7 +12,7 @@ export class GemmaEdgeAgent {
    * Analyzes local telemetry data for immediate offline anomalies.
    * Only escalates to the cloud (Vertex AI) if the anomaly is complex.
    */
-  public async analyzeLocalTelemetry(telemetryData: any) {
+  public async analyzeLocalTelemetry(telemetryData: { heartRate: number; mobility: number; [key: string]: unknown }) {
     console.log(`[Gemma Edge - ${this.model}] Analyzing real-time telemetry locally...`);
     
     // Simulate lightweight local inference
