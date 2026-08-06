@@ -1,25 +1,64 @@
 # Product Requirements Document (PRD) - AuraCare
+**Version:** 2.0
+**Standard:** IEEE 830-1998 (Recommended Practice for Software Requirements Specifications)
 
-## 1. Product Overview & Problem Statement
-Caregivers lack early indicators of behavioral or health changes in elderly family members living alone. By the time a physical SOS button is pressed, it is often too late. AuraCare is a proactive, AI-driven monitoring system that uses ambient IoT sensors and multimodal intelligence (audio/video) to detect subtle deviations in daily routines, vocal biomarkers, and emotional state, alerting caregivers before emergencies occur.
+## 1. Introduction
+### 1.1 Purpose
+The purpose of this document is to define the software requirements for AuraCare, a proactive, AI-driven elderly monitoring system. It specifies the mandatory architectural stack required for the hackathon submission.
 
-## 2. Target Audience
-*   **Primary Users:** Family caregivers and professional medical staff.
-*   **Secondary Users:** Elderly individuals living independently (passive users).
+### 1.2 Scope
+AuraCare utilizes ambient IoT sensors and multimodal intelligence (audio/video) to detect deviations in daily routines and emotional states, alerting caregivers before emergencies occur. The system strictly utilizes the Google Cloud and AI stack.
 
-## 3. Key Features
-*   **Proactive Anomaly Detection:** Utilizes Google Agent Development Kit (GADK) and Mastra to analyze sensor data streams.
-*   **Multimodal Intelligence (Voice & Video):** Integrates Smart Cameras to capture spatial audio/video, processed by a Voice AI Service to extract vocal biomarkers, and a Sentiment Analysis Agent to detect distress or confusion.
-*   **Vector Baseline Search:** Uses Qdrant to store and compare historical behavioral patterns (e.g., normal morning routine vs. sluggish morning routine).
-*   **Context-Aware Alerts:** Leverages Model Context Protocol (MCP) to provide the AI with patient history (recent meds, age, notes) before issuing alerts.
-*   **HIPAA Compliant Data Handling:** Strict audit logging for all Protected Health Information (PHI).
-*   **Decentralized Identity:** Enkrypt integration for secure caregiver authentication.
+## 2. Overall Description
+### 2.1 Product Perspective
+AuraCare is an intelligent distributed system comprising an edge IoT hub and cloud microservices. It leverages **Gemma 2B** for edge processing and **Gemini 1.5 Pro/Flash** on **Vertex AI** for cloud reasoning.
 
-## 4. User Journeys
-*   **Normal Day:** Caregiver opens the dashboard, sees green indicators for Heart Rate, Sleep, and Mobility.
-*   **Anomaly Detected:** The elderly person's mobility drops by 40%. The GADK agent queries Qdrant, determines this is a significant deviation from their specific baseline, and triggers a High Priority Alert to the caregiver's dashboard.
+### 2.2 User Classes
+- **Primary Users:** Family caregivers, professional medical staff.
+- **Secondary Users:** Elderly individuals (passive monitoring).
 
-## 5. Non-Functional Requirements
-*   **Security:** Enkrypt authentication; End-to-end encryption for IoT data.
-*   **Scalability:** Hosted on GCP Cloud Run for serverless, autoscaling performance.
-*   **Compliance:** Designed with HIPAA guidelines in mind (Audit logs, Role-Based Access Control).
+## 3. Specific Requirements (Functional & Non-Functional)
+
+### 3.1 Functional Requirements
+
+#### FR-001: Local Edge Behavioral Analysis
+**Description:** The system must process initial telemetry and behavioral data locally on the home IoT gateway to ensure privacy and low latency.
+**Acceptance Criteria:** The local edge hub must utilize **Gemma 2B** for offline anomaly detection prior to cloud escalation.
+**Priority:** High
+
+#### FR-002: Cloud AI Agent Reasoning
+**Description:** Complex anomalies that require multimodal understanding (audio/video) must be escalated to the cloud.
+**Acceptance Criteria:** The cloud backend must invoke **Gemini 1.5 Pro/Flash** via **Google AI Studio** and **Vertex AI** for advanced reasoning and sentiment analysis.
+**Priority:** High
+
+#### FR-003: Agent Communication & Coordination
+**Description:** Edge and cloud agents must communicate effectively and securely.
+**Acceptance Criteria:** Agent orchestration must use the **Agent Development Kit (ADK)**, implement **Agent-to-Agent (A2A)** protocols for escalation, and standardize context sharing using the **Model Context Protocol (MCP)**.
+**Priority:** High
+
+#### FR-004: Explainability Engine
+**Description:** Safety-critical alerts must be fully explainable.
+**Acceptance Criteria:** The Behavioral Agent must output a natural language justification detailing the specific sensor telemetry and AI logic that triggered the alert.
+**Priority:** High
+
+#### FR-005: Long-Term Analytics
+**Description:** Historical sensor data must be retained for trend analysis.
+**Acceptance Criteria:** All sensor streams must be ingested into **Google BigQuery** for historical analysis and dashboard querying.
+**Priority:** Medium
+
+### 3.2 Non-Functional Requirements
+
+#### NFR-001: LLM Observability & Tracing
+**Description:** The system must maintain strict observability over all LLM interactions.
+**Acceptance Criteria:** The application must integrate **OpenTelemetry** to trace LLM calls, tracking token usage, latency, and prompt hashing for the Voice AI and Sentiment Analysis services.
+**Priority:** High
+
+#### NFR-002: Infrastructure & Deployment
+**Description:** The backend must be highly available and scalable.
+**Acceptance Criteria:** All microservices must be containerized and deployed on **Google Cloud Run** using the **Antigravity** toolchain.
+**Priority:** High
+
+#### NFR-003: HIPAA Compliance & Audit Logging
+**Description:** The system must meet strict healthcare privacy standards.
+**Acceptance Criteria:** Data access must be authenticated via Enkrypt DID, and all sensitive operations must be immutably logged to GCP Cloud Audit Logs.
+**Priority:** High

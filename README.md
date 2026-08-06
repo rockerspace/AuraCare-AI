@@ -8,7 +8,11 @@ AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to dete
 - **AI Agent Chat**: An interactive chat interface for caregivers to converse with the Medical Triage Agent (Gemini 1.5 Pro concept) regarding patient status and historical data.
 - **Room View (Video Analysis)**: Simulates Gemini 1.5 Pro's video understanding capabilities with real-time bounding boxes and multimodal environment logs for fall risk detection.
 - **Google Cloud Run Ready**: Containerized via Docker and configured for `cloudbuild.yaml` CI/CD to ensure enterprise-grade backend scalability.
-- **Vertex AI (Gemini 1.5 Pro)**: Integrated with the `@google-cloud/vertexai` SDK for true multimodal video/audio analysis inside the `vertex-agent` module.
+- **Vertex AI & AI Studio (Gemini 1.5 Pro)**: Integrated with the `@google-cloud/vertexai` SDK for true multimodal video/audio analysis.
+- **Gemma 2B Edge Intelligence**: Local behavioral anomaly detection on the home IoT gateway for offline, privacy-preserving monitoring.
+- **Agent Architecture (ADK, MCP, A2A)**: Utilizes the Agent Development Kit and Model Context Protocol to seamlessly hand off context between the local edge agent and the cloud AI.
+- **BigQuery Analytics**: Streams historical sensor telemetry for predictive modeling.
+- **LLM Observability**: OpenTelemetry tracing for prompt hashing and token tracking, coupled with an Explainability Engine for deterministic alert justifications.
 - **GCP Cloud Audit Logging**: Implements HIPAA-compliant data access logging through Google Cloud Logging APIs.
 
 ## Documentation
