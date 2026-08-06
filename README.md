@@ -15,6 +15,11 @@ AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to dete
 - **Family Chat & Collaboration:** Interactive chat module simulating intelligent "Family Member" responders to assist caregivers in medical translations.
 - **Google Cloud Run Ready**: Containerized via Docker and configured for `cloudbuild.yaml` CI/CD to ensure enterprise-grade backend scalability.
 
+## Documentation
+*   [Product Requirements Document (PRD)](./docs/PRD.md)
+*   [Architecture Overview](./docs/ARCHITECTURE.md)
+*   [Agent Protocols](./docs/AGENTS.md)
+
 ## Architecture Diagram
 
 ```mermaid
