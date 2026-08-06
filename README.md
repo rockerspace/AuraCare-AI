@@ -124,7 +124,7 @@ After importing this repository into your Vercel account and deploying:
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Live Deployment 🚀
-The application is currently deployed and running on Google Cloud Run:
-**[AuraCare Live Service](https://auracare-service-805096709254.us-central1.run.app)**
+The application is currently deployed and running on Google Cloud Run with continuous deployment from this repository:
+**[AuraCare Live Service](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)**
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
