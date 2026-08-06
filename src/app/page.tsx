@@ -142,8 +142,9 @@ export default function Home() {
                   alert('🧠 Triggering Vertex AI Triage Agent... Check console or UI for response.');
                   const res = await runVertexAITriage('patient_01', [{ value: 30, type: 'mobility' }]);
                   console.log('Vertex AI Triage Result:', res);
-                  if (res.success) {
-                    alert(`Vertex AI Response:\nDecision: ${res.result.decision}\nPriority: ${res.result.priority}\nSummary: ${res.result.summary}`);
+                  if (res.success && res.result) {
+                    const result = res.result as any;
+                    alert(`Vertex AI Response:\nDecision: ${result.decision || result.status}\nPriority: ${result.priority || 'N/A'}\nSummary: ${result.summary || 'Normal Baseline'}`);
                   }
                 }}
                 className="group relative px-6 py-4 bg-purple-600 hover:bg-purple-500 rounded-full text-white font-bold tracking-widest shadow-[0_0_20px_rgba(147,51,234,0.6)] hover:shadow-[0_0_35px_rgba(168,85,247,0.8)] transition-all duration-300 border-2 border-purple-400/50 flex items-center gap-3"
