@@ -1,4 +1,4 @@
-import { vertexAgent } from './src/lib/gcp/vertex-agent';
+import { vertexAgent } from '../src/lib/gcp/vertex-agent';
 
 /**
  * A quick local test script to verify the Vertex AI (Gemini 1.5 Pro) connection.
