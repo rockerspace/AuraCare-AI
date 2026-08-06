@@ -6,6 +6,35 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [heartRate, setHeartRate] = useState(72);
   const [lastSynced, setLastSynced] = useState('Just now');
+  
+  // Agent Chat State
+  const [agentChatInput, setAgentChatInput] = useState('');
+  const [agentMessages, setAgentMessages] = useState([
+    { role: 'ai', text: "Hello! I'm monitoring Jane Doe today. I've synced with her IoT wearables and analyzed the latest Qdrant historical vectors. How can I help you?", source: null, actions: [] },
+    { role: 'user', text: "Has Jane taken her medication yet this morning?", source: null, actions: [] },
+    { role: 'ai', text: "Yes, based on the video analysis logs from the kitchen camera at 08:14 AM, Jane successfully accessed her pill organizer and ingested her morning dosage.", source: "Gemini 1.5 Pro Video Analytics", actions: [] },
+    { role: 'user', text: "What about her mobility alert from last night?", source: null, actions: [] },
+    { role: 'ai', text: "The alert triggered because her step count dropped 40% below her 30-day baseline. However, after correlating with ambient temperature sensors and sleep data, I determined she simply went to bed 2 hours earlier than usual. No immediate fall risk or health degradation is suspected.", source: null, actions: ['View Qdrant Vectors', 'Dismiss Alert'] }
+  ]);
+
+  const handleAgentChatSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!agentChatInput.trim()) return;
+    
+    const newMsg = agentChatInput;
+    setAgentMessages(prev => [...prev, { role: 'user', text: newMsg, source: null, actions: [] }]);
+    setAgentChatInput('');
+    
+    // Simulate AI response
+    setTimeout(() => {
+      setAgentMessages(prev => [...prev, { 
+        role: 'ai', 
+        text: "I am a Medical Triage Agent simulation. In a live production environment, this request would be routed through the A2A Coordinator to Vertex AI.", 
+        source: "Simulation Mode", 
+        actions: [] 
+      }]);
+    }, 1200);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -331,53 +360,40 @@ export default function Home() {
             </div>
             
             <div className="flex-1 p-6 overflow-y-auto space-y-6">
-              <div className="flex justify-start">
-                <div className="max-w-[70%] bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-4 text-sm text-neutral-200">
-                  Hello! I&apos;m monitoring Jane Doe today. I&apos;ve synced with her IoT wearables and analyzed the latest Qdrant historical vectors. How can I help you?
-                </div>
-              </div>
-              
-              <div className="flex justify-end">
-                <div className="max-w-[70%] bg-emerald-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg">
-                  Has Jane taken her medication yet this morning?
-                </div>
-              </div>
-              
-              <div className="flex justify-start">
-                <div className="max-w-[70%] bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-4 text-sm text-neutral-200">
-                  <p className="mb-2">Yes, based on the video analysis logs from the kitchen camera at 08:14 AM, Jane successfully accessed her pill organizer and ingested her morning dosage.</p>
-                  <p className="text-xs text-neutral-400 font-mono bg-black/40 p-2 rounded-lg border border-white/5">Source: Gemini 1.5 Pro Video Analytics</p>
-                </div>
-              </div>
-              
-              <div className="flex justify-end">
-                <div className="max-w-[70%] bg-emerald-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg">
-                  What about her mobility alert from last night?
-                </div>
-              </div>
-              
-              <div className="flex justify-start">
-                <div className="max-w-[70%] bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-4 text-sm text-neutral-200">
-                  <p className="mb-2">The alert triggered because her step count dropped 40% below her 30-day baseline. However, after correlating with ambient temperature sensors and sleep data, I determined she simply went to bed 2 hours earlier than usual. No immediate fall risk or health degradation is suspected.</p>
-                  <div className="flex gap-2 mt-3">
-                    <button className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium hover:bg-white/10 transition-colors">View Qdrant Vectors</button>
-                    <button className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium hover:bg-white/10 transition-colors">Dismiss Alert</button>
+              {agentMessages.map((msg, i) => (
+                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[70%] ${msg.role === 'user' ? 'bg-emerald-600 rounded-2xl rounded-tr-sm text-white shadow-lg' : 'bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm text-neutral-200'} p-4 text-sm`}>
+                    <p className={msg.source || msg.actions?.length ? "mb-2" : ""}>{msg.text}</p>
+                    
+                    {msg.source && (
+                      <p className="text-xs text-neutral-400 font-mono bg-black/40 p-2 rounded-lg border border-white/5">Source: {msg.source}</p>
+                    )}
+                    
+                    {msg.actions && msg.actions.length > 0 && (
+                      <div className="flex gap-2 mt-3">
+                        {msg.actions.map(action => (
+                          <button key={action} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium hover:bg-white/10 transition-colors">{action}</button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
             
             <div className="p-4 border-t border-white/10 bg-white/5">
-              <div className="relative">
+              <form onSubmit={handleAgentChatSubmit} className="relative">
                 <input 
                   type="text" 
+                  value={agentChatInput}
+                  onChange={(e) => setAgentChatInput(e.target.value)}
                   placeholder="Ask the Medical Triage Agent..." 
                   className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-emerald-500/50 transition-colors"
                 />
-                <button className="absolute right-2 top-2 p-1.5 bg-emerald-500 rounded-lg text-white shadow-md hover:bg-emerald-400 transition-colors">
+                <button type="submit" className="absolute right-2 top-2 p-1.5 bg-emerald-500 rounded-lg text-white shadow-md hover:bg-emerald-400 transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         )}
