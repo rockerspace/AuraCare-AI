@@ -66,6 +66,16 @@ AuraCare is an intelligent distributed system comprising an edge IoT hub and clo
 **Acceptance Criteria:** The application must include a **Family Chat** module where family members can collaborate, and the AI agent can translate medical jargon into plain language.
 **Priority:** High
 
+#### FR-010: SMS OTP Customer Authentication
+**Description:** Individual customers must be securely authenticated before accessing the dashboard.
+**Acceptance Criteria:** The system must implement SMS OTP (One-Time Password) based authentication using the **Google Identity Platform (Firebase Auth)**.
+**Priority:** High
+
+#### FR-011: Raw Sensor Feed Processing
+**Description:** Raw IoT sensor data requires intermediate processing before AI evaluation.
+**Acceptance Criteria:** Telemetry data must be piped through the **Nano Banana Tool** for specialized parsing before being fed into the Gemini 1.5 Pro reasoning engine.
+**Priority:** Medium
+
 ### 3.2 Non-Functional Requirements
 
 #### NFR-001: LLM Observability & Tracing
