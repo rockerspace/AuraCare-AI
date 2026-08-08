@@ -19,9 +19,9 @@ COPY . .
 # Next.js telemetry is disabled
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Copy environment variables for Next.js production build
-COPY .env.local .env.production
-
+# Copy environment variables for Next.js production build if they exist
+COPY package.json .env.loca[l] ./
+RUN cp .env.local .env.production 2>/dev/null || true
 RUN npm run build
 
 # Production image, copy all the files and run next
