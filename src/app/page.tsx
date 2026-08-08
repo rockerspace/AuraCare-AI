@@ -145,6 +145,12 @@ export default function Home() {
           console.warn("Could not clear old recaptcha verifier:", e);
         }
       }
+      
+      const container = document.getElementById('recaptcha-container');
+      if (container) {
+        container.innerHTML = ''; // Force clear any lingering iframes
+      }
+
       (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
       const recaptchaVerifier = (window as any).recaptchaVerifier;
       const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
