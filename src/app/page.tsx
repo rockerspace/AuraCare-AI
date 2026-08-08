@@ -824,6 +824,57 @@ export default function Home() {
               ))}
             </div>
             
+            {/* Quick-send Agent Suggestion Chips */}
+            <div className="px-4 py-2 border-t border-white/5 flex gap-2 overflow-x-auto scrollbar-none">
+              {[
+                { label: "🩺 Check vitals now", prompt: "Are her vitals stable right now?" },
+                { label: "📡 Haptic sensor report", prompt: "What do the haptic wearable sensors say about Jane's mobility today?" },
+                { label: "📷 Camera feed", prompt: "Can you check the living room camera video feed?" },
+                { label: "⚠️ Why did alert trigger?", prompt: "Why did the behavioral anomaly alert trigger 10 minutes ago?" },
+                { label: "💤 Sleep analysis", prompt: "How was her sleep last night compared to baseline?" },
+                { label: "🧠 Run AI triage", prompt: "Run a full AI triage report on Jane Doe right now." },
+              ].map((chip) => (
+                <button
+                  key={chip.label}
+                  onClick={() => {
+                    setAgentMessages(prev => [...prev, { role: 'user', text: chip.prompt, source: null, actions: [] }]);
+                    
+                    setTimeout(() => {
+                      setAgentMessages(prev => [...prev, { role: 'ai', text: "Routing query to the Clinical Context Agent...", source: "A2A Router", actions: [] }]);
+                      setTimeout(() => {
+                        let responseText = "I have cross-referenced the latest real-time IoT ingestion streams. Her vitals remain stable, and there are no immediate critical deviations detected.";
+                        let source = "Gemini 1.5 Pro + BigQuery";
+                        let actions = ["Acknowledge", "Escalate"];
+                        if (chip.prompt.toLowerCase().includes('haptic') || chip.prompt.toLowerCase().includes('mobility')) {
+                          responseText = "I've pulled the high-frequency haptic sensor data from the Edge node. The micro-tremor analysis indicates normal gait patterns, ruling out any immediate fall risk.";
+                          source = "Edge Agent + MCP"; actions = ["View Micro-Tremor Graph", "Log Note"];
+                        } else if (chip.prompt.toLowerCase().includes('camera') || chip.prompt.toLowerCase().includes('video')) {
+                          responseText = "I requested video analysis from the Vision Agent. The Gemini 1.5 Pro multimodal model confirms she is resting comfortably in the living room.";
+                          source = "Vision Agent (A2A)"; actions = ["View Frame", "Dismiss"];
+                        } else if (chip.prompt.toLowerCase().includes('alert') || chip.prompt.toLowerCase().includes('anomaly')) {
+                          responseText = "The alert triggered because her step count dropped 40% below her 30-day baseline. I used the MCP tool to query Qdrant vectors and determined she simply went to bed 2 hours earlier than usual.";
+                          source = "Gemini 1.5 Pro + Nano Banana"; actions = ["View Qdrant Vectors", "Dismiss Alert"];
+                        } else if (chip.prompt.toLowerCase().includes('sleep')) {
+                          responseText = "BigQuery sleep logs show 5h 12m vs a 7h 30m baseline. The Edge wearable detected 3 micro-wake events. Recommend reviewing medication schedule for late-evening stimulants.";
+                          source = "BigQuery + ADK"; actions = ["View Sleep Chart", "Flag for Review"];
+                        } else if (chip.prompt.toLowerCase().includes('triage')) {
+                          responseText = "Full AI Triage complete. Heart Rate: 89 bpm (elevated). SpO₂: 97% (normal). Mobility Index: Low (-40% from baseline). Recommendation: Initiate Caregiver Review Protocol.";
+                          source = "Medical Triage Agent — Gemini 1.5 Pro"; actions = ["Initiate Protocol", "Export Report"];
+                        }
+                        setAgentMessages(prev => {
+                          const filtered = prev.filter(m => m.text !== "Routing query to the Clinical Context Agent...");
+                          return [...filtered, { role: 'ai', text: responseText, source, actions }];
+                        });
+                      }, 2500);
+                    }, 500);
+                  }}
+                  className="shrink-0 text-xs px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded-full hover:bg-emerald-500/20 transition-colors whitespace-nowrap"
+                >
+                  {chip.label}
+                </button>
+              ))}
+            </div>
+
             <div className="p-4 border-t border-white/10 bg-white/5">
               <form onSubmit={handleAgentChatSubmit} className="relative">
                 <input 
@@ -840,6 +891,7 @@ export default function Home() {
             </div>
           </div>
         )}
+
 
         {activeTab === 'Family Chat' && (
           <div className="flex flex-col h-[75vh] bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-xl">
