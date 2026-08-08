@@ -41,10 +41,10 @@ export default function Home() {
 
   // Real-time Patients Simulation (Mocking IoT Stream)
   const [patients, setPatients] = useState([
-    { id: 'p1', name: 'Jane Doe', age: 82, status: 'Critical', lastActive: 'Just now', image: 'JD' },
-    { id: 'p2', name: 'Robert Smith', age: 76, status: 'Stable', lastActive: '1 hr ago', image: 'RS' },
-    { id: 'p3', name: 'Mary Johnson', age: 88, status: 'Review', lastActive: '15 mins ago', image: 'MJ' },
-    { id: 'p4', name: 'William Brown', age: 91, status: 'Stable', lastActive: '3 hrs ago', image: 'WB' },
+    { id: 'p1', name: 'Jane Doe', age: 82, status: 'Critical', lastActive: 'Just now', image: 'JD', vitals: { hr: 110, o2: 89, temp: 101.2 } },
+    { id: 'p2', name: 'Robert Smith', age: 76, status: 'Stable', lastActive: '1 hr ago', image: 'RS', vitals: { hr: 72, o2: 98, temp: 98.6 } },
+    { id: 'p3', name: 'Mary Johnson', age: 88, status: 'Review', lastActive: '15 mins ago', image: 'MJ', vitals: { hr: 85, o2: 95, temp: 99.1 } },
+    { id: 'p4', name: 'William Brown', age: 91, status: 'Stable', lastActive: '3 hrs ago', image: 'WB', vitals: { hr: 68, o2: 99, temp: 98.4 } },
   ]);
 
   useEffect(() => {
@@ -54,15 +54,28 @@ export default function Home() {
     const interval = setInterval(() => {
       setPatients(prev => prev.map(p => {
         const r = Math.random();
-        // 1. Randomly update last active time
-        if (r > 0.6) {
-          return { ...p, lastActive: `${Math.floor(Math.random() * 59) + 1} mins ago` };
-        } 
-        // 2. Simulate Robert Smith having a sudden anomaly
-        if (r > 0.85 && p.id === 'p2') {
-          return { ...p, status: p.status === 'Stable' ? 'Review' : 'Stable' };
+        
+        // Clone patient to mutate
+        const newPatient = { ...p, vitals: { ...p.vitals } };
+        
+        // 1. Simulate real-time fluctuating vitals (IoT streaming)
+        if (r > 0.3) {
+          newPatient.vitals.hr += Math.floor(Math.random() * 5) - 2; // fluctuate -2 to +2
+          newPatient.vitals.o2 = Math.min(100, Math.max(80, newPatient.vitals.o2 + (Math.floor(Math.random() * 3) - 1)));
+          newPatient.vitals.temp = parseFloat((newPatient.vitals.temp + (Math.random() * 0.4 - 0.2)).toFixed(1));
         }
-        return p;
+
+        // 2. Randomly update last active time
+        if (r > 0.6) {
+          newPatient.lastActive = `${Math.floor(Math.random() * 59) + 1} mins ago`;
+        } 
+        
+        // 3. Simulate Robert Smith having a sudden anomaly
+        if (r > 0.85 && p.id === 'p2') {
+          newPatient.status = p.status === 'Stable' ? 'Review' : 'Stable';
+        }
+        
+        return newPatient;
       }));
     }, 4000);
     
@@ -501,7 +514,7 @@ export default function Home() {
                   </motion.span>
                 </div>
                 
-                <div className="flex justify-between items-center mb-6 relative z-10 text-sm">
+                <div className="flex justify-between items-center mb-4 relative z-10 text-sm">
                   <span className="text-neutral-400">Last Active</span>
                   <motion.span 
                     key={patient.lastActive}
@@ -511,6 +524,44 @@ export default function Home() {
                   >
                     {patient.lastActive}
                   </motion.span>
+                </div>
+
+                {/* Simulated Real-Time IoT Vitals */}
+                <div className="grid grid-cols-3 gap-2 mb-6 relative z-10 text-center bg-black/20 rounded-xl p-3 border border-white/5">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1">Heart</span>
+                    <motion.span 
+                      key={patient.vitals.hr}
+                      initial={{ scale: 1.1, color: '#ef4444' }}
+                      animate={{ scale: 1, color: '#e5e5e5' }}
+                      transition={{ duration: 0.5 }}
+                      className="font-mono font-medium text-sm"
+                    >
+                      {patient.vitals.hr} <span className="text-[10px] text-neutral-600">bpm</span>
+                    </motion.span>
+                  </div>
+                  <div className="flex flex-col border-l border-r border-white/5">
+                    <span className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1">SpO2</span>
+                    <motion.span 
+                      key={patient.vitals.o2}
+                      initial={{ opacity: 0.5 }}
+                      animate={{ opacity: 1 }}
+                      className="font-mono font-medium text-sm"
+                    >
+                      {patient.vitals.o2}<span className="text-[10px] text-neutral-600">%</span>
+                    </motion.span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1">Temp</span>
+                    <motion.span 
+                      key={patient.vitals.temp}
+                      initial={{ opacity: 0.5 }}
+                      animate={{ opacity: 1 }}
+                      className="font-mono font-medium text-sm"
+                    >
+                      {patient.vitals.temp}°<span className="text-[10px] text-neutral-600">F</span>
+                    </motion.span>
+                  </div>
                 </div>
                 
                 <div className="mt-auto relative z-10">
