@@ -9,12 +9,52 @@
 [![Vertex AI](https://img.shields.io/badge/AI-Gemini%201.5%20Pro-blue?logo=google)](https://cloud.google.com/vertex-ai)
 [![Firebase Auth](https://img.shields.io/badge/Auth-Firebase%20SMS%20OTP-orange?logo=firebase)](https://firebase.google.com)
 [![HIPAA](https://img.shields.io/badge/Compliance-HIPAA%20Audit%20Logging-green)](https://cloud.google.com/audit-logs)
+[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension%20Ready-yellow?logo=google-chrome&logoColor=white)](./chrome-extension)
 
 ---
 
 ## 🚀 Live Demo
 
 ### **[▶ Launch AuraCare on Google Cloud Run](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)**
+
+### **[🧩 Install Chrome Extension](./chrome-extension)** — Sidebar dashboard in any Chrome tab
+
+---
+
+## 🧩 Chrome Extension
+
+AuraCare ships with a **Chrome Side Panel Extension** that brings the full dashboard into any browser tab — no new windows, no switching apps.
+
+### Install in 30 seconds
+1. Open Chrome → go to **`chrome://extensions`**
+2. Enable **Developer mode** (top-right toggle)
+3. Click **"Load unpacked"**
+4. Select the **`chrome-extension/`** folder from this repo
+5. Click the AuraCare icon in your Chrome toolbar → sidebar opens instantly!
+
+### Extension Features
+
+| Feature | Details |
+|---|---|
+| 👥 **Patients Tab** | Live IoT vitals (HR, SpO₂, Temp) with flash animations every 4 seconds |
+| 🤖 **Agent Chat** | Full A2A routing simulation + 5 quick-send chips |
+| 🏠 **Family Chat** | AI Translator (Gemini) + 5 quick-send chips + named family members |
+| 🔔 **Push Notifications** | Simulated critical patient alerts as Chrome notifications |
+| ⚡ **Alert Banner** | Rotates AI anomaly alerts automatically every 8 seconds |
+| ↗ **Open Full App** | Direct link to the live Google Cloud Run deployment |
+
+### Extension Structure
+```
+chrome-extension/
+├── manifest.json     ← Manifest V3 config
+├── background.js     ← Service worker + push notifications
+├── sidepanel.html    ← Full dashboard UI (dark glassmorphic)
+├── sidepanel.js      ← Live vitals + Agent/Family Chat logic
+└── icons/
+    ├── icon16.png
+    ├── icon48.png
+    └── icon128.png
+```
 
 ---
 

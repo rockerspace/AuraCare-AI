@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuraCare Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #080c14;
+      color: #e5e5e5;
+      width: 380px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #0a1628 0%, #0d1f3c 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 0 14px rgba(16,185,129,0.4);
+    }
+
+    .logo-text { font-size: 16px; font-weight: 600; color: #fff; }
+    .logo-sub  { font-size: 10px; color: #10b981; font-weight: 400; letter-spacing: 0.05em; }
+
+    .live-badge {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 10px; color: #10b981; font-weight: 500;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.2);
+      padding: 4px 8px; border-radius: 20px;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #10b981;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ── Alert Banner ── */
+    .alert-banner {
+      background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(220,38,38,0.08));
+      border: 1px solid rgba(239,68,68,0.25);
+      border-left: 3px solid #ef4444;
+      margin: 10px 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .alert-title {
+      font-size: 11px; font-weight: 600; color: #ef4444;
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px;
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    .alert-body { font-size: 12px; color: #fca5a5; line-height: 1.5; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      padding: 8px 12px;
+      gap: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .tab {
+      flex: 1; padding: 7px 4px; font-size: 11px; font-weight: 500;
+      text-align: center; border-radius: 8px; cursor: pointer;
+      border: 1px solid transparent;
+      color: #6b7280; background: transparent;
+      transition: all 0.2s;
+    }
+
+    .tab.active {
+      background: rgba(16,185,129,0.15);
+      border-color: rgba(16,185,129,0.3);
+      color: #10b981;
+    }
+
+    .tab:hover:not(.active) { background: rgba(255,255,255,0.05); color: #d1d5db; }
+
+    /* ── Content panels ── */
+    .panel { display: none; padding: 10px 12px; animation: fadeIn 0.3s ease; }
+    .panel.active { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Section title ── */
+    .section-title {
+      font-size: 11px; font-weight: 600; color: #6b7280;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin: 10px 0 8px;
+    }
+
+    /* ── Patient Card ── */
+    .patient-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .patient-card:hover { border-color: rgba(255,255,255,0.15); }
+
+    .patient-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: #fff; flex-shrink: 0;
+    }
+
+    .patient-name  { font-size: 13px; font-weight: 500; color: #fff; }
+    .patient-age   { font-size: 11px; color: #9ca3af; }
+
+    .status-badge {
+      padding: 3px 8px; border-radius: 20px;
+      font-size: 10px; font-weight: 600;
+      margin-left: auto; flex-shrink: 0;
+    }
+
+    .status-critical { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); box-shadow: 0 0 8px rgba(239,68,68,0.2); }
+    .status-stable   { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.25); }
+    .status-review   { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+
+    /* ── Vitals grid ── */
+    .vitals-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      background: rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 8px;
+    }
+
+    .vital { text-align: center; }
+    .vital-label { font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .vital-value { font-size: 13px; font-weight: 600; font-family: monospace; color: #e5e5e5; }
+    .vital-unit  { font-size: 9px; color: #6b7280; }
+
+    .vital-value.updated {
+      animation: vitalFlash 0.5s ease;
+    }
+
+    @keyframes vitalFlash {
+      0% { color: #10b981; transform: scale(1.1); }
+      100% { color: #e5e5e5; transform: scale(1); }
+    }
+
+    /* ── Agent Chat ── */
+    .chat-messages {
+      height: 240px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 4px 0 8px;
+    }
+
+    .chat-messages::-webkit-scrollbar { width: 3px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    .msg-row { display: flex; gap: 8px; align-items: flex-start; }
+    .msg-row.user { flex-direction: row-reverse; }
+
+    .msg-avatar {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; color: #fff;
+    }
+
+    .msg-avatar.ai   { background: linear-gradient(135deg, #10b981, #06b6d4); }
+    .msg-avatar.user { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+
+    .msg-bubble {
+      max-width: 80%;
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .msg-bubble.ai {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #d1d5db;
+      border-radius: 12px 12px 12px 2px;
+    }
+
+    .msg-bubble.user {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border-radius: 12px 12px 2px 12px;
+    }
+
+    .msg-source {
+      font-size: 9px; color: #6b7280; font-family: monospace;
+      background: rgba(0,0,0,0.3); padding: 3px 6px;
+      border-radius: 5px; margin-top: 4px;
+    }
+
+    .msg-actions { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+
+    .action-btn {
+      padding: 3px 8px; font-size: 9px; font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px; cursor: pointer; color: #d1d5db;
+      transition: background 0.2s;
+    }
+
+    .action-btn:hover { background: rgba(255,255,255,0.12); }
+
+    /* ── Chips ── */
+    .chips-row {
+      display: flex; gap: 5px; overflow-x: auto;
+      padding: 6px 0; margin-bottom: 6px;
+    }
+
+    .chips-row::-webkit-scrollbar { display: none; }
+
+    .chip {
+      flex-shrink: 0; font-size: 10px;
+      padding: 4px 10px; border-radius: 20px; cursor: pointer;
+      border: 1px solid rgba(16,185,129,0.25);
+      background: rgba(16,185,129,0.08);
+      color: #6ee7b7; white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .chip:hover { background: rgba(16,185,129,0.18); }
+
+    .chip.purple {
+      border-color: rgba(139,92,246,0.25);
+      background: rgba(139,92,246,0.08);
+      color: #c4b5fd;
+    }
+
+    .chip.purple:hover { background: rgba(139,92,246,0.18); }
+
+    /* ── Chat Input ── */
+    .chat-input-row {
+      display: flex; gap: 6px; align-items: center; margin-top: 6px;
+    }
+
+    .chat-input {
+      flex: 1; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 8px 10px;
+      font-size: 11px; color: #fff; font-family: 'Outfit', sans-serif;
+      outline: none; transition: border-color 0.2s;
+    }
+
+    .chat-input::placeholder { color: #6b7280; }
+    .chat-input:focus { border-color: rgba(16,185,129,0.4); }
+
+    .send-btn {
+      width: 32px; height: 32px; border-radius: 8px; cursor: pointer; border: none;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+
+    .send-btn:hover { opacity: 0.85; }
+    .send-btn.green { background: linear-gradient(135deg, #10b981, #059669); }
+    .send-btn.purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+    .send-btn svg { width: 14px; height: 14px; }
+
+    /* ── Family Chat ── */
+    .family-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .online-members { display: flex; gap: -4px; }
+
+    .member-avatar {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid #080c14;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; font-weight: 700; color: #fff;
+      margin-left: -6px;
+    }
+
+    .member-avatar:first-child { margin-left: 0; }
+
+    /* ── Typing indicator ── */
+    .typing {
+      display: flex; gap: 3px; align-items: center;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      width: fit-content;
+    }
+
+    .typing span {
+      width: 5px; height: 5px; border-radius: 50%; background: #9ca3af;
+      animation: bounce 1s infinite;
+    }
+
+    .typing span:nth-child(2) { animation-delay: 0.15s; }
+    .typing span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-4px); }
+    }
+
+    /* ── Open App Button ── */
+    .open-app-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 10px;
+      background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.1));
+      border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 12px; cursor: pointer;
+      font-size: 12px; font-weight: 500; color: #10b981;
+      transition: background 0.2s;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .open-app-btn:hover { background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(6,182,212,0.18)); }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 10px;
+      color: #374151;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">AC</div>
+      <div>
+        <div class="logo-text">AuraCare</div>
+        <div class="logo-sub">Agentic AI · 2026 Finale</div>
+      </div>
+    </div>
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      LIVE
+    </div>
+  </div>
+
+  <!-- Alert Banner -->
+  <div class="alert-banner" id="alert-banner">
+    <div class="alert-title">⚡ Behavioral Anomaly Detected</div>
+    <div class="alert-body" id="alert-text">Jane Doe: Mobility index dropped 40% below historical baseline. AI Triage Agent activated.</div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('patients')">👥 Patients</button>
+    <button class="tab" onclick="switchTab('agent')">🤖 Agent</button>
+    <button class="tab" onclick="switchTab('family')">🏠 Family</button>
+  </div>
+
+  <!-- ── PATIENTS PANEL ── -->
+  <div class="panel active" id="panel-patients">
+    <div class="section-title">Live IoT Monitoring</div>
+
+    <!-- Jane Doe -->
+    <div class="patient-card">
+      <div class="patient-header">
+        <div class="avatar">JD</div>
+        <div>
+          <div class="patient-name">Jane Doe</div>
+          <div class="patient-age">Age 82 · Just now</div>
+        </div>
+        <span class="status-badge status-critical" id="status-p1">Critical</span>
+      </div>
+      <div class="vitals-grid">
+        <div class="vital">
+          <div class="vital-label">Heart</div>
+          <div class="vital-value" id="hr-p1">110</div>
+          <div class="vital-unit">bpm</div>
+        </div>
+        <div class="vital">
+          <div class="vital-label">SpO₂</div>
+          <div class="vital-value" id="o2-p1">89</div>
+          <div class="vital-unit">%</div>
+        </div>
+        <div class="vital">
+          <div class="vital-label">Temp</div>
+          <div class="vital-value" id="temp-p1">101.2</div>
+          <div class="vital-unit">°F</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Robert Smith -->
+    <div class="patient-card">
+      <div class="patient-header">
+        <div class="avatar">RS</div>
+        <div>
+          <div class="patient-name">Robert Smith</div>
+          <div class="patient-age">Age 76 · 12 mins ago</div>
+        </div>
+        <span class="status-badge status-stable" id="status-p2">Stable</span>
+      </div>
+      <div class="vitals-grid">
+        <div class="vital">
+          <div class="vital-label">Heart</div>
+          <div class="vital-value" id="hr-p2">72</div>
+          <div class="vital-unit">bpm</div>
+        </div>
+        <div class="vital">
+          <div class="vital-label">SpO₂</div>
+          <div class="vital-value" id="o2-p2">98</div>
+          <div class="vital-unit">%</div>
+        </div>
+        <div class="vital">
+          <div class="vital-label">Temp</div>
+          <div class="vital-value" id="temp-p2">98.6</div>
+          <div class="vital-unit">°F</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mary Johnson -->
+    <div class="patient-card">
+      <div class="patient-header">
+        <div class="avatar">MJ</div>
+        <div>
+          <div class="patient-name">Mary Johnson</div>
+          <div class="patient-age">Age 88 · 15 mins ago</div>
+        </div>
+        <span class="status-badge status-review" id="status-p3">Review</span>
+      </div>
+      <div class="vitals-grid">
+        <div class="vital">
+          <div class="vital-label">Heart</div>
+          <div class="vital-value" id="hr-p3">85</div>
+          <div class="vital-unit">bpm</div>
+        </div>
+        <div class="vital">
+          <div class="vital-label">SpO₂</div>
+          <div class="vital-value" id="o2-p3">95</div>
+          <div class="vital-unit">%</div>
+        </div>
+        <div class="vital">
+          <div class="vital-label">Temp</div>
+          <div class="vital-value" id="temp-p3">99.1</div>
+          <div class="vital-unit">°F</div>
+        </div>
+      </div>
+    </div>
+
+    <a class="open-app-btn" href="https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app" target="_blank">
+      ↗ Open Full AuraCare Dashboard
+    </a>
+  </div>
+
+  <!-- ── AGENT CHAT PANEL ── -->
+  <div class="panel" id="panel-agent">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#10b981,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;">AI</div>
+      <div>
+        <div style="font-size:12px;font-weight:500;color:#fff;">Medical Triage Agent</div>
+        <div style="font-size:10px;color:#10b981;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;background:#10b981;border-radius:50%;display:inline-block;"></span>Online · ADK + A2A</div>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="agent-messages">
+      <div class="msg-row">
+        <div class="msg-avatar ai">AI</div>
+        <div>
+          <div class="msg-bubble ai">Hello Dr. Smith. I am the Medical Triage Agent powered by Gemini 1.5 Pro via ADK. How can I assist you?</div>
+          <div class="msg-source">Source: ADK / A2A Network</div>
+          <div class="msg-actions">
+            <button class="action-btn">View Dashboard</button>
+            <button class="action-btn">Run Triage</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chips -->
+    <div class="chips-row">
+      <div class="chip" onclick="sendAgentChip('Are her vitals stable right now?', 'I have cross-referenced the live IoT ingestion streams. Her vitals remain stable with no critical deviations.', 'Gemini 1.5 Pro + BigQuery', ['Acknowledge','Escalate'])">🩺 Vitals</div>
+      <div class="chip" onclick="sendAgentChip('Check haptic sensor report', 'The micro-tremor analysis from the Edge node indicates normal gait patterns, ruling out immediate fall risk.', 'Edge Agent + MCP', ['View Graph','Log Note'])">📡 Haptic</div>
+      <div class="chip" onclick="sendAgentChip('Check the living room camera feed', 'The Vision Agent confirms she is resting comfortably in the living room. No hazards detected.', 'Vision Agent (A2A)', ['View Frame','Dismiss'])">📷 Camera</div>
+      <div class="chip" onclick="sendAgentChip('Why did the alert trigger?', 'Step count dropped 40% below the 30-day baseline. Qdrant vectors and Nano Banana data confirm she went to bed 2 hours earlier than usual.', 'Gemini 1.5 Pro + Nano Banana', ['View Vectors','Dismiss'])">⚠️ Alert</div>
+      <div class="chip" onclick="sendAgentChip('Run full AI triage on Jane Doe', 'Full Triage: HR 89bpm (elevated), SpO₂ 97% (normal), Mobility Index Low (-40%). Recommend initiating Caregiver Review Protocol.', 'Medical Triage Agent — Gemini 1.5 Pro', ['Initiate Protocol','Export'])">🧠 Triage</div>
+    </div>
+
+    <div class="chat-input-row">
+      <input class="chat-input" id="agent-input" placeholder="Ask the Triage Agent..." onkeydown="if(event.key==='Enter')sendAgentMsg()" />
+      <button class="send-btn green" onclick="sendAgentMsg()">
+        <svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── FAMILY CHAT PANEL ── -->
+  <div class="panel" id="panel-family">
+    <div class="family-header">
+      <div>
+        <div style="font-size:12px;font-weight:500;color:#fff;">Family Collaboration Hub</div>
+        <div style="font-size:10px;color:#a78bfa;">● Sarah, Michael & Priya online</div>
+      </div>
+      <div class="online-members">
+        <div class="member-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">S</div>
+        <div class="member-avatar" style="background:linear-gradient(135deg,#3b82f6,#6366f1);">M</div>
+        <div class="member-avatar" style="background:linear-gradient(135deg,#f97316,#ef4444);">P</div>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="family-messages">
+      <div class="msg-row">
+        <div class="msg-avatar ai" style="background:linear-gradient(135deg,#6b7280,#4b5563);">MD</div>
+        <div>
+          <div style="font-size:9px;color:#9ca3af;margin-bottom:2px;">Dr. Smith (Caregiver)</div>
+          <div class="msg-bubble ai">Good morning. Jane's gait telemetry shows a minor deviation today. Her baseline vitals remain stable.</div>
+        </div>
+      </div>
+      <div class="msg-row">
+        <div class="msg-avatar ai">AI</div>
+        <div>
+          <div style="font-size:9px;color:#10b981;margin-bottom:2px;">AI Translator (Gemini)</div>
+          <div class="msg-bubble ai" style="border-color:rgba(16,185,129,0.2);background:rgba(16,185,129,0.08);color:#a7f3d0;">
+            <div style="font-size:9px;font-weight:600;color:#10b981;margin-bottom:2px;">✨ AI Translation</div>
+            Jane is walking slightly differently today, but her heart rate and vitals are completely normal. No immediate concern.
+          </div>
+        </div>
+      </div>
+      <div class="msg-row user">
+        <div class="msg-avatar user" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">S</div>
+        <div>
+          <div style="font-size:9px;color:#9ca3af;margin-bottom:2px;text-align:right;">Sarah (Daughter)</div>
+          <div class="msg-bubble user">Thank you! Can we visit her at 4 PM today?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick chips -->
+    <div class="chips-row">
+      <div class="chip purple" onclick="sendFamilyMsg('How is Jane doing today?')">💬 Jane today?</div>
+      <div class="chip purple" onclick="sendFamilyMsg('Any changes in her medication?')">💊 Medication?</div>
+      <div class="chip purple" onclick="sendFamilyMsg('Can we visit this weekend?')">🏡 Visit?</div>
+      <div class="chip purple" onclick="sendFamilyMsg('Did she sleep well last night?')">😴 Sleep?</div>
+      <div class="chip purple" onclick="sendFamilyMsg('Is the mobility issue improving?')">🦾 Mobility?</div>
+    </div>
+
+    <div class="chat-input-row">
+      <input class="chat-input" id="family-input" placeholder="Message as Dr. Smith..." onkeydown="if(event.key==='Enter')sendFamilyMsg()" style="border-color:rgba(139,92,246,0.2);" onfocus="this.style.borderColor='rgba(139,92,246,0.4)'" onblur="this.style.borderColor='rgba(139,92,246,0.2)'" />
+      <button class="send-btn purple" onclick="sendFamilyMsg()">
+        <svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="footer">🔒 HIPAA Compliant · Powered by Vertex AI + Google Cloud Run</div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

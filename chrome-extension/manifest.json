@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "AuraCare — AI Caregiver Dashboard",
+  "version": "1.0.0",
+  "description": "Real-time proactive elderly care dashboard powered by Gemini AI, ADK, MCP and A2A agents. Built for the Agentic AI Builder Series 2026 Finale.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "AuraCare Dashboard"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [],
+  "web_accessible_resources": []
+}
