@@ -18,6 +18,15 @@ AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to dete
 - **Family Chat & Collaboration:** Interactive chat module simulating intelligent "Family Member" responders to assist caregivers in medical translations.
 - **Google Cloud Run Ready**: Containerized via Docker and configured for `cloudbuild.yaml` CI/CD to ensure enterprise-grade backend scalability.
 
+## 🎤 Demo: What to Ask the Agent Chat
+During the Agentic AI Builder Series Finale, use these prompts in the **Agent Chat** tab to trigger dynamic multi-agent A2A workflows:
+1. **Trigger the Edge Agent (Haptics):** Ask *"What do the haptic wearable sensors say about Jane's mobility today?"* 
+   *(Simulates pulling high-frequency micro-tremor graphs and gait analysis from edge nodes.)*
+2. **Trigger the Vision Agent (Multimodal):** Ask *"Can you check the living room camera video feed?"*
+   *(Simulates A2A escalation to a Vision Agent utilizing Gemini 1.5 Pro to parse raw video streams.)*
+3. **Trigger the Triage Agent (Cross-Reference):** Ask *"Why did the behavioral anomaly alert trigger 10 minutes ago?"*
+   *(Simulates querying Qdrant vectors and processing raw BigQuery IoT streams through the Nano Banana tool.)*
+
 ## Documentation
 *   [Product Requirements Document (PRD)](./docs/PRD.md)
 *   [Architecture Overview](./docs/ARCHITECTURE.md)

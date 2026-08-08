@@ -9,8 +9,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('Dashboard');
-  const [messages, setMessages] = useState<{role: 'user' | 'assistant', text: string}[]>([]);
-  const [chatInput, setChatInput] = useState('');
   const [heartRate, setHeartRate] = useState(72);
   const [lastSynced, setLastSynced] = useState('Just now');
   const [isRefreshing, setIsRefreshing] = useState(false);

@@ -20,12 +20,13 @@ export class VectorSearchService {
       });
       
       const snapshot = await query.get();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const results = snapshot.docs.map((doc: any) => doc.data());
       
       console.log(`[Firestore Vector] Found ${results.length} similar historical patterns`);
       return results;
-    } catch (error: any) {
-      console.warn("[Firestore Vector] Index not ready or error searching patterns:", error.message);
+    } catch (error: unknown) {
+      console.warn("[Firestore Vector] Index not ready or error searching patterns:", (error as Error).message);
       console.warn("[Firestore Vector] Falling back to mock historical baseline until index builds...");
       // Fallback response so the demo doesn't crash while Google Cloud builds the index
       return [
