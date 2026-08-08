@@ -1,101 +1,106 @@
 # 🌟 AuraCare — Proactive Elderly Care, Powered by Agentic AI
 
-> **Built for the Agentic AI Builder Series 2026 Finale**
-> A production-grade, real-time AI Agent dashboard that monitors elderly patients using IoT sensors, haptic wearables, multi-agent reasoning, and multimodal AI — all running on Google Cloud.
+> **Built for the Agentic AI Builder Series 2026 Finale**  
+> A production-grade, real-time AI Agent dashboard monitoring elderly patients using IoT sensors, haptic wearables, multi-agent reasoning (ADK + A2A + MCP), and Google Vertex AI — deployed on Google Cloud Run.
 
 [![CI](https://github.com/rockerspace/AI-Agent-Series-Builder-Finale-2026/actions/workflows/ci.yml/badge.svg)](https://github.com/rockerspace/AI-Agent-Series-Builder-Finale-2026/actions)
-[![Google Cloud Run](https://img.shields.io/badge/Deployed%20on-Google%20Cloud%20Run-4285F4?logo=google-cloud)](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)
-[![Next.js](https://img.shields.io/badge/Next.js-16.3-black?logo=next.js)](https://nextjs.org)
-[![Firebase](https://img.shields.io/badge/Auth-Firebase-orange?logo=firebase)](https://firebase.google.com)
-[![Vertex AI](https://img.shields.io/badge/AI-Vertex%20AI%20Gemini%201.5%20Pro-blue?logo=google)](https://cloud.google.com/vertex-ai)
+[![Deployed on Google Cloud Run](https://img.shields.io/badge/Live-Google%20Cloud%20Run-4285F4?logo=google-cloud&logoColor=white)](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16.3%20Turbopack-black?logo=next.js)](https://nextjs.org)
+[![Vertex AI](https://img.shields.io/badge/AI-Gemini%201.5%20Pro-blue?logo=google)](https://cloud.google.com/vertex-ai)
+[![Firebase Auth](https://img.shields.io/badge/Auth-Firebase%20SMS%20OTP-orange?logo=firebase)](https://firebase.google.com)
+[![HIPAA](https://img.shields.io/badge/Compliance-HIPAA%20Audit%20Logging-green)](https://cloud.google.com/audit-logs)
 
 ---
 
 ## 🚀 Live Demo
 
-**[▶ Launch AuraCare on Google Cloud Run](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)**
+### **[▶ Launch AuraCare on Google Cloud Run](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)**
 
 ---
 
 ## 📌 What Is AuraCare?
 
-AuraCare is an AI-driven **proactive caregiving platform** for elderly patients. Rather than reacting to emergencies, AuraCare's agent network monitors **subtle, real-time deviations** in daily routines — mobility, sleep, vitals, sentiment — and alerts caregivers before a crisis occurs.
+AuraCare is a **proactive, AI-driven caregiving platform** for elderly patients. Rather than reacting to emergencies, AuraCare's multi-agent network monitors **subtle real-time deviations** in daily routines — mobility, sleep, vitals, sentiment — and alerts caregivers before a crisis occurs.
 
-The system is designed around a fully decoupled **Agentic AI Architecture** using:
-- **ADK** (Agent Development Kit) for agent scaffolding
-- **MCP** (Model Context Protocol) for contextual data fetching
-- **A2A** (Agent-to-Agent) protocols for multi-agent escalation
-- **Google Vertex AI (Gemini 1.5 Pro)** for clinical reasoning
+The platform is built around a fully decoupled **Agentic AI Architecture**:
+
+| Protocol | Role |
+|---|---|
+| **ADK** (Agent Development Kit) | Agent scaffolding and lifecycle management |
+| **MCP** (Model Context Protocol) | Secure real-time patient context fetching |
+| **A2A** (Agent-to-Agent) | Multi-agent escalation and coordination |
+| **Vertex AI — Gemini 1.5 Pro** | Clinical reasoning, multimodal analysis, NLP |
 
 ---
 
-## ✨ Key Features
+## ✨ Feature Highlights
 
-### 🧠 Agentic AI Intelligence
-| Feature | Technology |
-|---|---|
-| Medical Triage Agent | Vertex AI Gemini 1.5 Pro via ADK |
-| A2A Network Routing | Agent-to-Agent escalation protocol |
-| MCP Context Fetching | Model Context Protocol for real-time patient data |
-| Vision Agent | Gemini 1.5 Pro multimodal camera analysis |
-| Edge Agent | Haptic sensor micro-tremor processing |
-| Behavioral Analysis | Mastra + Qdrant vector similarity search |
+### 🤖 Agent Chat — Live Multi-Agent Simulation
 
-### 📡 Real-Time IoT Streaming
-- **Live Patient Vitals** — Heart Rate (bpm), SpO₂ (%), Temperature (°F) streamed live every 4 seconds with animated Framer Motion updates
-- **BigQuery Integration** — All telemetry ingested via production-grade Next.js webhook (`/api/telemetry/ingest`) into Google BigQuery
-- **Behavioral Anomaly Detection** — AI flags mobility drops, sleep deviations, and irregular patterns vs. 30-day historical baselines
+A fully interactive **Medical Triage Agent** chat powered by a simulated ADK + A2A network. The UI dynamically routes your prompt through a visible pipeline before returning a context-aware response.
+
+**🟢 Quick-Send Chips — Tap These During Your Demo:**
+
+| Chip | Agent Triggered | Simulated Response |
+|---|---|---|
+| 🩺 **Check vitals now** | Gemini 1.5 Pro + BigQuery | Cross-references live IoT ingestion streams |
+| 📡 **Haptic sensor report** | Edge Agent + MCP | High-frequency micro-tremor gait analysis |
+| 📷 **Camera feed** | Vision Agent (A2A) | Gemini multimodal room analysis |
+| ⚠️ **Why did alert trigger?** | Gemini 1.5 Pro + Nano Banana | Qdrant vector similarity query + explanation |
+| 💤 **Sleep analysis** | BigQuery + ADK | Sleep log vs 30-day baseline comparison |
+| 🧠 **Run AI triage** | Medical Triage Agent | Full vitals + mobility triage with recommendation |
+
+Each chip triggers a **visible 2-step A2A pipeline**: "Routing query..." → Full contextual AI response with action buttons.
+
+---
+
+### 🏠 Family Collaboration Hub — Smart AI Translator
+
+A HIPAA-secure family group chat with **3 named family members** (Sarah/Daughter, Michael/Son, Priya/Niece) and an embedded Gemini AI translator that converts medical language into plain, reassuring language for the family.
+
+**🟣 Quick-Send Chips — Tap These During Your Demo:**
+
+| Message | AI Translation Topic | Family Reply Style |
+|---|---|---|
+| 💬 **How is Jane doing today?** | General health summary | Warm acknowledgement |
+| 💊 **Any changes in her medication?** | Medication plan update | Pharmacy coordination |
+| 🏡 **Can we visit her this weekend?** | Visit clearance | Weekend schedule coordination |
+| 🍽️ **Was she eating properly?** | Appetite & nutrition tracking | Concerned follow-up |
+| 😴 **Did she sleep well last night?** | AI sleep sensor data summary | Time awareness response |
+| 🦾 **Is the mobility issue improving?** | Haptic gait analysis | Medical curiosity response |
+
+Features: animated **typing indicator** (· · ·), animated **Framer Motion message bubbles**, and **context-aware replies** per topic.
+
+---
+
+### 📡 Patients — Live IoT Vitals Streaming
+
+Every patient card shows **real-time simulated IoT telemetry** updating every 4 seconds:
+
+| Metric | Source | Behavior |
+|---|---|---|
+| ❤️ Heart Rate (bpm) | Haptic wearable | Fluctuates ±2 bpm per cycle, pulses red on change |
+| 🫧 SpO₂ (%) | Pulse oximeter sensor | Stays 80–100%, subtle fade animation |
+| 🌡️ Temperature (°F) | Smart patch | Fluctuates ±0.2°F per cycle |
+| 📋 Status badge | AI risk engine | Robert Smith randomly toggles Stable ↔ Review |
+
+---
 
 ### 🔐 Security & Identity
-- **Firebase SMS OTP Auth** — Bulletproof phone verification using `@firebase/auth` with invisible reCAPTCHA. DOM-node-level reset prevents "already rendered" errors on retries.
+
+- **Firebase SMS OTP** — Bulletproof phone verification with bulletproof reCAPTCHA reset (DOM-node-level replacement on retry)
 - **HIPAA Audit Logging** — All PHI access logged to GCP Cloud Audit Logs
-- **DID (Decentralized Identity)** — Enkrypt wallet integration for physician identity (`did:ethr:...`)
-
-### 🏠 Family Collaboration Hub
-- **3 Named Family Members** — Sarah (Daughter), Michael (Son), Priya (Niece) with unique colored avatars
-- **AI Translator (Gemini)** — Automatically converts medical jargon into plain, compassionate language for families
-- **Smart Contextual Replies** — AI understands conversation topic (medication / mobility / sleep / visits) and responds appropriately
-- **Live Typing Indicator** — Animated `· · ·` indicator while AI processes
-- **Quick-Send Chips** — One-tap suggestion chips for fast demo interaction
-
-### 🤖 Agent Chat (Multi-Agent Simulation)
-- Dynamic A2A routing pipeline with a live "Routing query..." status animation
-- Context-aware responses: ask about haptics → Edge Agent; ask about camera → Vision Agent; anything else → Triage Agent
-- Action buttons per response (View Micro-Tremor Graph, Dismiss Alert, Escalate, etc.)
-
-### ☁️ Google Cloud Deployment
-- Containerized via **Docker** (multi-stage build: deps → builder → runner)
-- Deployed on **Google Cloud Run** (fully serverless, auto-scaling)
-- CI via **GitHub Actions** (lint + TypeScript type-check on every push)
-- Automated **Google Cloud Build** trigger on push to `main`
+- **DID (Decentralized Identity)** — Enkrypt wallet integration (`did:ethr:...`)
 
 ---
 
-## 🎤 Demo Script — Agentic AI Builder Finale 2026
+### ☁️ Infrastructure
 
-### Agent Chat — Try These Prompts
-
-These trigger different multi-agent workflows in real-time:
-
-| Prompt | Agent Triggered | Demo Effect |
-|---|---|---|
-| `What do the haptic wearable sensors say about Jane's mobility?` | **Edge Agent + MCP** | Simulates pulling high-frequency micro-tremor graphs |
-| `Can you check the living room camera video feed?` | **Vision Agent (A2A)** | Simulates Gemini 1.5 Pro multimodal room analysis |
-| `Why did the behavioral anomaly alert trigger 10 minutes ago?` | **Triage Agent + BigQuery** | Simulates Qdrant vector query + Nano Banana IoT processing |
-| `Are her vitals stable right now?` | **Gemini 1.5 Pro** | Cross-references live IoT ingestion streams |
-
-### Family Chat — Quick-Send Chips
-
-Tap these in the Family Chat to trigger smart AI translations and contextual family replies:
-
-| Message | AI Translation Topic |
-|---|---|
-| `How is Jane doing today?` | General health status update |
-| `Any changes in her medication?` | Medication plan explanation |
-| `Can we visit her this weekend?` | Visit coordination |
-| `Was she eating properly?` | Appetite & nutrition tracking |
-| `Did she sleep well last night?` | AI sleep sensor summary |
-| `Is the mobility issue improving?` | Haptic gait analysis summary |
+- **Google Cloud Run** — Fully serverless, auto-scaling containerized deployment
+- **Multi-stage Docker Build** — `deps → builder → runner` pattern for minimal image size
+- **GitHub Actions CI** — Lint + TypeScript type-check on every push to `main`
+- **Google Cloud Build** — Auto-deploys on push with optional `.env.local` injection
+- **Zod Environment Validation** — Graceful defaults prevent CI/CD crashes
 
 ---
 
@@ -105,34 +110,35 @@ Tap these in the Family Chat to trigger smart AI translations and contextual fam
 graph TD
     subgraph IoT & Edge Devices
         S[Haptic Wearables / IoT Sensors] -->|Real-Time Telemetry POST| Webhook[Next.js API Webhook]
-        Cam[Smart Camera] -->|Audio/Video Stream| VisionAgent[Vision Agent]
+        Cam[Smart Camera] -->|Video Stream| VisionAgent[Vision Agent]
     end
 
     subgraph Security & Auth
         Auth[Firebase SMS OTP] -->|Verification| App[Next.js App]
-        App -->|HIPAA Logging| Audit[GCP Cloud Audit Logs]
+        App -->|HIPAA PHI Logging| Audit[GCP Cloud Audit Logs]
     end
 
     subgraph Data Layer
-        Webhook -->|Auth Token Check| FirestoreDevices[(Firestore Devices DB)]
+        Webhook -->|Token Auth| FirestoreDevices[(Firestore Devices DB)]
         App -->|Stream Metrics| BQ[(Google BigQuery)]
-        App -->|Fetch Vectors| FirestoreVec[(Firestore Vector Search)]
+        App -->|KNN Search| FirestoreVec[(Firestore Vector Search)]
     end
 
-    subgraph AI Agent Network
-        GADK[Behavioral Agent - ADK] <-->|MCP Context Fetch| MCP[MCP Server]
-        GADK <-->|KNN Similarity| FirestoreVec
+    subgraph AI Agent Network - ADK + A2A + MCP
+        EdgeAgent[Edge Agent] -->|Micro-tremor data| MCP[MCP Server]
+        GADK[Behavioral Agent - ADK] <-->|Fetch Context| MCP
+        GADK <-->|Cosine Similarity| FirestoreVec
         GADK <-->|A2A Escalation| Triage[Medical Triage Agent]
         Triage <-->|Gemini 1.5 Pro| VertexAI[Google Vertex AI]
         VisionAgent <-->|Multimodal| VertexAI
     end
 
-    subgraph Family Collaboration
+    subgraph Collaboration
         FamilyHub[Family Chat Hub] <-->|AI Translator| VertexAI
     end
 
-    subgraph Client
-        Dashboard[Caregiver Dashboard] <-->|Real-time| App
+    subgraph Caregiver Dashboard
+        Dashboard[Next.js 16 UI] <-->|Real-time| App
     end
 ```
 
@@ -143,15 +149,16 @@ graph TD
 | Layer | Technology |
 |---|---|
 | **Frontend** | Next.js 16.3 (Turbopack), React, Tailwind CSS, Framer Motion |
-| **Auth** | Google Identity Platform (Firebase Auth — SMS OTP) |
+| **Auth** | Google Identity Platform — Firebase Auth (SMS OTP + invisible reCAPTCHA) |
 | **AI Engine** | Google Vertex AI (Gemini 1.5 Pro) |
-| **Agent Framework** | ADK, MCP, A2A Protocols |
+| **Agent Framework** | ADK (Agent Development Kit), MCP, A2A Protocols |
 | **Data Warehouse** | Google BigQuery |
-| **Vector Search** | Firestore Vector Search (KNN / COSINE) |
+| **Vector Search** | Firestore Vector Search (KNN / COSINE similarity) |
 | **IoT Ingestion** | Next.js API Webhook + Firestore Device Registry |
-| **Infrastructure** | Google Cloud Run (Serverless Docker Container) |
+| **Infrastructure** | Google Cloud Run (Serverless Docker) |
 | **CI/CD** | GitHub Actions + Google Cloud Build |
 | **Identity (Web3)** | Enkrypt DID (`did:ethr:...`) |
+| **Validation** | Zod (type-safe environment schema) |
 
 ---
 
@@ -159,8 +166,8 @@ graph TD
 
 ### Prerequisites
 - Node.js 20+
-- A Firebase project with Phone Auth enabled
-- A Google Cloud project with Vertex AI, BigQuery, and Firestore enabled
+- Firebase project with **Phone Auth** enabled
+- Google Cloud project with **Vertex AI, BigQuery, Firestore** APIs enabled
 
 ### Setup
 
@@ -170,29 +177,25 @@ cd AI-Agent-Series-Builder-Finale-2026
 npm install
 ```
 
-Create a `.env.local` file:
+Create a `.env.local` file in the project root:
+
 ```env
+# Firebase (Client-side)
 NEXT_PUBLIC_FIREBASE_API_KEY="your-api-key"
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-domain.firebaseapp.com"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
 NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-project-id"
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-bucket.appspot.com"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="your-sender-id"
 NEXT_PUBLIC_FIREBASE_APP_ID="your-app-id"
+
+# Google Cloud (Server-side)
 GCP_PROJECT_ID="your-gcp-project-id"
 GCP_REGION="us-central1"
 ```
 
 ```bash
 npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
-### Production Build
-
-```bash
-npm run build
-npm start
+# Open http://localhost:3000
 ```
 
 ---
@@ -200,15 +203,16 @@ npm start
 ## ☁️ Google Cloud Run Deployment
 
 ```bash
+# One-command deploy from source
 gcloud run deploy auracare-app \
   --source . \
   --region us-central1 \
   --platform managed \
   --allow-unauthenticated \
-  --set-env-vars "GCP_PROJECT_ID=your-project,GCP_REGION=us-central1"
+  --set-env-vars "GCP_PROJECT_ID=your-project-id,GCP_REGION=us-central1"
 ```
 
-> **Note:** The `Dockerfile` safely handles missing `.env.local` during automated Cloud Build triggers using a conditional copy pattern.
+> **Note:** The `Dockerfile` uses a safe optional `cp` pattern for `.env.local` — automated Cloud Build triggers won't fail if the file is absent.
 
 ---
 
@@ -218,29 +222,28 @@ gcloud run deploy auracare-app \
 auracare-app/
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx          # Main dashboard (all tabs, real-time simulation)
-│   │   ├── layout.tsx        # Root layout with meta tags and fonts
-│   │   ├── actions.ts        # Server actions: BigQuery, Vertex AI, telemetry
+│   │   ├── page.tsx              # Main dashboard: all tabs, IoT simulation, Agent & Family Chat
+│   │   ├── layout.tsx            # Root layout: meta tags, fonts
+│   │   ├── actions.ts            # Server actions: BigQuery, Vertex AI triage, telemetry
 │   │   └── api/
-│   │       └── telemetry/
-│   │           └── ingest/   # IoT webhook endpoint
+│   │       └── telemetry/ingest/ # IoT webhook endpoint (device auth + BigQuery stream)
 │   ├── lib/
-│   │   ├── env.ts            # Zod-validated environment variables
+│   │   ├── env.ts                # Zod-validated env schema with safe defaults
 │   │   └── gcp/
-│   │       ├── firebase.ts        # Firebase Auth client
-│   │       ├── firestore-admin.ts # Admin SDK for server-side Firestore
-│   │       └── vector-search.ts   # Firestore KNN vector search
+│   │       ├── firebase.ts           # Firebase Auth client
+│   │       ├── firestore-admin.ts    # Admin SDK (server-side Firestore)
+│   │       └── vector-search.ts      # Firestore KNN vector similarity search
 │   └── agents/
-│       └── gemini-multi-agent.ts  # Vertex AI multi-agent orchestration
+│       └── gemini-multi-agent.ts     # Vertex AI multi-agent orchestration
 ├── docs/
-│   ├── PRD.md            # Product Requirements Document
-│   ├── ARCHITECTURE.md   # Architecture deep-dive
-│   └── AGENTS.md         # Agent protocols and A2A spec
+│   ├── PRD.md                    # Product Requirements Document
+│   ├── ARCHITECTURE.md           # Architecture deep-dive
+│   └── AGENTS.md                 # Agent protocols (A2A / MCP / ADK spec)
 ├── .github/workflows/
-│   └── ci.yml            # GitHub Actions (lint + type-check)
-├── Dockerfile            # Multi-stage production Docker build
-├── .gcloudignore         # Ensures .env.local is included in Cloud Build
-└── cloudbuild.yaml       # Google Cloud Build trigger config
+│   └── ci.yml                    # GitHub Actions CI (lint + TypeScript)
+├── Dockerfile                    # Multi-stage production Docker build
+├── .gcloudignore                 # Ensures .env.local uploads in Cloud Build
+└── cloudbuild.yaml               # Google Cloud Build trigger config
 ```
 
 ---
@@ -255,8 +258,10 @@ auracare-app/
 
 ## 🏆 About This Project
 
-AuraCare was built end-to-end as a showcase for the **Agentic AI Builder Series 2026 Finale**, demonstrating how a coordinated network of specialized AI agents — connected via A2A protocols, grounded by MCP-served context, and powered by Vertex AI — can transform reactive healthcare into **proactive, personalized, always-on caregiving** at scale.
+AuraCare was built end-to-end as a showcase for the **Agentic AI Builder Series 2026 Finale**, demonstrating how a coordinated network of specialized AI agents — connected via **A2A protocols**, grounded by **MCP-served context**, and powered by **Vertex AI (Gemini 1.5 Pro)** — can transform reactive healthcare into **proactive, personalized, always-on caregiving** at scale.
+
+The platform also demonstrates **scalability through Haptic Wearable sensors**: high-frequency micro-tremor and gait data is processed at the edge before being escalated to the cloud agent network, enabling fall-risk detection and behavioral anomaly identification without requiring constant camera monitoring.
 
 ---
 
-*Built with ❤️ using Google Cloud, Vertex AI, Firebase, and Next.js*
+*Built with ❤️ using Google Cloud · Vertex AI · Firebase · Next.js · ADK · MCP · A2A*
