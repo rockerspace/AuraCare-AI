@@ -101,19 +101,37 @@ export default function Home() {
     if (e) e.preventDefault();
     if (!familyChatInput.trim()) return;
     
-    // Add the user's message
-    const newMessage = { role: 'family', author: 'You', text: familyChatInput };
+    const newMsg = familyChatInput;
+    // The user of this dashboard is the Caregiver (Dr. Smith)
+    const newMessage = { role: 'md', author: 'Dr. Smith (Caregiver)', text: newMsg };
     setFamilyMessages(prev => [...prev, newMessage]);
     setFamilyChatInput('');
     
-    // Auto-Responder simulation for Family Member
+    // Auto-Responder simulation: AI Translates, then Family Replies
     setTimeout(() => {
       setFamilyMessages(prev => [...prev, { 
-        role: 'family', 
-        author: 'Family Member', 
-        text: "Got it! Thanks for the update. We'll be there soon." 
+        role: 'ai', 
+        author: 'AI Translator (Gemini)', 
+        text: `The doctor says: ${newMsg.includes('medical') || newMsg.length > 20 ? 'Everything is proceeding normally, but we are keeping a close watch on the metrics.' : newMsg}`,
+        isTranslation: true
       }]);
-    }, 2000);
+
+      setTimeout(() => {
+        const replies = [
+          "Got it, thank you for the update!",
+          "That makes sense, we appreciate you letting us know.",
+          "We will keep that in mind.",
+          "Understood. Please let us know if anything changes."
+        ];
+        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+        
+        setFamilyMessages(prev => [...prev, { 
+          role: 'family', 
+          author: 'Family Member', 
+          text: randomReply 
+        }]);
+      }, 2000);
+    }, 1500);
   };
 
   const handleSendOTP = async (e: React.FormEvent) => {
