@@ -258,7 +258,7 @@ auracare-app/
 
 ## 🏆 About This Project
 
-AuraCare was built end-to-end as a showcase for the **Agentic AI Builder Series 2026 Finale**, demonstrating how a coordinated network of specialized AI agents — connected via **A2A protocols**, grounded by **MCP-served context**, and powered by **Vertex AI (Gemini 1.5 Pro)** — can transform reactive healthcare into **proactive, personalized, always-on caregiving** at scale.
+AuraCare was built end-to-end demonstrating how a coordinated network of specialized AI agents — connected via **A2A protocols**, grounded by **MCP-served context**, and powered by **Vertex AI (Gemini 1.5 Pro)** — can transform reactive healthcare into **proactive, personalized, always-on caregiving** at scale.
 
 The platform also demonstrates **scalability through Haptic Wearable sensors**: high-frequency micro-tremor and gait data is processed at the edge before being escalated to the cloud agent network, enabling fall-risk detection and behavioral anomaly identification without requiring constant camera monitoring.
 
