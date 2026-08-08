@@ -132,37 +132,86 @@ export default function Home() {
     }, 500);
   };
 
-  const handleFamilyChatSubmit = (e?: React.FormEvent) => {
+  const [familyTyping, setFamilyTyping] = useState(false);
+
+  const familyMembers = [
+    { name: 'Sarah (Daughter)', avatar: 'S', color: 'from-purple-400 to-pink-500' },
+    { name: 'Michael (Son)', avatar: 'M', color: 'from-blue-400 to-indigo-500' },
+    { name: 'Priya (Niece)', avatar: 'P', color: 'from-orange-400 to-rose-500' },
+  ];
+
+  const familySuggestions = [
+    "How is Jane doing today?",
+    "Any changes in her medication?",
+    "Can we visit her this weekend?",
+    "Was she eating properly?",
+    "Did she sleep well last night?",
+    "Is the mobility issue improving?",
+  ];
+
+  const handleFamilyChatSubmit = (e?: React.FormEvent, prefill?: string) => {
     if (e) e.preventDefault();
-    if (!familyChatInput.trim()) return;
+    const msg = prefill || familyChatInput;
+    if (!msg.trim()) return;
     
-    const newMsg = familyChatInput;
-    // The user of this dashboard is the Caregiver (Dr. Smith)
-    const newMessage = { role: 'md', author: 'Dr. Smith (Caregiver)', text: newMsg };
+    const newMessage = { role: 'md', author: 'Dr. Smith (Caregiver)', text: msg };
     setFamilyMessages(prev => [...prev, newMessage]);
     setFamilyChatInput('');
+    setFamilyTyping(true);
     
-    // Auto-Responder simulation: AI Translates, then Family Replies
+    // Smart AI Translation based on keyword detection
     setTimeout(() => {
+      let translation = `The doctor says: "${msg}" — everything is being monitored carefully.`;
+      
+      if (msg.toLowerCase().includes('mobility') || msg.toLowerCase().includes('walking') || msg.toLowerCase().includes('gait')) {
+        translation = `The doctor says Jane's walking ability is being closely monitored by an AI sensor. There is nothing to panic about right now.`;
+      } else if (msg.toLowerCase().includes('medication') || msg.toLowerCase().includes('medicine') || msg.toLowerCase().includes('drug')) {
+        translation = `The doctor is updating Jane's medication plan. This is routine and will help her feel better.`;
+      } else if (msg.toLowerCase().includes('sleep') || msg.toLowerCase().includes('rest')) {
+        translation = `The doctor says Jane's sleep patterns are being tracked overnight by AI wearable sensors. She is getting some rest.`;
+      } else if (msg.toLowerCase().includes('heart') || msg.toLowerCase().includes('vital') || msg.toLowerCase().includes('rate')) {
+        translation = `The doctor says Jane's heart rate is being monitored in real-time. Current readings are within an acceptable range.`;
+      } else if (msg.toLowerCase().includes('visit') || msg.toLowerCase().includes('come')) {
+        translation = `The doctor is saying it is okay to visit. Please coordinate a time that works well so Jane is rested.`;
+      } else if (msg.toLowerCase().includes('eat') || msg.toLowerCase().includes('food') || msg.toLowerCase().includes('appetite')) {
+        translation = `The doctor says Jane's food intake and appetite are being logged daily. The caregivers are ensuring she eats properly.`;
+      }
+
       setFamilyMessages(prev => [...prev, { 
         role: 'ai', 
-        author: 'AI Translator (Gemini)', 
-        text: `The doctor says: ${newMsg.includes('medical') || newMsg.length > 20 ? 'Everything is proceeding normally, but we are keeping a close watch on the metrics.' : newMsg}`,
+        author: 'AI Translator (Gemini)',
+        text: translation,
         isTranslation: true
       }]);
 
+      // Randomized family member replies
       setTimeout(() => {
-        const replies = [
-          "Got it, thank you for the update!",
-          "That makes sense, we appreciate you letting us know.",
-          "We will keep that in mind.",
-          "Understood. Please let us know if anything changes."
-        ];
-        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+        setFamilyTyping(false);
+        const member = familyMembers[Math.floor(Math.random() * familyMembers.length)];
+        
+        const contextReplies: Record<string, string[]> = {
+          mobility: ["Oh okay, that's a relief!", "Thank you for the explanation, we were worried about her walking.", "Is there anything we can do to help at home?"],
+          medication: ["Got it, should we pick up anything from the pharmacy?", "Understood, we'll make sure she takes them on time during our visit.", "Thanks for letting us know!"],
+          sleep: ["She mentioned she's been having trouble sleeping. Good to know it's being tracked!", "We'll make sure not to call her too late then.", "Understood, thank you!"],
+          heart: ["That's reassuring to hear.", "Should we be worried or is this normal for her age?", "We appreciate you keeping us updated!"],
+          visit: ["Perfect! We were thinking Saturday afternoon works for us.", "Great, we will coordinate and let you know.", "Thank you doctor, we will be there!"],
+          default: ["Got it, thank you for the update!", "We appreciate you keeping the family in the loop.", "Understood, please keep us posted!", "Thanks Dr. Smith, we trust you are taking good care of her!"],
+        };
+        
+        let replyPool = contextReplies.default;
+        if (msg.toLowerCase().includes('mobility') || msg.toLowerCase().includes('walking')) replyPool = contextReplies.mobility;
+        else if (msg.toLowerCase().includes('medication') || msg.toLowerCase().includes('medicine')) replyPool = contextReplies.medication;
+        else if (msg.toLowerCase().includes('sleep')) replyPool = contextReplies.sleep;
+        else if (msg.toLowerCase().includes('heart') || msg.toLowerCase().includes('vital')) replyPool = contextReplies.heart;
+        else if (msg.toLowerCase().includes('visit') || msg.toLowerCase().includes('come')) replyPool = contextReplies.visit;
+        
+        const randomReply = replyPool[Math.floor(Math.random() * replyPool.length)];
         
         setFamilyMessages(prev => [...prev, { 
           role: 'family', 
-          author: 'Family Member', 
+          author: member.name,
+          avatar: member.avatar,
+          color: member.color,
           text: randomReply 
         }]);
       }, 2000);
@@ -779,7 +828,8 @@ export default function Home() {
         )}
 
         {activeTab === 'Family Chat' && (
-          <div className="flex flex-col h-[70vh] bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-xl">
+          <div className="flex flex-col h-[75vh] bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-xl">
+            {/* Header */}
             <div className="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-400 to-pink-500 flex items-center justify-center shadow-lg">
@@ -787,46 +837,53 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="text-white font-medium">Family Collaboration Hub</h3>
-                  <p className="text-xs text-purple-400 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-purple-500 rounded-full"></span> 3 Members Online</p>
+                  <p className="text-xs text-purple-400 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-pulse"></span> Sarah, Michael & Priya Online</p>
                 </div>
               </div>
-              <span className="text-xs text-neutral-500">HIPAA Secure Channel</span>
+              <span className="text-xs text-neutral-500 bg-black/30 border border-white/5 px-3 py-1 rounded-full">🔒 HIPAA Secure</span>
             </div>
             
-            <div className="flex-1 p-6 overflow-y-auto space-y-6">
+            {/* Messages */}
+            <div className="flex-1 p-6 overflow-y-auto space-y-5">
               <div className="flex justify-center">
-                <span className="text-xs text-neutral-500 bg-white/5 px-3 py-1 rounded-full">Today</span>
+                <span className="text-xs text-neutral-500 bg-white/5 px-3 py-1 rounded-full">Today — {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</span>
               </div>
               
               {familyMessages.map((msg, i) => {
                 if (msg.role === 'family') {
                   return (
-                    <div key={i} className="flex justify-end">
-                      <div className="max-w-[70%] bg-purple-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg">
-                        {msg.text}
+                    <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex justify-end">
+                      <div className="flex flex-col items-end gap-1">
+                        <span className="text-xs text-neutral-500 mr-1">{msg.author || 'Family Member'}</span>
+                        <div className="flex items-end gap-2">
+                          <div className="max-w-[70%] bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg">
+                            {msg.text}
+                          </div>
+                          <div className={`w-7 h-7 rounded-full bg-gradient-to-tr ${msg.color || 'from-purple-400 to-pink-500'} flex items-center justify-center text-xs font-bold text-white shrink-0`}>{msg.avatar || 'F'}</div>
+                        </div>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 } else if (msg.role === 'ai') {
                   return (
-                    <div key={i} className="flex justify-start">
+                    <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
                       <div className="flex gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500 flex items-center justify-center text-xs font-bold text-white mt-1">AI</div>
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500 flex items-center justify-center text-xs font-bold text-white mt-1 shrink-0">AI</div>
                         <div className="max-w-[80%]">
                           <div className="text-xs text-emerald-400 mb-1 ml-1">{msg.author}</div>
                           <div className="bg-emerald-900/30 border border-emerald-500/20 rounded-2xl rounded-tl-sm p-3 text-sm text-emerald-100">
-                            {msg.isTranslation && <strong>AI Translation: </strong>}
+                            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block mb-1">✨ AI Translation</span>
                             {msg.text}
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 } else {
                   return (
-                    <div key={i} className="flex justify-start">
+                    <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
                       <div className="flex gap-3">
-                        <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center text-xs font-bold text-white mt-1">MD</div>
+                        <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center text-xs font-bold text-white mt-1 shrink-0">MD</div>
                         <div className="max-w-[80%]">
                           <div className="text-xs text-neutral-400 mb-1 ml-1">{msg.author}</div>
                           <div className="bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-3 text-sm text-neutral-200">
@@ -834,19 +891,47 @@ export default function Home() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 }
               })}
+              
+              {/* Typing Indicator */}
+              {familyTyping && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
+                  <div className="flex gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-400 to-pink-500 flex items-center justify-center text-xs font-bold text-white mt-1 shrink-0">F</div>
+                    <div className="bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm p-3 flex items-center gap-1">
+                      <span className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                      <span className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                      <span className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </div>
             
+            {/* Quick-send Suggestion Chips */}
+            <div className="px-4 py-2 border-t border-white/5 flex gap-2 overflow-x-auto scrollbar-none">
+              {familySuggestions.map((s) => (
+                <button 
+                  key={s} 
+                  onClick={() => handleFamilyChatSubmit(undefined, s)}
+                  className="shrink-0 text-xs px-3 py-1.5 bg-purple-500/10 border border-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/20 transition-colors whitespace-nowrap"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+            
+            {/* Input */}
             <div className="p-4 border-t border-white/10 bg-white/5">
               <form onSubmit={handleFamilyChatSubmit} className="relative">
                 <input 
                   type="text" 
                   value={familyChatInput}
                   onChange={(e) => setFamilyChatInput(e.target.value)}
-                  placeholder="Message Family Chat..." 
+                  placeholder="Message Family Chat as Dr. Smith..." 
                   className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                 />
                 <button type="submit" className="absolute right-2 top-2 p-1.5 bg-purple-500 rounded-lg text-white shadow-md hover:bg-purple-400 transition-colors">
