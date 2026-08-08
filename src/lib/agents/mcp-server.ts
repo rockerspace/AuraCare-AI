@@ -1,6 +1,8 @@
 // Model Context Protocol (MCP) Server Configuration
 // This allows GADK and Mastra agents to fetch standardized context about the patient.
 
+import { db } from '../gcp/firestore-admin';
+
 export interface PatientContext {
   patientId: string;
   name: string;
@@ -16,17 +18,16 @@ export class MCPServer {
   public async getContext(patientId: string): Promise<PatientContext> {
     console.log(`[MCP Server] Fetching standard context for patient: ${patientId}`);
     
-    // Mock data for MVP
-    return {
-      patientId,
-      name: 'Jane Doe',
-      age: 82,
-      recentNotes: [
-        'Reported feeling slightly dizzy yesterday morning.',
-        'Medication refilled on 3 days ago.',
-      ],
-      baselineMobility: 'Normal, walks without assistance. 4000 steps/day average.',
-    };
+    try {
+      const doc = await db.collection('patients').doc(patientId).get();
+      if (!doc.exists) {
+        throw new Error(`Patient not found: ${patientId}`);
+      }
+      return { patientId, ...doc.data() } as PatientContext;
+    } catch (error) {
+      console.error(`[MCP Server] Error fetching context for ${patientId}:`, error);
+      throw error;
+    }
   }
   
   /**
@@ -38,8 +39,8 @@ export class MCPServer {
     
     return [
       {
-        name: 'query_qdrant_history',
-        description: 'Queries the vector database for historical behavioral baselines.',
+        name: 'query_firestore_vector_history',
+        description: 'Queries the Firestore vector database for historical behavioral baselines.',
         parameters: { vector: 'array of floats' }
       },
       {

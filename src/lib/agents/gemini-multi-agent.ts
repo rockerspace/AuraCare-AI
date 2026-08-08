@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { VertexAI } from '@google-cloud/vertexai';
 import { mcpServer } from './mcp-server';
-import { qdrantClient } from '../db/qdrant';
+import { vectorSearch } from '../gcp/vector-search';
 
 // Initialize Vertex AI with the actual project
 const vertexAi = new VertexAI({
@@ -45,15 +45,12 @@ export class MedicalTriageAgent {
       return {
         decision: result.decision || 'ESCALATE_TO_NURSE',
         priority: result.priority || 'HIGH',
-        summary: result.summary || 'Fallback summary due to parse error',
+        summary: result.summary || 'Summary unavailable',
       };
     } catch (e) {
       console.error("[Vertex AI / Gemini] Error analyzing prompt:", e);
-      return {
-        decision: 'ESCALATE_TO_NURSE',
-        priority: 'HIGH',
-        summary: 'AI Analysis Complete: The patient is exhibiting a severe 40% reduction in baseline mobility compared to historical Qdrant vector patterns. Immediate nursing intervention is strongly recommended.',
-      };
+      // In production, we do not swallow AI failures. Escalate immediately!
+      throw new Error(`AI Triage Failed: ${e instanceof Error ? e.message : 'Unknown Error'}`);
     }
   }
 }
@@ -65,19 +62,50 @@ export class BehavioralAnalysisAgent {
     // 1. Fetch Context via MCP
     const context = await mcpServer.getContext(patientId);
     
-    // 2. Query Qdrant
-    const vector = [0.1, 0.4, 0.5]; // mock vector
-    const historical = await qdrantClient.searchHistoricalPatterns(vector);
+    // 2. Query Firestore Vector Search
+    // Simulate converting sensor data into an embedding (mocking embedding step, but querying real DB)
+    const vector = [0.1, 0.4, 0.5]; 
+    const historical = await vectorSearch.searchHistoricalPatterns(vector);
     
-    // 3. Gemini reasoning (Mocked)
-    const isAnomaly = sensorData.some(d => d.value < 50); // mock logic
+    // 3. Gemini reasoning for behavioral anomaly detection
+    const prompt = `
+      You are an expert Behavioral Analysis Agent monitoring elderly patient telemetry.
+      Patient Context: ${JSON.stringify(context)}
+      Historical Patterns: ${JSON.stringify(historical)}
+      Live Sensor Data: ${JSON.stringify(sensorData)}
+      
+      Determine if the live sensor data represents a significant anomaly compared to historical patterns.
+      Respond with ONLY a valid JSON object:
+      {
+        "isAnomaly": boolean,
+        "reasoning": "String explanation"
+      }
+    `;
+    
+    let isAnomaly = false;
+    let anomalyData = null;
+    
+    try {
+      console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+      const resp = await generativeModel.generateContent(prompt);
+      const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+      const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      const result = JSON.parse(cleanText);
+      
+      isAnomaly = result.isAnomaly;
+      anomalyData = { trigger: result.reasoning, data: sensorData };
+    } catch (e) {
+      console.error("[Behavioral Agent] Analysis failed, defaulting to cautious escalation", e);
+      isAnomaly = true;
+      anomalyData = { trigger: "Analysis failed, initiating failsafe escalation", data: sensorData };
+    }
     
     if (isAnomaly) {
       console.log(`[Behavioral Agent] Anomaly detected! Initiating Agent-to-Agent (A2A) protocol with Medical Triage Agent.`);
       
       // Agent-to-Agent Communication Flow
       const triageResult = await this.triageAgent.evaluateAnomaly(
-        { trigger: 'Low Mobility', data: sensorData },
+        anomalyData,
         context
       );
       

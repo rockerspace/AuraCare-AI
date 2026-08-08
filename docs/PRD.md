@@ -76,6 +76,11 @@ AuraCare is an intelligent distributed system comprising an edge IoT hub and clo
 **Acceptance Criteria:** Telemetry data must be piped through the **Nano Banana Tool** for specialized parsing before being fed into the Gemini 1.5 Pro reasoning engine.
 **Priority:** Medium
 
+#### FR-012: Real-time IoT Ingestion & Device Authentication
+**Description:** Physical IoT devices and wearables must securely stream metrics to the backend.
+**Acceptance Criteria:** A production-grade webhook (`/api/telemetry/ingest`) must authenticate incoming IoT device pings using unique device tokens validated against the Firestore `devices` collection (Option B strategy), before streaming to BigQuery and AI agents.
+**Priority:** High
+
 ### 3.2 Non-Functional Requirements
 
 #### NFR-001: LLM Observability & Tracing

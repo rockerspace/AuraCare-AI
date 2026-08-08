@@ -1,8 +1,10 @@
+import { Logging } from '@google-cloud/logging';
+import { env } from '../env';
+
 /**
- * GCP Cloud Audit Logs Integration (Mock)
+ * GCP Cloud Audit Logs Integration
  * 
- * In a production Google Cloud environment, this service would utilize the
- * @google-cloud/logging SDK to write immutable audit logs for HIPAA compliance.
+ * Utilizes the @google-cloud/logging SDK to write immutable audit logs for HIPAA compliance.
  */
 
 interface AuditLogEntry {
@@ -15,7 +17,12 @@ interface AuditLogEntry {
 }
 
 export class GCPAuditLogger {
-  private logName = 'projects/auracare-prod/logs/cloudaudit.googleapis.com%2Fdata_access';
+  private logging: Logging;
+  private logName = 'data_access_audit';
+
+  constructor() {
+    this.logging = new Logging({ projectId: env.GCP_PROJECT_ID });
+  }
 
   /**
    * Logs a data access event to GCP Cloud Audit Logs.
@@ -26,13 +33,24 @@ export class GCPAuditLogger {
       timestamp: new Date().toISOString(),
     };
 
-    // Simulate network delay to GCP Logging API
-    await new Promise(resolve => setTimeout(resolve, 150));
-
-    console.log(`[GCP Audit Log - ${this.logName}]`);
-    console.log(JSON.stringify(fullEntry, null, 2));
-
-    return { success: true, logId: `audit_${Date.now()}` };
+    try {
+      const log = this.logging.log(this.logName);
+      
+      const metadata = {
+        resource: { type: 'global' },
+        severity: 'INFO',
+      };
+      
+      const logEntry = log.entry(metadata, fullEntry);
+      await log.write(logEntry);
+      
+      console.log(`[GCP Audit Log - ${this.logName}] Successfully wrote audit log for ${entry.patientId}`);
+      return { success: true, logId: `audit_${Date.now()}` };
+    } catch (error) {
+      console.error(`[GCP Audit Log - Error] Failed to write audit log:`, error);
+      // In a strict HIPAA environment, failing to audit log might require failing the operation
+      throw error;
+    }
   }
 }
 

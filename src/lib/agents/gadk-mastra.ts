@@ -14,8 +14,8 @@ export class BehavioralAgent {
     // 1. Retrieve standardized context via MCP
     const context = await mcpServer.getContext(patientId);
     
-    // 2. Query Qdrant for historical baseline vectors (mocked here, implemented in db/qdrant.ts)
-    // const historicalVectors = await qdrantClient.search('behavioral_patterns', ...);
+    // 2. Query Firestore Vector Search for historical baseline vectors
+    // const historicalVectors = await vectorSearch.searchHistoricalPatterns(...);
 
     console.log(`[GADK] Context loaded for ${context.name}. Analyzing current metrics...`);
 

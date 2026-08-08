@@ -11,7 +11,8 @@ AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to dete
   - Contextual patient data is securely fetched via the **Model Context Protocol (MCP)**.
   - Local edge agents communicate directly with the cloud-based Triage Agent using **Agent-to-Agent (A2A)** escalation protocols.
 - **Nano Banana Processing Tool:** Raw IoT telemetry data is piped through our specialized Nano Banana data parser before being fed into Gemini for reasoning.
-- **BigQuery Analytics:** Real-time historical streaming and analytics! Our SOS Panic Button triggers a real write into BigQuery, while the dashboard UI actively pulls SQL aggregations directly from the cloud.
+- **Real-Time IoT Ingestion:** Production-grade Next.js webhook (`/api/telemetry/ingest`) architecture for authenticating hardware device tokens via Firestore, streaming metrics directly into BigQuery, and asynchronously invoking Gemini Agents to monitor for critical deviations instantly.
+- **BigQuery Analytics:** Real-time historical streaming and analytics! Our SOS Panic Button and IoT Webhooks trigger real writes into BigQuery, while the dashboard UI actively pulls SQL aggregations directly from the cloud.
 - **Family Chat & Collaboration:** Interactive chat module simulating intelligent "Family Member" responders to assist caregivers in medical translations.
 - **Google Cloud Run Ready**: Containerized via Docker and configured for `cloudbuild.yaml` CI/CD to ensure enterprise-grade backend scalability.
 
@@ -25,24 +26,25 @@ AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to dete
 ```mermaid
 graph TD
     subgraph IoT & Home Devices
-        S[Sensors / Wearables] -->|Telemetry| Nano[Nano Banana Tool]
-        Nano --> API[Next.js API Routes]
+        S[Sensors / Wearables] -->|Real-Time Telemetry POST| Webhook[Next.js API Webhook]
+        Webhook -->|Auth Token Check| Firestore[(Firestore Devices DB)]
         Cam[Smart Camera] -->|Audio/Video Stream| VideoSvc[Video Service]
     end
 
     subgraph Security & Access
-        Auth[Firebase SMS OTP] -->|Verification| API
+        Auth[Firebase SMS OTP] -->|Verification| API[Next.js App Server]
         API -->|HIPAA Logging| Audit[GCP Cloud Audit Logs]
+        Webhook --> API
     end
 
     subgraph Data & Storage
         API -->|Stream Metrics| BQ[(Google BigQuery)]
-        Qdrant[(Qdrant Vector DB)]
+        API -->|Fetch Vectors| FirestoreVec[(Firestore Vector Search)]
     end
 
     subgraph AI Intelligence Layer
         GADK[Behavioral Agent - ADK] <-->|Fetch Context| MCP[MCP Server]
-        GADK <-->|Similarity Search| Qdrant
+        GADK <-->|Similarity Search| FirestoreVec
         GADK <-->|A2A Escalation| Triage[Medical Triage Agent]
         Triage <-->|Gemini 1.5 Pro| VertexAI[Google Vertex AI]
     end
@@ -61,16 +63,15 @@ graph TD
 *   **Data Parsing:** Nano Banana Tool
 *   **Infrastructure:** Google Cloud Run (Fully Serverless & Containerized)
 
-## Getting Started (Local Development)
-
-First, install dependencies and run the development server:
+First, install dependencies and set up the production build:
 
 ```bash
 npm install
-npm run dev
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the SMS OTP login screen.
+Open your deployed domain (or the local production build) with your browser to see the SMS OTP login screen.
 
 **Note on Firebase Configuration:** To test SMS delivery locally, ensure you have copied your `firebaseConfig` keys from the Google Cloud Console into a `.env.local` file in the project root:
 

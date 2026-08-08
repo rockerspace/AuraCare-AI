@@ -7,24 +7,25 @@ AuraCare leverages a modern, serverless Google Tech Stack combined with AI Agent
 
 ```mermaid
 graph TD
-    subgraph IoT_Edge_Gateway ["IoT Edge Gateway (Local Home)"]
-        S[Sensors / Wearables] -->|Telemetry| Gemma[Gemma 2B - Local Behavioral Agent]
-        Cam[Smart Camera] -->|WebRTC Video & Spatial Audio| Gemma
-        SOS[Hardware SOS Panic Button] -->|Instant Trigger| A2A
-        Gemma -->|Offline Baseline & Anomaly Check| A2A[A2A Coordinator]
+    subgraph IoT_Edge_Gateway ["IoT Edge & Devices"]
+        S[Sensors / Wearables] -->|Real-Time POST| Webhook[Next.js API Webhook]
+        Webhook -->|Device Token Auth| FirestoreAuth[(Firestore Devices)]
+        Cam[Smart Camera] -->|WebRTC Video & Spatial Audio| VideoSvc
+        SOS[Hardware SOS Panic Button] -->|Instant Trigger| Webhook
     end
 
     subgraph Security_Access ["Security & Access"]
-        Auth[Enkrypt DID] -->|Verification| API
+        Auth[Firebase SMS OTP] -->|Verification| API
         API[Next.js API Routes / Cloud Run] -->|HIPAA Logging| Audit[GCP Cloud Audit Logs]
     end
 
     subgraph Data_Analytics ["Data & Analytics (Google Cloud)"]
         API -->|Stream Sensor Data| BQ[(BigQuery)]
-        Qdrant[(Qdrant Vector DB)]
+        API -->|Similarity Search| FirestoreVec[(Firestore Vector Search)]
     end
 
     subgraph AI_Intelligence_Layer ["AI Intelligence Layer (Cloud)"]
+        Webhook -->|Invoke Analysis| A2A[A2A Coordinator]
         A2A -->|Escalate Anomaly| MCP[MCP Server - Context Standardization]
         MCP -->|Fetch Patient History| ADK[Agent Development Kit Orchestrator]
         ADK -->|Video/Audio Analytics| Vertex[Gemini 1.5 Pro via Vertex AI & AI Studio]
@@ -43,10 +44,10 @@ graph TD
 ```
 
 
-1.  **Gemma 2B (Edge Processing):** Runs locally on the home IoT gateway to analyze real-time telemetry from wearables, preserving privacy and ensuring offline functionality for baseline monitoring.
+1.  **Next.js API Webhook (Edge Ingestion):** `/api/telemetry/ingest` handles thousands of IoT pings concurrently, validates secure device tokens against Firestore, and proxies data to downstream cloud tools.
 2.  **WebRTC & Spatial Audio Ingestion:** Secure, low-latency WebRTC pipelines stream live video and spatial audio from IoT cameras directly into the edge and cloud processing layers for immediate context.
-2.  **ADK, MCP, and A2A Protocols:** 
-    - The **Agent-to-Agent (A2A)** protocol manages the handoff between the local Gemma edge agent and the cloud-based Gemini agents.
+3.  **ADK, MCP, and A2A Protocols:** 
+    - The **Agent-to-Agent (A2A)** protocol manages the handoff between the webhook events and the cloud-based Gemini agents.
     - The **Model Context Protocol (MCP)** securely formats and standardizes patient history before sending it to the cloud.
     - The **Agent Development Kit (ADK)** and **Antigravity** toolchains orchestrate these workflows.
 4.  **Vertex AI & Google AI Studio (Gemini 1.5 Pro):** Replaces generic ML pipelines. Handles complex multimodal reasoning (analyzing WebRTC video feeds and spatial audio sentiment) when escalated by the edge agent. Includes dedicated **Voice AI** and **Sentiment Analysis** modules.

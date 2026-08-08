@@ -96,10 +96,10 @@ export default function Home() {
       const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
       setConfirmationResult(confirmation);
       setAuthStep('otp');
-    } catch (error) {
+    } catch (error: any) {
       console.error("Firebase SMS error:", error);
-      alert("Failed to send real SMS (Check Firebase Config). Logging in for demo purposes.");
-      setIsAuthenticated(true); // Fallback for hackathon demo
+      alert(`Failed to send SMS OTP: ${error.message || "Unknown error"}`);
+      // Remove fallback bypass logic to enforce real authentication
     }
   };
 
@@ -109,13 +109,12 @@ export default function Home() {
       try {
         await confirmationResult.confirm(otp);
         setIsAuthenticated(true);
-      } catch (error) {
+      } catch (error: any) {
         console.error("OTP Verification error:", error);
-        alert("Invalid OTP");
+        alert(`Invalid OTP: ${error.message || "Please try again."}`);
       }
     } else {
-      // Fallback if bypassed
-      setIsAuthenticated(true);
+      alert("Please request an OTP first.");
     }
   };
 

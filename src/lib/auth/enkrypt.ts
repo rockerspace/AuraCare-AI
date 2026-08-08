@@ -1,6 +1,9 @@
 // Enkrypt Authentication Wrapper (Phase 2)
 // This simulates integration with Enkrypt for secure, decentralized identity management.
 
+import { ethers } from 'ethers';
+import { env } from '../env';
+
 export interface CaregiverSession {
   did: string; // Decentralized ID
   role: 'caregiver' | 'admin' | 'medical_staff';
@@ -11,18 +14,29 @@ export interface CaregiverSession {
  * Validates an Enkrypt signature against a nonce to authenticate a user.
  */
 export async function verifyEnkryptSignature(signature: string, nonce: string): Promise<CaregiverSession | null> {
-  // In a real implementation, this would use the Enkrypt SDK to verify the cryptographically signed message.
-  console.log(`[Enkrypt] Verifying signature: ${signature.substring(0, 10)}... against nonce: ${nonce}`);
+  if (!signature || !nonce) return null;
   
-  // Mocking a successful validation for MVP
-  if (signature && nonce) {
-    return {
-      did: 'did:ethr:0x1234567890abcdef',
-      role: 'caregiver',
-      permissions: ['read:patient_vitals', 'write:care_notes'],
-    };
+  try {
+    // Recover the address from the signed message (nonce)
+    const recoveredAddress = ethers.verifyMessage(nonce, signature);
+    
+    // In production, we ensure the recovered address matches the authorized caregiver's Enkrypt public key
+    const authorizedPublicKey = env.ENKRYPT_PUBLIC_KEY;
+    
+    if (authorizedPublicKey && recoveredAddress.toLowerCase() === authorizedPublicKey.toLowerCase()) {
+      return {
+        did: `did:ethr:${recoveredAddress}`,
+        role: 'caregiver',
+        permissions: ['read:patient_vitals', 'write:care_notes'],
+      };
+    } else {
+      console.error(`[Enkrypt Auth] Unauthorized address: ${recoveredAddress}`);
+      return null;
+    }
+  } catch (error) {
+    console.error("[Enkrypt Auth] Signature verification failed:", error);
+    return null;
   }
-  return null;
 }
 
 /**

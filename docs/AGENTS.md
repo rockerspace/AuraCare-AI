@@ -1,9 +1,16 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# AI Agent Protocols - AuraCare
 
-# This is NOT the Next.js you know
+AuraCare uses a robust, production-grade agentic architecture to process IoT streams and trigger real-time actions.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+## 1. The Medical Triage Agent (Gemini 1.5 Pro)
+The core of our intelligence layer is the Medical Triage Agent, implemented in `src/lib/agents/gemini-multi-agent.ts`.
+Unlike a simple rule-based system, this agent evaluates incoming telemetry (heart rate, mobility) from our IoT webhook against historical context fetched via the MCP Server.
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+## 2. Model Context Protocol (MCP) Server
+When the IoT webhook triggers the agent, the Agent first queries the MCP Server (`src/lib/agents/mcp-server.ts`). 
+The MCP Server retrieves a patient's exact medical background and past vector search results from Firestore to give the Gemini agent the exact standard of care required to make a decision.
 
-<!-- END:nextjs-agent-rules -->
+## 3. Agent-to-Agent (A2A) Escalation
+Our system simulates a `BehavioralAnalysisAgent` and a `MedicalTriageAgent`. The behavioral agent monitors the high-throughput IoT stream asynchronously from `/api/telemetry/ingest`. When it detects a mathematically significant deviation (e.g. mobility drops 40%), it initiates an A2A protocol payload to escalate the exact subset of anomaly data to the heavier, multimodal Medical Triage Agent for a clinical decision.
+
+This ensures cost-effectiveness (we do not run a massive Gemini 1.5 Pro prompt on every single heartbeat) while preserving emergency safety guarantees.
