@@ -2,9 +2,9 @@ import { z } from 'zod';
 
 // Client-side environment variables (safe to expose to browser)
 const clientSchema = z.object({
-  NEXT_PUBLIC_FIREBASE_API_KEY: z.string().min(1, "Firebase API Key is required"),
-  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: z.string().min(1, "Firebase Auth Domain is required"),
-  NEXT_PUBLIC_FIREBASE_PROJECT_ID: z.string().min(1, "Firebase Project ID is required"),
+  NEXT_PUBLIC_FIREBASE_API_KEY: z.string().default('demo-key'),
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: z.string().default('demo-domain'),
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID: z.string().default('demo-project'),
   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: z.string().optional(),
   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: z.string().optional(),
   NEXT_PUBLIC_FIREBASE_APP_ID: z.string().optional(),
@@ -12,7 +12,7 @@ const clientSchema = z.object({
 
 // Server-side environment variables (secrets)
 const serverSchema = z.object({
-  GCP_PROJECT_ID: z.string().min(1, "GCP Project ID is required"),
+  GCP_PROJECT_ID: z.string().default('demo-project'),
   GCP_REGION: z.string().default('us-central1'),
   ENKRYPT_PUBLIC_KEY: z.string().optional(),
 });
