@@ -39,7 +39,7 @@ The platform is built around a fully decoupled **Agentic AI Architecture**:
 
 A fully interactive **Medical Triage Agent** chat powered by a simulated ADK + A2A network. The UI dynamically routes your prompt through a visible pipeline before returning a context-aware response.
 
-**🟢 Quick-Send Chips — Tap These During Your Demo:**
+
 
 | Chip | Agent Triggered | Simulated Response |
 |---|---|---|
@@ -58,7 +58,6 @@ Each chip triggers a **visible 2-step A2A pipeline**: "Routing query..." → Ful
 
 A HIPAA-secure family group chat with **3 named family members** (Sarah/Daughter, Michael/Son, Priya/Niece) and an embedded Gemini AI translator that converts medical language into plain, reassuring language for the family.
 
-**🟣 Quick-Send Chips — Tap These During Your Demo:**
 
 | Message | AI Translation Topic | Family Reply Style |
 |---|---|---|
@@ -256,7 +255,7 @@ auracare-app/
 
 ---
 
-## 🏆 About This Project
+ About This Project
 
 AuraCare was built end-to-end demonstrating how a coordinated network of specialized AI agents — connected via **A2A protocols**, grounded by **MCP-served context**, and powered by **Vertex AI (Gemini 1.5 Pro)** — can transform reactive healthcare into **proactive, personalized, always-on caregiving** at scale.
 
