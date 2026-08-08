@@ -1025,3 +1025,339 @@ The VertexAI class and all its dependencies are deprecated as of June 24, 2025 a
     at Array.<anonymous> (https://www.gstatic.com/recaptcha/releases/w_Yb7dGGXaKesJ7BMiqFJqBG/recaptcha__en.js:507:6)
     at Array.<anonymous> (https://www.gstatic.com/recaptcha/releases/w_Yb7dGGXaKesJ7BMiqFJqBG/recaptcha__en.js:472:341)
     at $W.<anonymous> (https://www.gstatic.com/recaptcha/releases/w_Yb7dGGXaKesJ7BMiqFJqBG/recaptcha__en.js:172:468)
+ GET / 200 in 127ms (next.js: 58ms, application-code: 69ms)
+ POST / 200 in 2.0s (next.js: 24ms, application-code: 1994ms)
+  └─ ƒ fetchDashboardMetrics() in 1962ms src/app/actions.ts
+ POST / 200 in 1230ms (next.js: 2ms, application-code: 1228ms)
+  └─ ƒ fetchDashboardMetrics() in 1223ms src/app/actions.ts
+✓ Compiled in 456ms
+ GET / 200 in 50ms (next.js: 20ms, application-code: 29ms)
+✓ Compiled in 635ms
+ GET / 200 in 213ms (next.js: 27ms, application-code: 186ms)
+ POST / 200 in 1690ms (next.js: 5ms, application-code: 1686ms)
+  └─ ƒ fetchDashboardMetrics() in 1677ms src/app/actions.ts
+ POST / 200 in 1467ms (next.js: 4ms, application-code: 1463ms)
+  └─ ƒ fetchDashboardMetrics() in 1457ms src/app/actions.ts
+✓ Compiled in 298ms
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+ POST / 200 in 2.3s (next.js: 10ms, application-code: 2.2s)
+  └─ ƒ fetchDashboardMetrics() in 2221ms src/app/actions.ts
+ POST / 200 in 1159ms (next.js: 3ms, application-code: 1156ms)
+  └─ ƒ fetchDashboardMetrics() in 1148ms src/app/actions.ts
+ GET / 200 in 30ms (next.js: 6ms, application-code: 24ms)
+✓ Compiled in 232ms
+ GET / 200 in 50ms (next.js: 18ms, application-code: 32ms)
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+[MCP Server] Fetching standard context for patient: patient_01
+[Firestore Vector] Searching for similar patterns...
+[Firestore Vector] Found 0 similar historical patterns
+[Behavioral Agent] Analyzing telemetry for Jane Doe...
+[Behavioral Agent] Analysis failed, defaulting to cautious escalation Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+   95 |     try {
+   96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+>  97 |       const resp = await generativeModel.generateContent(prompt);
+      |                    ^
+   98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+   99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  100 |       const result = JSON.parse(cleanText); {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+     95 |     try {
+     96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  >  97 |       const resp = await generativeModel.generateContent(prompt);
+        |                    ^
+     98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+     99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    100 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+     95 |     try {
+     96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  >  97 |       const resp = await generativeModel.generateContent(prompt);
+        |                    ^
+     98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+     99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    100 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Behavioral Agent] Anomaly detected! Initiating Agent-to-Agent (A2A) protocol with Medical Triage Agent.
+[Triage Agent] Evaluating anomaly for Jane Doe...
+[Vertex AI / Gemini] Analyzing prompt using Gemini 1.5 Flash model...
+[Vertex AI / Gemini] Error analyzing prompt: Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  37 |     
+  38 |     try {
+> 39 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  41 |       
+  42 |       // Clean up markdown in case it was returned {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    37 |     
+    38 |     try {
+  > 39 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    41 |       
+    42 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    37 |     
+    38 |     try {
+  > 39 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    41 |       
+    42 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Vertex AI / Gemini] Falling back to simulated AI response due to GCP API/Quota restrictions...
+ POST / 200 in 5.2s (next.js: 35ms, application-code: 5.2s)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 5110ms src/app/actions.ts
+ POST / 200 in 1419ms (next.js: 3ms, application-code: 1416ms)
+  └─ ƒ fetchDashboardMetrics() in 1407ms src/app/actions.ts
+[BigQuery] Streaming 1 rows to auracare_analytics.sensor_telemetry_historical...
+[BigQuery] Successfully inserted 1 rows.
+ POST / 200 in 878ms (next.js: 15ms, application-code: 863ms)
+  └─ ƒ logTelemetryToBigQuery("patient_01", "SOS_PANIC_TRIGGERED") in 847ms src/app/actions.ts
+ POST / 200 in 1601ms (next.js: 3ms, application-code: 1598ms)
+  └─ ƒ fetchDashboardMetrics() in 1586ms src/app/actions.ts
+[MCP Server] Fetching standard context for patient: patient_01
+[Firestore Vector] Searching for similar patterns...
+[Firestore Vector] Found 0 similar historical patterns
+[Behavioral Agent] Analyzing telemetry for Jane Doe...
+[Behavioral Agent] Analysis failed, defaulting to cautious escalation Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+   95 |     try {
+   96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+>  97 |       const resp = await generativeModel.generateContent(prompt);
+      |                    ^
+   98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+   99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  100 |       const result = JSON.parse(cleanText); {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+     95 |     try {
+     96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  >  97 |       const resp = await generativeModel.generateContent(prompt);
+        |                    ^
+     98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+     99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    100 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+     95 |     try {
+     96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  >  97 |       const resp = await generativeModel.generateContent(prompt);
+        |                    ^
+     98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+     99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    100 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Behavioral Agent] Anomaly detected! Initiating Agent-to-Agent (A2A) protocol with Medical Triage Agent.
+[Triage Agent] Evaluating anomaly for Jane Doe...
+[Vertex AI / Gemini] Analyzing prompt using Gemini 1.5 Flash model...
+[Vertex AI / Gemini] Error analyzing prompt: Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  37 |     
+  38 |     try {
+> 39 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  41 |       
+  42 |       // Clean up markdown in case it was returned {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    37 |     
+    38 |     try {
+  > 39 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    41 |       
+    42 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    37 |     
+    38 |     try {
+  > 39 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    41 |       
+    42 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Vertex AI / Gemini] Falling back to simulated AI response due to GCP API/Quota restrictions...
+ POST / 200 in 3.5s (next.js: 6ms, application-code: 3.5s)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 3440ms src/app/actions.ts
+ POST / 200 in 1525ms (next.js: 26ms, application-code: 1499ms)
+  └─ ƒ fetchDashboardMetrics() in 1478ms src/app/actions.ts
+[MCP Server] Fetching standard context for patient: patient_01
+[Firestore Vector] Searching for similar patterns...
+[Firestore Vector] Found 0 similar historical patterns
+[Behavioral Agent] Analyzing telemetry for Jane Doe...
+[Behavioral Agent] Analysis failed, defaulting to cautious escalation Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+   95 |     try {
+   96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+>  97 |       const resp = await generativeModel.generateContent(prompt);
+      |                    ^
+   98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+   99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  100 |       const result = JSON.parse(cleanText); {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+     95 |     try {
+     96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  >  97 |       const resp = await generativeModel.generateContent(prompt);
+        |                    ^
+     98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+     99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    100 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+     95 |     try {
+     96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  >  97 |       const resp = await generativeModel.generateContent(prompt);
+        |                    ^
+     98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+     99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    100 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Behavioral Agent] Anomaly detected! Initiating Agent-to-Agent (A2A) protocol with Medical Triage Agent.
+[Triage Agent] Evaluating anomaly for Jane Doe...
+[Vertex AI / Gemini] Analyzing prompt using Gemini 1.5 Flash model...
+[Vertex AI / Gemini] Error analyzing prompt: Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  37 |     
+  38 |     try {
+> 39 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  41 |       
+  42 |       // Clean up markdown in case it was returned {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    37 |     
+    38 |     try {
+  > 39 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    41 |       
+    42 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    37 |     
+    38 |     try {
+  > 39 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    41 |       
+    42 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Vertex AI / Gemini] Falling back to simulated AI response due to GCP API/Quota restrictions...
+ POST / 200 in 3.5s (next.js: 33ms, application-code: 3.5s)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 3431ms src/app/actions.ts
+ POST / 200 in 1795ms (next.js: 4ms, application-code: 1791ms)
+  └─ ƒ fetchDashboardMetrics() in 1781ms src/app/actions.ts
+✓ Compiled in 848ms
+ GET / 200 in 68ms (next.js: 27ms, application-code: 40ms)
+ POST / 200 in 1332ms (next.js: 3ms, application-code: 1329ms)
+  └─ ƒ fetchDashboardMetrics() in 1323ms src/app/actions.ts
+ POST / 200 in 1113ms (next.js: 4ms, application-code: 1109ms)
+  └─ ƒ fetchDashboardMetrics() in 1104ms src/app/actions.ts
+[browser] Firebase SMS error: Error: reCAPTCHA has already been rendered in this element
+    at <unknown> (https://www.gstatic.com/recaptcha/releases/XOqlk8PL_yVx6IdpLbpXdiLy/recaptcha__en.js:232:388)
+    at async handleSendOTP (src/app/page.tsx:240:28)
+  238 |       (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+  239 |       const recaptchaVerifier = (window as any).recaptchaVerifier;
+> 240 |       const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+      |                            ^
+  241 |       setConfirmationResult(confirmation);
+  242 |       setAuthStep('otp');
+  243 |     } catch (error: any) { (src/app/page.tsx:244:15)
+[browser] Firebase SMS error: FirebaseError: Firebase: Error (auth/internal-error).
+    at async handleSendOTP (src/app/page.tsx:240:28)
+  238 |       (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+  239 |       const recaptchaVerifier = (window as any).recaptchaVerifier;
+> 240 |       const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+      |                            ^
+  241 |       setConfirmationResult(confirmation);
+  242 |       setAuthStep('otp');
+  243 |     } catch (error: any) { (src/app/page.tsx:244:15)
+✓ Compiled in 82ms
+ GET / 200 in 95ms (next.js: 18ms, application-code: 77ms)
+✓ Compiled in 87ms
