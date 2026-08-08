@@ -218,6 +218,35 @@ export default function Home() {
     }, 1500);
   };
 
+  const handleAlertAction = (alert: any) => {
+    setActiveTab('Agent Chat');
+    const prompt = `Run AI triage and action protocol for alert: ${alert.id} (${alert.type}) for ${alert.patient}.`;
+    
+    setAgentMessages(prev => [...prev, { role: 'user', text: prompt, source: null, actions: [] }]);
+    
+    // Simulate dynamic multi-agent processing pipeline
+    setTimeout(() => {
+      setAgentMessages(prev => [...prev, { 
+        role: 'ai', 
+        text: "Routing triage request to Medical Triage Agent...", 
+        source: "A2A Router", 
+        actions: [] 
+      }]);
+      
+      setTimeout(() => {
+        setAgentMessages(prev => {
+          const filtered = prev.filter(m => m.source !== "A2A Router");
+          return [...filtered, {
+            role: 'ai',
+            text: `I have analyzed Alert ${alert.id}. Cross-referencing ${alert.source} with historical baselines indicates immediate caregiver intervention is required. I have flagged ${alert.patient}'s profile for priority review and drafted an incident report.`,
+            source: "Medical Triage Agent — Gemini 1.5 Pro",
+            actions: ["View Patient History", "Escalate to Doctor"]
+          }];
+        });
+      }, 2500);
+    }, 400);
+  };
+
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -663,7 +692,10 @@ export default function Home() {
                   <button className="flex-1 md:flex-none px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-sm font-medium transition-colors">
                     Acknowledge
                   </button>
-                  <button className="flex-1 md:flex-none px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 rounded-lg text-sm font-medium transition-colors">
+                  <button 
+                    onClick={() => handleAlertAction(alert)}
+                    className="flex-1 md:flex-none px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 rounded-lg text-sm font-medium transition-colors"
+                  >
                     Take Action
                   </button>
                 </div>
