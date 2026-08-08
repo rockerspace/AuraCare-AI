@@ -120,9 +120,14 @@ export default function Home() {
     e.preventDefault();
     try {
       console.log("Using API Key:", auth.app.options.apiKey?.substring(0, 10) + "...");
-      if (!(window as any).recaptchaVerifier) {
-        (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+      if ((window as any).recaptchaVerifier) {
+        try {
+          (window as any).recaptchaVerifier.clear();
+        } catch (e) {
+          console.warn("Could not clear old recaptcha verifier:", e);
+        }
       }
+      (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
       const recaptchaVerifier = (window as any).recaptchaVerifier;
       const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
       setConfirmationResult(confirmation);
