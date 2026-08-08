@@ -86,15 +86,39 @@ export default function Home() {
     setAgentMessages(prev => [...prev, { role: 'user', text: newMsg, source: null, actions: [] }]);
     setAgentChatInput('');
     
-    // Simulate AI response
+    // Simulate dynamic multi-agent processing pipeline
     setTimeout(() => {
+      // 1. Initial acknowledgment (A2A Network routing)
       setAgentMessages(prev => [...prev, { 
         role: 'ai', 
-        text: "I am a Medical Triage Agent simulation. In a live production environment, this request would be routed through the A2A Coordinator to Vertex AI.", 
-        source: "Simulation Mode", 
+        text: "Routing query to the Clinical Context Agent...", 
+        source: "A2A Router", 
         actions: [] 
       }]);
-    }, 1200);
+      
+      // 2. Simulated Vertex AI response via MCP
+      setTimeout(() => {
+        let responseText = "I have cross-referenced the latest real-time IoT ingestion streams. Her vitals remain stable, and there are no immediate critical deviations detected.";
+        let source = "Gemini 1.5 Pro + BigQuery";
+        let actions = ["Acknowledge", "Escalate"];
+
+        if (newMsg.toLowerCase().includes('haptic') || newMsg.toLowerCase().includes('wearable') || newMsg.toLowerCase().includes('sensor')) {
+          responseText = "I've pulled the high-frequency haptic sensor data from the Edge node. The micro-tremor analysis indicates normal gait patterns, ruling out any immediate fall risk.";
+          source = "Edge Agent + MCP";
+          actions = ["View Micro-Tremor Graph", "Log Note"];
+        } else if (newMsg.toLowerCase().includes('video') || newMsg.toLowerCase().includes('camera')) {
+          responseText = "I requested video analysis from the Vision Agent. The Gemini 1.5 Pro multimodal model confirms she is resting comfortably in the living room.";
+          source = "Vision Agent (A2A)";
+          actions = ["View Frame", "Dismiss"];
+        }
+        
+        // Replace the routing message with the final response
+        setAgentMessages(prev => {
+          const filtered = prev.filter(msg => msg.text !== "Routing query to the Clinical Context Agent...");
+          return [...filtered, { role: 'ai', text: responseText, source, actions }];
+        });
+      }, 2500);
+    }, 500);
   };
 
   const handleFamilyChatSubmit = (e?: React.FormEvent) => {
