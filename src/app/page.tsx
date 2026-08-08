@@ -222,19 +222,34 @@ export default function Home() {
     e.preventDefault();
     try {
       console.log("Using API Key:", auth.app.options.apiKey?.substring(0, 10) + "...");
+
+      // Step 1: Destroy the old verifier instance cleanly
       if ((window as any).recaptchaVerifier) {
         try {
           (window as any).recaptchaVerifier.clear();
-        } catch (e) {
-          console.warn("Could not clear old recaptcha verifier:", e);
+        } catch (_) {
+          console.warn("Could not clear old recaptcha verifier.");
         }
-      }
-      
-      const container = document.getElementById('recaptcha-container');
-      if (container) {
-        container.innerHTML = ''; // Force clear any lingering iframes
+        (window as any).recaptchaVerifier = null;
       }
 
+      // Step 2: Reset the global grecaptcha widget if it was previously rendered
+      try {
+        if (typeof (window as any).grecaptcha !== 'undefined' && typeof (window as any).grecaptcha.reset === 'function') {
+          (window as any).grecaptcha.reset();
+        }
+      } catch (_) { /* gracefully ignore if widget wasn't rendered */ }
+
+      // Step 3: Replace the DOM node entirely — Firebase tracks by element identity,
+      // not innerHTML, so a fresh cloneNode is the only bulletproof reset.
+      const container = document.getElementById('recaptcha-container');
+      if (container && container.parentNode) {
+        const fresh = document.createElement('div');
+        fresh.id = 'recaptcha-container';
+        container.parentNode.replaceChild(fresh, container);
+      }
+
+      // Step 4: Create a brand-new RecaptchaVerifier on the fresh element
       (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
       const recaptchaVerifier = (window as any).recaptchaVerifier;
       const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
@@ -243,7 +258,6 @@ export default function Home() {
     } catch (error: any) {
       console.error("Firebase SMS error:", error);
       alert(`Failed to send SMS OTP: ${error.message || "Unknown error"}`);
-      // Remove fallback bypass logic to enforce real authentication
     }
   };
 
