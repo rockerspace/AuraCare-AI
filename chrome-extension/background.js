@@ -1,30 +1,28 @@
-// AuraCare Background Service Worker
-// Opens the side panel when the extension icon is clicked
+// AuraCare Background Service Worker — Manifest V3
 
+// ── Tell Chrome to open the side panel automatically on icon click ──
+// This is the correct Manifest V3 pattern for always-on side panels
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+});
+
+// Fallback: also handle explicit action click for older Chrome versions
 chrome.action.onClicked.addListener((tab) => {
   chrome.sidePanel.open({ tabId: tab.id });
 });
 
-// Set the side panel to open on action click for all tabs
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.sidePanel.setOptions({
-    enabled: true,
-    path: 'sidepanel.html'
-  });
-});
+// ── Simulated critical alert notifications ──
+// In production this listens to a real WebSocket from the AuraCare backend
+const alerts = [
+  { title: '⚠️ AuraCare Alert', message: 'Jane Doe: Mobility index dropped 40% below baseline.' },
+  { title: '🔴 Critical: AuraCare', message: 'Robert Smith: SpO₂ reading below 90%. Review recommended.' },
+  { title: '🟡 AuraCare Monitor', message: 'Mary Johnson: Sleep duration shorter than 7-day average.' },
+];
 
-// Alert simulation: push a Chrome notification if a critical anomaly is detected
-// In production, this would listen to a real WebSocket from the AuraCare backend
-setInterval(() => {
-  const alerts = [
-    { title: '⚠️ AuraCare Alert', message: 'Jane Doe: Mobility index dropped 40% below baseline.' },
-    { title: '🔴 Critical: AuraCare', message: 'Robert Smith: SpO₂ reading below 90%. Review recommended.' },
-    { title: '🟡 AuraCare Monitor', message: 'Mary Johnson: Sleep duration shorter than 7-day average.' },
-  ];
+chrome.alarms.create('vitalsCheck', { periodInMinutes: 0.5 });
 
-  // Only fire demo notifications occasionally (not every interval)
-  const rand = Math.random();
-  if (rand > 0.92) {
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === 'vitalsCheck' && Math.random() > 0.7) {
     const alert = alerts[Math.floor(Math.random() * alerts.length)];
     chrome.notifications.create({
       type: 'basic',
@@ -34,4 +32,4 @@ setInterval(() => {
       priority: 2
     });
   }
-}, 30000); // Check every 30 seconds
+});
