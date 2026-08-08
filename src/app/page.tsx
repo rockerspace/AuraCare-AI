@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { logTelemetryToBigQuery, runVertexAITriage, fetchDashboardMetrics } from './actions';
 import { auth, ConfirmationResult } from '@/lib/gcp/firebase';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { RecaptchaVerifier, signInWithPhoneNumber, signInWithEmailAndPassword } from 'firebase/auth';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Home() {
@@ -15,6 +15,9 @@ export default function Home() {
   
   // Auth State
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginMode, setLoginMode] = useState<'sms' | 'email'>('email');
+  const [email, setEmail] = useState('demo@auracare.ai');
+  const [password, setPassword] = useState('demo123');
   const [authStep, setAuthStep] = useState<'phone' | 'otp'>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
@@ -247,6 +250,22 @@ export default function Home() {
     }, 400);
   };
 
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // Demo fallback for quick testing
+      if (email === 'demo@auracare.ai' && password === 'demo123') {
+        setIsAuthenticated(true);
+        return;
+      }
+      await signInWithEmailAndPassword(auth, email, password);
+      setIsAuthenticated(true);
+    } catch (error: any) {
+      console.error("Email login error:", error);
+      alert(`Login failed: ${error.message || "Please check your credentials."}`);
+    }
+  };
+
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -347,10 +366,53 @@ export default function Home() {
             <h1 className="text-4xl font-bold tracking-tight">Aura<span className="text-emerald-500">Care</span></h1>
           </div>
 
-          <h2 className="text-2xl font-semibold mb-8 text-center text-neutral-200">Secure Access</h2>
+          <h2 className="text-2xl font-semibold mb-6 text-center text-neutral-200">Secure Access</h2>
           <div id="recaptcha-container"></div>
           
-          {authStep === 'phone' ? (
+          <div className="flex bg-black/40 p-1 rounded-xl mb-6 border border-white/5">
+            <button 
+              className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${loginMode === 'email' ? 'bg-emerald-500/20 text-emerald-400 shadow-sm' : 'text-neutral-500 hover:text-neutral-300'}`}
+              onClick={() => setLoginMode('email')}
+            >
+              Email Login
+            </button>
+            <button 
+              className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${loginMode === 'sms' ? 'bg-emerald-500/20 text-emerald-400 shadow-sm' : 'text-neutral-500 hover:text-neutral-300'}`}
+              onClick={() => setLoginMode('sms')}
+            >
+              SMS OTP
+            </button>
+          </div>
+
+          {loginMode === 'email' ? (
+            <form onSubmit={handleEmailLogin} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-neutral-400 mb-1">Email Address</label>
+                <input 
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="doctor@auracare.ai" 
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-neutral-400 mb-1">Password</label>
+                <input 
+                  type="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••" 
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                  required
+                />
+              </div>
+              <button type="submit" className="w-full py-3 mt-2 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold shadow-[0_0_15px_rgba(52,211,153,0.4)] transition-all">
+                Sign In Securely
+              </button>
+            </form>
+          ) : authStep === 'phone' ? (
             <form onSubmit={handleSendOTP} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-neutral-400 mb-1">Phone Number</label>
@@ -363,7 +425,7 @@ export default function Home() {
                   required
                 />
               </div>
-              <button type="submit" className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold shadow-[0_0_15px_rgba(52,211,153,0.4)] transition-all">
+              <button type="submit" className="w-full py-3 mt-2 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold shadow-[0_0_15px_rgba(52,211,153,0.4)] transition-all">
                 Send SMS OTP
               </button>
             </form>
@@ -380,7 +442,7 @@ export default function Home() {
                   required
                 />
               </div>
-              <button type="submit" className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 rounded-xl font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
+              <button type="submit" className="w-full py-3 mt-2 bg-cyan-600 hover:bg-cyan-500 rounded-xl font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
                 Verify & Login
               </button>
             </form>
