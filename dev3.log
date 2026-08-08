@@ -1,0 +1,24 @@
+
+> auracare-app@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 81841, using available port 3001 instead.
+▲ Next.js 16.3.0 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.0.0.2:3001
+- Environments: .env.local
+✓ Ready in 477ms
+⚠ Warning: Next.js ignored package-lock.json in /Users/narendravenkatesan because it is outside the current Git repository (/Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 106ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          81841
+- Dir:          /Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app
+- Log:          .next/dev/logs/next-development.log
+
+You can access the existing server at http://localhost:3000,
+or run kill 81841 to stop it and start a new one.
+[?25h

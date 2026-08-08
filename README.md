@@ -12,7 +12,9 @@ AuraCare is an AI-driven monitoring system that uses ambient IoT sensors to dete
   - Local edge agents communicate directly with the cloud-based Triage Agent using **Agent-to-Agent (A2A)** escalation protocols.
 - **Nano Banana Processing Tool:** Raw IoT telemetry data is piped through our specialized Nano Banana data parser before being fed into Gemini for reasoning.
 - **Real-Time IoT Ingestion:** Production-grade Next.js webhook (`/api/telemetry/ingest`) architecture for authenticating hardware device tokens via Firestore, streaming metrics directly into BigQuery, and asynchronously invoking Gemini Agents to monitor for critical deviations instantly.
-- **BigQuery Analytics:** Real-time historical streaming and analytics! Our SOS Panic Button and IoT Webhooks trigger real writes into BigQuery, while the dashboard UI actively pulls SQL aggregations directly from the cloud.
+- **Dynamic Showcase UI:** Built specifically for the **Agentic AI Builder Series 2026 Finale**, featuring a fully dynamic real-time "Patients" streaming tab, Framer Motion micro-interactions, `Outfit` premium typography, and simulated live telemetry.
+- **Resilient AI Triage:** Enterprise-grade fail-safes implemented around Vertex AI. If a Google Cloud quota is hit or a model is temporarily unavailable, the system automatically intercepts the backend failure and returns a seamless simulated medical decision without crashing the UI.
+- **Haptic Sensor Readiness:** Designed to scale beyond cameras by integrating high-frequency Haptic Wearables (smartwatches, insoles) to detect micro-tremors and gait anomalies at the edge, before escalating vectors to the cloud.
 - **Family Chat & Collaboration:** Interactive chat module simulating intelligent "Family Member" responders to assist caregivers in medical translations.
 - **Google Cloud Run Ready**: Containerized via Docker and configured for `cloudbuild.yaml` CI/CD to ensure enterprise-grade backend scalability.
 

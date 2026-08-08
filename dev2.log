@@ -1,0 +1,850 @@
+
+> auracare-app@0.1.0 dev
+> next dev
+
+▲ Next.js 16.3.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.0.0.2:3000
+- Environments: .env.local
+✓ Ready in 556ms
+⚠ Warning: Next.js ignored package-lock.json in /Users/narendravenkatesan because it is outside the current Git repository (/Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 26ms
+
+✓ Generated AGENTS.md and CLAUDE.md for AI agents. Set `agentRules: false` in next.config to disable.
+ GET / 200 in 400ms (next.js: 201ms, application-code: 199ms)
+(node:81841) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/v1/firestore_client.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streamingApiCaller.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/normalCalls/timeout.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streaming.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/createApiCall.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/index.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/telemetry/enabled-trace-util.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/document-reference.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+[IoT Ingest] Error processing telemetry: Error: 5 NOT_FOUND: 
+    at POST (src/app/api/telemetry/ingest/route.ts:26:39)
+  24 |     // 2. Authenticate Device (Option B: Unique device tokens in Firestore)
+  25 |     const deviceRef = db.collection('devices').doc(payload.deviceToken);
+> 26 |     const deviceDoc = await deviceRef.get();
+     |                                       ^
+  27 |
+  28 |     if (!deviceDoc.exists) {
+  29 |       console.error(`[IoT Ingest] Unauthorized device token attempted access: ${payload.deviceToken}`); {
+  code: 5,
+  details: '',
+  metadata: Metadata {
+    internalRepr: Map(1) { 'x-debug-tracking-id' => [Array] },
+    opaqueData: Map(0) {},
+    options: {}
+  }
+}
+ POST /api/telemetry/ingest 500 in 2.3s (next.js: 115ms, proxy.ts: 49ms, application-code: 2.2s)
+ POST / 200 in 2.7s (next.js: 4ms, application-code: 2.7s)
+  └─ ƒ fetchDashboardMetrics() in 2672ms src/app/actions.ts
+ POST / 200 in 1313ms (next.js: 3ms, application-code: 1309ms)
+  └─ ƒ fetchDashboardMetrics() in 1300ms src/app/actions.ts
+[BigQuery] Streaming 1 rows to auracare_analytics.sensor_telemetry_historical...
+[MCP Server] Fetching standard context for patient: patient_01
+[MCP Server] Error fetching context for patient_01: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async POST (src/app/api/telemetry/ingest/route.ts:69:5)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+[IoT Ingest] AI Agent Analysis Failed: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async POST (src/app/api/telemetry/ingest/route.ts:69:5)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+ERROR streaming data to BigQuery: Error [PartialFailureError]: 
+    at ignore-listed frames {
+  errors: [ { errors: [Array], row: [Object] } ],
+  response: {
+    kind: 'bigquery#tableDataInsertAllResponse',
+    insertErrors: [ [Object] ]
+  }
+}
+[IoT Ingest] Failed to stream to BigQuery: Error [PartialFailureError]: 
+    at ignore-listed frames {
+  errors: [ { errors: [Array], row: [Object] } ],
+  response: {
+    kind: 'bigquery#tableDataInsertAllResponse',
+    insertErrors: [ [Object] ]
+  }
+}
+ POST /api/telemetry/ingest 200 in 3.7s (next.js: 11ms, proxy.ts: 7ms, application-code: 3.7s)
+[BigQuery] Streaming 1 rows to auracare_analytics.sensor_telemetry_historical...
+[MCP Server] Fetching standard context for patient: patient_01
+[MCP Server] Error fetching context for patient_01: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async POST (src/app/api/telemetry/ingest/route.ts:69:5)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+[IoT Ingest] AI Agent Analysis Failed: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async POST (src/app/api/telemetry/ingest/route.ts:69:5)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+ERROR streaming data to BigQuery: Error [PartialFailureError]: 
+    at ignore-listed frames {
+  errors: [ { errors: [Array], row: [Object] } ],
+  response: {
+    kind: 'bigquery#tableDataInsertAllResponse',
+    insertErrors: [ [Object] ]
+  }
+}
+[IoT Ingest] Failed to stream to BigQuery: Error [PartialFailureError]: 
+    at ignore-listed frames {
+  errors: [ { errors: [Array], row: [Object] } ],
+  response: {
+    kind: 'bigquery#tableDataInsertAllResponse',
+    insertErrors: [ [Object] ]
+  }
+}
+ POST /api/telemetry/ingest 200 in 2.3s (next.js: 6ms, proxy.ts: 11ms, application-code: 2.3s)
+ GET / 200 in 46ms (next.js: 10ms, application-code: 36ms)
+ POST / 200 in 1819ms (next.js: 3ms, application-code: 1816ms)
+  └─ ƒ fetchDashboardMetrics() in 1806ms src/app/actions.ts
+ POST / 200 in 1545ms (next.js: 5ms, application-code: 1540ms)
+  └─ ƒ fetchDashboardMetrics() in 1531ms src/app/actions.ts
+✓ Compiled in 1072ms
+ GET / 200 in 47ms (next.js: 23ms, application-code: 24ms)
+✓ Compiled in 628ms
+✓ Compiled in 428ms
+[browser] ./src/app/page.tsx:202:15
+Error: Expected '</', got 'jsx text'
+  200 |             </form>
+  201 |           )}
+> 202 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 203 |       </div>
+      | ^^^^^^
+  204 |     );
+  205 |   }
+  206 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] 
+[browser] ./src/app/page.tsx:202:15
+Error: Expected '</', got 'jsx text'
+  200 |             </form>
+  201 |           )}
+> 202 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 203 |       </div>
+      | ^^^^^^
+  204 |     );
+  205 |   }
+  206 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] 
+✓ Compiled in 984ms
+ GET / 200 in 48ms (next.js: 16ms, application-code: 32ms)
+ GET / 200 in 106ms (next.js: 11ms, application-code: 95ms)
+ POST / 200 in 4.8s (next.js: 3ms, application-code: 4.8s)
+  └─ ƒ fetchDashboardMetrics() in 4797ms src/app/actions.ts
+ POST / 200 in 2.1s (next.js: 109ms, application-code: 2.0s)
+  └─ ƒ fetchDashboardMetrics() in 2026ms src/app/actions.ts
+ GET / 200 in 29ms (next.js: 13ms, application-code: 16ms)
+✓ Compiled in 389ms
+✓ Compiled in 182ms
+ GET / 200 in 48ms (next.js: 17ms, application-code: 31ms)
+[MCP Server] Fetching standard context for patient: patient_01
+[MCP Server] Error fetching context for patient_01: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+Failed to run Vertex AI Triage via Server Action: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+ POST / 200 in 1989ms (next.js: 10ms, application-code: 1979ms)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 1965ms src/app/actions.ts
+[MCP Server] Fetching standard context for patient: patient_01
+[MCP Server] Error fetching context for patient_01: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+Failed to run Vertex AI Triage via Server Action: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+ POST / 200 in 286ms (next.js: 7ms, application-code: 279ms)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 272ms src/app/actions.ts
+✓ Compiled in 145ms
+ GET / 200 in 44ms (next.js: 15ms, application-code: 30ms)
+ GET / 200 in 40ms (next.js: 20ms, application-code: 20ms)
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+[MCP Server] Fetching standard context for patient: patient_01
+[MCP Server] Error fetching context for patient_01: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+Failed to run Vertex AI Triage via Server Action: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+ POST / 200 in 567ms (next.js: 20ms, application-code: 547ms)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 529ms src/app/actions.ts
+[BigQuery] Streaming 1 rows to auracare_analytics.sensor_telemetry_historical...
+[BigQuery] Successfully inserted 1 rows.
+ POST / 200 in 1002ms (next.js: 32ms, application-code: 970ms)
+  └─ ƒ logTelemetryToBigQuery("patient_01", "SOS_PANIC_TRIGGERED") in 928ms src/app/actions.ts
+ POST / 200 in 3.8s (next.js: 5ms, application-code: 3.8s)
+  └─ ƒ fetchDashboardMetrics() in 3790ms src/app/actions.ts
+[MCP Server] Fetching standard context for patient: patient_01
+[MCP Server] Error fetching context for patient_01: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+Failed to run Vertex AI Triage via Server Action: Error: Patient not found: patient_01
+    at MCPServer.getContext (src/lib/agents/mcp-server.ts:24:15)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:63:21)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  22 |       const doc = await db.collection('patients').doc(patientId).get();
+  23 |       if (!doc.exists) {
+> 24 |         throw new Error(`Patient not found: ${patientId}`);
+     |               ^
+  25 |       }
+  26 |       return { patientId, ...doc.data() } as PatientContext;
+  27 |     } catch (error) {
+ POST / 200 in 1577ms (next.js: 31ms, application-code: 1546ms)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 1506ms src/app/actions.ts
+ GET / 200 in 35ms (next.js: 19ms, application-code: 16ms)
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+[MCP Server] Fetching standard context for patient: patient_01
+[MCP Server] Patient not found in DB. Auto-seeding mock data for patient_01...
+[Firestore Vector] Searching for similar patterns...
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/v1/firestore_client.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streamingApiCaller.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/normalCalls/timeout.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streaming.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/createApiCall.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/query-util.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/vector-query.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+[Firestore Vector] Error searching patterns: Error: 9 FAILED_PRECONDITION: Missing vector index configuration. Please create the required index with the following gcloud command: gcloud firestore indexes composite create --project=vemarai --collection-group=behavioral_patterns --query-scope=COLLECTION --field-config=vector-config='{"dimension":"3","flat": "{}"}',field-path=embedding
+    at VectorSearchService.searchHistoricalPatterns (src/lib/gcp/vector-search.ts:22:36)
+    at BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:68:43)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  20 |       });
+  21 |       
+> 22 |       const snapshot = await query.get();
+     |                                    ^
+  23 |       const results = snapshot.docs.map((doc: any) => doc.data());
+  24 |       
+  25 |       console.log(`[Firestore Vector] Found ${results.length} similar historical patterns`); {
+  code: 9,
+  details: `Missing vector index configuration. Please create the required index with the following gcloud command: gcloud firestore indexes composite create --project=vemarai --collection-group=behavioral_patterns --query-scope=COLLECTION --field-config=vector-config='{"dimension":"3","flat": "{}"}',field-path=embedding`,
+  metadata: Metadata {
+    internalRepr: Map(1) { 'x-debug-tracking-id' => [Array] },
+    opaqueData: Map(0) {},
+    options: {}
+  }
+}
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/v1/firestore_client.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streamingApiCaller.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/normalCalls/timeout.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streaming.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/createApiCall.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/query-util.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/vector-query.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+Failed to run Vertex AI Triage via Server Action: Error: 9 FAILED_PRECONDITION: Missing vector index configuration. Please create the required index with the following gcloud command: gcloud firestore indexes composite create --project=vemarai --collection-group=behavioral_patterns --query-scope=COLLECTION --field-config=vector-config='{"dimension":"3","flat": "{}"}',field-path=embedding
+    at VectorSearchService.searchHistoricalPatterns (src/lib/gcp/vector-search.ts:22:36)
+    at BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:68:43)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  20 |       });
+  21 |       
+> 22 |       const snapshot = await query.get();
+     |                                    ^
+  23 |       const results = snapshot.docs.map((doc: any) => doc.data());
+  24 |       
+  25 |       console.log(`[Firestore Vector] Found ${results.length} similar historical patterns`); {
+  code: 9,
+  details: `Missing vector index configuration. Please create the required index with the following gcloud command: gcloud firestore indexes composite create --project=vemarai --collection-group=behavioral_patterns --query-scope=COLLECTION --field-config=vector-config='{"dimension":"3","flat": "{}"}',field-path=embedding`,
+  metadata: Metadata {
+    internalRepr: Map(1) { 'x-debug-tracking-id' => [Array] },
+    opaqueData: Map(0) {},
+    options: {}
+  }
+}
+ POST / 200 in 2.0s (next.js: 38ms, application-code: 1996ms)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 1959ms src/app/actions.ts
+[MCP Server] Fetching standard context for patient: patient_01
+[Firestore Vector] Searching for similar patterns...
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/v1/firestore_client.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streamingApiCaller.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/normalCalls/timeout.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streaming.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/createApiCall.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/query-util.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/vector-query.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+[Firestore Vector] Error searching patterns: Error: 9 FAILED_PRECONDITION: Missing vector index configuration. Please create the required index with the following gcloud command: gcloud firestore indexes composite create --project=vemarai --collection-group=behavioral_patterns --query-scope=COLLECTION --field-config=vector-config='{"dimension":"3","flat": "{}"}',field-path=embedding
+    at VectorSearchService.searchHistoricalPatterns (src/lib/gcp/vector-search.ts:22:36)
+    at BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:68:43)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  20 |       });
+  21 |       
+> 22 |       const snapshot = await query.get();
+     |                                    ^
+  23 |       const results = snapshot.docs.map((doc: any) => doc.data());
+  24 |       
+  25 |       console.log(`[Firestore Vector] Found ${results.length} similar historical patterns`); {
+  code: 9,
+  details: `Missing vector index configuration. Please create the required index with the following gcloud command: gcloud firestore indexes composite create --project=vemarai --collection-group=behavioral_patterns --query-scope=COLLECTION --field-config=vector-config='{"dimension":"3","flat": "{}"}',field-path=embedding`,
+  metadata: Metadata {
+    internalRepr: Map(1) { 'x-debug-tracking-id' => [Array] },
+    opaqueData: Map(0) {},
+    options: {}
+  }
+}
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/v1/firestore_client.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streamingApiCaller.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/normalCalls/timeout.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/streamingCalls/streaming.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/node_modules/google-gax/build/src/createApiCall.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/query-util.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+file:///Users/narendravenkatesan/.gemini/antigravity/scratch/auracare-app/node_modules/@google-cloud/firestore/build/src/reference/vector-query.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: TypeError [ERR_INVALID_ARG_TYPE]: The "payload" argument must be of type object. Received null
+Failed to run Vertex AI Triage via Server Action: Error: 9 FAILED_PRECONDITION: Missing vector index configuration. Please create the required index with the following gcloud command: gcloud firestore indexes composite create --project=vemarai --collection-group=behavioral_patterns --query-scope=COLLECTION --field-config=vector-config='{"dimension":"3","flat": "{}"}',field-path=embedding
+    at VectorSearchService.searchHistoricalPatterns (src/lib/gcp/vector-search.ts:22:36)
+    at BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:68:43)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  20 |       });
+  21 |       
+> 22 |       const snapshot = await query.get();
+     |                                    ^
+  23 |       const results = snapshot.docs.map((doc: any) => doc.data());
+  24 |       
+  25 |       console.log(`[Firestore Vector] Found ${results.length} similar historical patterns`); {
+  code: 9,
+  details: `Missing vector index configuration. Please create the required index with the following gcloud command: gcloud firestore indexes composite create --project=vemarai --collection-group=behavioral_patterns --query-scope=COLLECTION --field-config=vector-config='{"dimension":"3","flat": "{}"}',field-path=embedding`,
+  metadata: Metadata {
+    internalRepr: Map(1) { 'x-debug-tracking-id' => [Array] },
+    opaqueData: Map(0) {},
+    options: {}
+  }
+}
+ POST / 200 in 919ms (next.js: 13ms, application-code: 906ms)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 888ms src/app/actions.ts
+ GET / 200 in 55ms (next.js: 33ms, application-code: 23ms)
+ GET / 200 in 35ms (next.js: 4ms, application-code: 31ms)
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+ POST / 200 in 2.1s (next.js: 1.5ms, application-code: 2.1s)
+  └─ ƒ fetchDashboardMetrics() in 2089ms src/app/actions.ts
+ POST / 200 in 1581ms (next.js: 1.8ms, application-code: 1579ms)
+  └─ ƒ fetchDashboardMetrics() in 1574ms src/app/actions.ts
+[MCP Server] Fetching standard context for patient: patient_01
+[Firestore Vector] Searching for similar patterns...
+[Firestore Vector] Index not ready or error searching patterns: 9 FAILED_PRECONDITION: The query requires an index. That index is currently building and cannot be used yet. See its status here: https://console.firebase.google.com/v1/r/project/vemarai/firestore/indexes?create_composite=Cl5wcm9qZWN0cy92ZW1hcmFpL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9iZWhhdmlvcmFsX3BhdHRlcm5zL2luZGV4ZXMvQ0lDQWdPalhoNEVLEAEaDAoIX19uYW1lX18QAQ
+[Firestore Vector] Falling back to mock historical baseline until index builds...
+[Behavioral Agent] Analyzing telemetry for Jane Doe...
+[Behavioral Agent] Analysis failed, defaulting to cautious escalation Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  88 |     try {
+  89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+> 90 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  93 |       const result = JSON.parse(cleanText); {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    88 |     try {
+    89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  > 90 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    93 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    88 |     try {
+    89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  > 90 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    93 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Behavioral Agent] Anomaly detected! Initiating Agent-to-Agent (A2A) protocol with Medical Triage Agent.
+[Triage Agent] Evaluating anomaly for Jane Doe...
+[Vertex AI / Gemini] Analyzing prompt using Gemini 1.5 Flash model...
+[Vertex AI / Gemini] Error analyzing prompt: Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  36 |     
+  37 |     try {
+> 38 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  40 |       
+  41 |       // Clean up markdown in case it was returned {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    36 |     
+    37 |     try {
+  > 38 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    40 |       
+    41 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    36 |     
+    37 |     try {
+  > 38 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    40 |       
+    41 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+Failed to run Vertex AI Triage via Server Action: Error: AI Triage Failed: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:53:13)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  51 |       console.error("[Vertex AI / Gemini] Error analyzing prompt:", e);
+  52 |       // In production, we do not swallow AI failures. Escalate immediately!
+> 53 |       throw new Error(`AI Triage Failed: ${e instanceof Error ? e.message : 'Unknown Error'}`);
+     |             ^
+  54 |     }
+  55 |   }
+  56 | }
+ POST / 200 in 4.3s (next.js: 11ms, application-code: 4.3s)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 4271ms src/app/actions.ts
+ GET / 200 in 66ms (next.js: 37ms, application-code: 29ms)
+ GET / 200 in 46ms (next.js: 5ms, application-code: 41ms)
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+ POST / 200 in 1700ms (next.js: 2ms, application-code: 1698ms)
+  └─ ƒ fetchDashboardMetrics() in 1679ms src/app/actions.ts
+ POST / 200 in 1432ms (next.js: 1.9ms, application-code: 1430ms)
+  └─ ƒ fetchDashboardMetrics() in 1423ms src/app/actions.ts
+[MCP Server] Fetching standard context for patient: patient_01
+[Firestore Vector] Searching for similar patterns...
+[Firestore Vector] Index not ready or error searching patterns: 9 FAILED_PRECONDITION: The query requires an index. That index is currently building and cannot be used yet. See its status here: https://console.firebase.google.com/v1/r/project/vemarai/firestore/indexes?create_composite=Cl5wcm9qZWN0cy92ZW1hcmFpL2RhdGFiYXNlcy8oZGVmYXVsdCkvY29sbGVjdGlvbkdyb3Vwcy9iZWhhdmlvcmFsX3BhdHRlcm5zL2luZGV4ZXMvQ0lDQWdPalhoNEVLEAEaDAoIX19uYW1lX18QAQ
+[Firestore Vector] Falling back to mock historical baseline until index builds...
+[Behavioral Agent] Analyzing telemetry for Jane Doe...
+[Behavioral Agent] Analysis failed, defaulting to cautious escalation Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  88 |     try {
+  89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+> 90 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  93 |       const result = JSON.parse(cleanText); {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    88 |     try {
+    89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  > 90 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    93 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    88 |     try {
+    89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  > 90 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    93 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Behavioral Agent] Anomaly detected! Initiating Agent-to-Agent (A2A) protocol with Medical Triage Agent.
+[Triage Agent] Evaluating anomaly for Jane Doe...
+[Vertex AI / Gemini] Analyzing prompt using Gemini 1.5 Flash model...
+[Vertex AI / Gemini] Error analyzing prompt: Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  36 |     
+  37 |     try {
+> 38 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  40 |       
+  41 |       // Clean up markdown in case it was returned {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    36 |     
+    37 |     try {
+  > 38 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    40 |       
+    41 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    36 |     
+    37 |     try {
+  > 38 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    40 |       
+    41 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+Failed to run Vertex AI Triage via Server Action: Error: AI Triage Failed: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:53:13)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  51 |       console.error("[Vertex AI / Gemini] Error analyzing prompt:", e);
+  52 |       // In production, we do not swallow AI failures. Escalate immediately!
+> 53 |       throw new Error(`AI Triage Failed: ${e instanceof Error ? e.message : 'Unknown Error'}`);
+     |             ^
+  54 |     }
+  55 |   }
+  56 | }
+ POST / 200 in 4.0s (next.js: 13ms, application-code: 3.9s)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 3927ms src/app/actions.ts
+[MCP Server] Fetching standard context for patient: patient_01
+[Firestore Vector] Searching for similar patterns...
+[Firestore Vector] Found 0 similar historical patterns
+[Behavioral Agent] Analyzing telemetry for Jane Doe...
+[Behavioral Agent] Analysis failed, defaulting to cautious escalation Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  88 |     try {
+  89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+> 90 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  93 |       const result = JSON.parse(cleanText); {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    88 |     try {
+    89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  > 90 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    93 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:90:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    88 |     try {
+    89 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  > 90 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    91 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    92 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    93 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Behavioral Agent] Anomaly detected! Initiating Agent-to-Agent (A2A) protocol with Medical Triage Agent.
+[Triage Agent] Evaluating anomaly for Jane Doe...
+[Vertex AI / Gemini] Analyzing prompt using Gemini 1.5 Flash model...
+[Vertex AI / Gemini] Error analyzing prompt: Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  36 |     
+  37 |     try {
+> 38 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  40 |       
+  41 |       // Clean up markdown in case it was returned {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    36 |     
+    37 |     try {
+  > 38 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    40 |       
+    41 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:38:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    36 |     
+    37 |     try {
+  > 38 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    39 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    40 |       
+    41 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+Failed to run Vertex AI Triage via Server Action: Error: AI Triage Failed: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.5-flash-001` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:53:13)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:107:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  51 |       console.error("[Vertex AI / Gemini] Error analyzing prompt:", e);
+  52 |       // In production, we do not swallow AI failures. Escalate immediately!
+> 53 |       throw new Error(`AI Triage Failed: ${e instanceof Error ? e.message : 'Unknown Error'}`);
+     |             ^
+  54 |     }
+  55 |   }
+  56 | }
+ POST / 200 in 2.8s (next.js: 10ms, application-code: 2.8s)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 2810ms src/app/actions.ts
+ GET / 200 in 238ms (next.js: 182ms, application-code: 56ms)
+The VertexAI class and all its dependencies are deprecated as of June 24, 2025 and will be removed on June 24, 2026. Please use the Google Gen AI SDK (https://www.npmjs.com/package/@google/genai) to access Gemini features. For details, see https://cloud.google.com/vertex-ai/generative-ai/docs/deprecations/genai-vertexai-sdk.
+[MCP Server] Fetching standard context for patient: patient_01
+[Firestore Vector] Searching for similar patterns...
+[Firestore Vector] Found 0 similar historical patterns
+[Behavioral Agent] Analyzing telemetry for Jane Doe...
+[Behavioral Agent] Analysis failed, defaulting to cautious escalation Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+   95 |     try {
+   96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+>  97 |       const resp = await generativeModel.generateContent(prompt);
+      |                    ^
+   98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+   99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  100 |       const result = JSON.parse(cleanText); {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+     95 |     try {
+     96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  >  97 |       const resp = await generativeModel.generateContent(prompt);
+        |                    ^
+     98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+     99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    100 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:97:20)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+     95 |     try {
+     96 |       console.log(`[Behavioral Agent] Analyzing telemetry for ${context.name}...`);
+  >  97 |       const resp = await generativeModel.generateContent(prompt);
+        |                    ^
+     98 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+     99 |       const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    100 |       const result = JSON.parse(cleanText); {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Behavioral Agent] Anomaly detected! Initiating Agent-to-Agent (A2A) protocol with Medical Triage Agent.
+[Triage Agent] Evaluating anomaly for Jane Doe...
+[Vertex AI / Gemini] Analyzing prompt using Gemini 1.5 Flash model...
+[Vertex AI / Gemini] Error analyzing prompt: Error [ClientError]: [VertexAI.ClientError]: got status: 404 Not Found. {"error":{"code":404,"message":"Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.","status":"NOT_FOUND"}}
+    at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+    at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+    at async runVertexAITriage (src/app/actions.ts:28:20)
+  37 |     
+  38 |     try {
+> 39 |       const resp = await generativeModel.generateContent(prompt);
+     |                    ^
+  40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+  41 |       
+  42 |       // Clean up markdown in case it was returned {
+  stackTrace: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    37 |     
+    38 |     try {
+  > 39 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    41 |       
+    42 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  },
+  [cause]: Error: Publisher model `projects/vemarai/locations/us-central1/publishers/google/models/gemini-1.0-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.
+      at async MedicalTriageAgent.evaluateAnomaly (src/lib/agents/gemini-multi-agent.ts:39:20)
+      at async BehavioralAnalysisAgent.analyzeStream (src/lib/agents/gemini-multi-agent.ts:114:28)
+      at async runVertexAITriage (src/app/actions.ts:28:20)
+    37 |     
+    38 |     try {
+  > 39 |       const resp = await generativeModel.generateContent(prompt);
+       |                    ^
+    40 |       const text = resp.response.candidates?.[0].content.parts[0].text || "{}";
+    41 |       
+    42 |       // Clean up markdown in case it was returned {
+    code: 404,
+    status: 'NOT_FOUND',
+    errorDetails: undefined
+  }
+}
+[Vertex AI / Gemini] Falling back to simulated AI response due to GCP API/Quota restrictions...
+ POST / 200 in 5.1s (next.js: 16ms, application-code: 5.1s)
+  └─ ƒ runVertexAITriage("patient_01", [{"type":"mobility","value":30}]) in 5080ms src/app/actions.ts
+ POST / 200 in 1760ms (next.js: 7ms, application-code: 1753ms)
+  └─ ƒ fetchDashboardMetrics() in 1745ms src/app/actions.ts
+[BigQuery] Streaming 1 rows to auracare_analytics.sensor_telemetry_historical...
+[BigQuery] Successfully inserted 1 rows.
+ POST / 200 in 1836ms (next.js: 18ms, application-code: 1819ms)
+  └─ ƒ logTelemetryToBigQuery("patient_01", "SOS_PANIC_TRIGGERED") in 1795ms src/app/actions.ts
+ POST / 200 in 1440ms (next.js: 3ms, application-code: 1437ms)
+  └─ ƒ fetchDashboardMetrics() in 1429ms src/app/actions.ts
+✓ Compiled in 363ms
+ GET / 200 in 45ms (next.js: 16ms, application-code: 29ms)
+ POST / 200 in 1616ms (next.js: 1.4ms, application-code: 1614ms)
+  └─ ƒ fetchDashboardMetrics() in 1608ms src/app/actions.ts
+ POST / 200 in 1330ms (next.js: 3ms, application-code: 1327ms)
+  └─ ƒ fetchDashboardMetrics() in 1322ms src/app/actions.ts
+[browser] Firebase SMS error: Error: reCAPTCHA client element has been removed: 0
+    at Array.<anonymous> (https://www.gstatic.com/recaptcha/releases/w_Yb7dGGXaKesJ7BMiqFJqBG/recaptcha__en.js:239:498)
+    at <unknown> (https://www.gstatic.com/recaptcha/releases/w_Yb7dGGXaKesJ7BMiqFJqBG/recaptcha__en.js:108:430) (src/app/page.tsx:131:15)
