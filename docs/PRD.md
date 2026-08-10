@@ -1,17 +1,17 @@
-# Product Requirements Document (PRD) - AuraCare
+# Product Requirements Document (PRD) - MVP VRN
 **Version:** 2.0
 **Standard:** IEEE 830-1998 (Recommended Practice for Software Requirements Specifications)
 
 ## 1. Introduction
 ### 1.1 Purpose
-The purpose of this document is to define the software requirements for AuraCare, a proactive, AI-driven elderly monitoring system. It specifies the mandatory architectural stack required for the hackathon submission.
+The purpose of this document is to define the software requirements for MVP VRN, a proactive, AI-driven elderly monitoring system. It specifies the mandatory architectural stack required for the hackathon submission.
 
 ### 1.2 Scope
-AuraCare utilizes ambient IoT sensors and multimodal intelligence (audio/video) to detect deviations in daily routines and emotional states, alerting caregivers before emergencies occur. The system strictly utilizes the Google Cloud and AI stack.
+MVP VRN utilizes ambient IoT sensors and multimodal intelligence (audio/video) to detect deviations in daily routines and emotional states, alerting caregivers before emergencies occur. The system strictly utilizes the Google Cloud and AI stack.
 
 ## 2. Overall Description
 ### 2.1 Product Perspective
-AuraCare is an intelligent distributed system comprising an edge IoT hub and cloud microservices. It leverages **Gemma 2B** for edge processing and **Gemini 1.5 Pro/Flash** on **Vertex AI** for cloud reasoning.
+MVP VRN is an intelligent distributed system comprising an edge IoT hub and cloud microservices. It leverages **Gemma 2B** for edge processing and **Gemini 1.5 Pro/Flash** on **Vertex AI** for cloud reasoning.
 
 ### 2.2 User Classes
 - **Primary Users:** Family caregivers, professional medical staff.

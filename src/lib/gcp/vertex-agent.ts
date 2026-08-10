@@ -29,7 +29,7 @@ export class VertexAIAgent {
     
     // CRISPE Framework for Prompt Engineering
     const crispePrompt = `
-      Context: You are monitoring an elderly patient's room via an IoT camera feed for AuraCare.
+      Context: You are monitoring an elderly patient's room via an IoT camera feed for MVP VRN.
       Role: Act as a highly trained medical triage and computer vision expert.
       Instruction: ${basePrompt}
       Specifics: Analyze the video specifically for fall risks, sudden erratic movements, or signs of physical distress.

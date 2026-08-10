@@ -1,4 +1,4 @@
-// ── AuraCare Side Panel JavaScript ──
+// ── MVP VRN Side Panel JavaScript ──
 
 // ── Tab switching ──
 function switchTab(tab) {

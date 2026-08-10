@@ -34,7 +34,7 @@ export class A2ACoordinator {
     
     // 2. Format a structured CRISPE prompt for the cloud agent
     const prompt = `
-      Context: You are the AuraCare Medical Triage Agent (Gemini 1.5 Pro).
+      Context: You are the MVP VRN Medical Triage Agent (Gemini 1.5 Pro).
       Role: Assess the escalated anomaly from the local Gemma edge node.
       Instruction: Review the standardized MCP context and determine if emergency services are required.
       Specifics: Focus on mobility drops and heart rate spikes.

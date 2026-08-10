@@ -1,6 +1,6 @@
-# Architecture - AuraCare
+# Architecture - MVP VRN
 
-AuraCare leverages a modern, serverless Google Tech Stack combined with AI Agent frameworks to provide proactive caregiver support.
+MVP VRN leverages a modern, serverless Google Tech Stack combined with AI Agent frameworks to provide proactive caregiver support.
 
 ## High-Level Architecture Diagram
 *(Mermaid Diagram)*

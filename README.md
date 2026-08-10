@@ -1,4 +1,4 @@
-# 🌟 AuraCare — Proactive Elderly Care, Powered by Agentic AI
+# 🌟 MVP VRN — Proactive Elderly Care, Powered by Agentic AI
 
 > **Built for the Agentic AI Builder Series 2026 Finale**  
 > A production-grade, real-time AI Agent dashboard monitoring elderly patients using IoT sensors, haptic wearables, multi-agent reasoning (ADK + A2A + MCP), and Google Vertex AI — deployed on Google Cloud Run.
@@ -15,7 +15,7 @@
 
 ## 🚀 Live Demo
 
-### **[▶ Launch AuraCare on Google Cloud Run](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)**
+### **[▶ Launch MVP VRN on Google Cloud Run](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)**
 
 ### **[🧩 Install Chrome Extension](./chrome-extension)** — Sidebar dashboard in any Chrome tab
 
@@ -23,14 +23,14 @@
 
 ## 🧩 Chrome Extension
 
-AuraCare ships with a **Chrome Side Panel Extension** that brings the full dashboard into any browser tab — no new windows, no switching apps.
+MVP VRN ships with a **Chrome Side Panel Extension** that brings the full dashboard into any browser tab — no new windows, no switching apps.
 
 ### Install in 30 seconds
 1. Open Chrome → go to **`chrome://extensions`**
 2. Enable **Developer mode** (top-right toggle)
 3. Click **"Load unpacked"**
 4. Select the **`chrome-extension/`** folder from this repo
-5. Click the AuraCare icon in your Chrome toolbar → sidebar opens instantly!
+5. Click the MVP VRN icon in your Chrome toolbar → sidebar opens instantly!
 
 ### Extension Features
 
@@ -58,9 +58,9 @@ chrome-extension/
 
 ---
 
-## 📌 What Is AuraCare?
+## 📌 What Is MVP VRN?
 
-AuraCare is a **proactive, AI-driven caregiving platform** for elderly patients. Rather than reacting to emergencies, AuraCare's multi-agent network monitors **subtle real-time deviations** in daily routines — mobility, sleep, vitals, sentiment — and alerts caregivers before a crisis occurs.
+MVP VRN is a **proactive, AI-driven caregiving platform** for elderly patients. Rather than reacting to emergencies, MVP VRN's multi-agent network monitors **subtle real-time deviations** in daily routines — mobility, sleep, vitals, sentiment — and alerts caregivers before a crisis occurs.
 
 The platform is built around a fully decoupled **Agentic AI Architecture**:
 
@@ -233,8 +233,12 @@ GCP_REGION="us-central1"
 ```
 
 ```bash
+# Visit the live application deployed on Google Cloud Run
+# https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app
+
+# Alternatively, to run the development server locally:
 npm run dev
-# Open http://localhost:3000
+# Then open http://localhost:3000
 ```
 
 ---
@@ -243,7 +247,7 @@ npm run dev
 
 ```bash
 # One-command deploy from source
-gcloud run deploy auracare-app \
+gcloud run deploy mvpvrn-app \
   --source . \
   --region us-central1 \
   --platform managed \
@@ -258,7 +262,7 @@ gcloud run deploy auracare-app \
 ## 📁 Project Structure
 
 ```
-auracare-app/
+mvpvrn-app/
 ├── src/
 │   ├── app/
 │   │   ├── page.tsx              # Main dashboard: all tabs, IoT simulation, Agent & Family Chat
@@ -297,7 +301,7 @@ auracare-app/
 
  About This Project
 
-AuraCare was built end-to-end demonstrating how a coordinated network of specialized AI agents — connected via **A2A protocols**, grounded by **MCP-served context**, and powered by **Vertex AI (Gemini 1.5 Pro)** — can transform reactive healthcare into **proactive, personalized, always-on caregiving** at scale.
+MVP VRN was built end-to-end demonstrating how a coordinated network of specialized AI agents — connected via **A2A protocols**, grounded by **MCP-served context**, and powered by **Vertex AI (Gemini 1.5 Pro)** — can transform reactive healthcare into **proactive, personalized, always-on caregiving** at scale.
 
 The platform also demonstrates **scalability through Haptic Wearable sensors**: high-frequency micro-tremor and gait data is processed at the edge before being escalated to the cloud agent network, enabling fall-risk detection and behavioral anomaly identification without requiring constant camera monitoring.
 

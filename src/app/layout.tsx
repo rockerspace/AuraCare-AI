@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AuraCare - Proactive Caregiving",
+  title: "MVP VRN - Proactive Caregiving",
   description: "Proactive AI-driven monitoring system for elderly care.",
 };
 

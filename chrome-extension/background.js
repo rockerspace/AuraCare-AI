@@ -1,4 +1,4 @@
-// AuraCare Background Service Worker — Manifest V3
+// MVP VRN Background Service Worker — Manifest V3
 
 // ── Tell Chrome to open the side panel automatically on icon click ──
 // This is the correct Manifest V3 pattern for always-on side panels
@@ -12,11 +12,11 @@ chrome.action.onClicked.addListener((tab) => {
 });
 
 // ── Simulated critical alert notifications ──
-// In production this listens to a real WebSocket from the AuraCare backend
+// In production this listens to a real WebSocket from the MVP VRN backend
 const alerts = [
-  { title: '⚠️ AuraCare Alert', message: 'Jane Doe: Mobility index dropped 40% below baseline.' },
-  { title: '🔴 Critical: AuraCare', message: 'Robert Smith: SpO₂ reading below 90%. Review recommended.' },
-  { title: '🟡 AuraCare Monitor', message: 'Mary Johnson: Sleep duration shorter than 7-day average.' },
+  { title: '⚠️ MVP VRN Alert', message: 'Jane Doe: Mobility index dropped 40% below baseline.' },
+  { title: '🔴 Critical: MVP VRN', message: 'Robert Smith: SpO₂ reading below 90%. Review recommended.' },
+  { title: '🟡 MVP VRN Monitor', message: 'Mary Johnson: Sleep duration shorter than 7-day average.' },
 ];
 
 chrome.alarms.create('vitalsCheck', { periodInMinutes: 0.5 });

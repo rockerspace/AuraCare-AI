@@ -16,7 +16,7 @@ export default function Home() {
   // Auth State
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginMode, setLoginMode] = useState<'sms' | 'email'>('email');
-  const [email, setEmail] = useState('demo@auracare.ai');
+  const [email, setEmail] = useState('demo@mvpvrn.ai');
   const [password, setPassword] = useState('demo123');
   const [authStep, setAuthStep] = useState<'phone' | 'otp'>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -254,7 +254,7 @@ export default function Home() {
     e.preventDefault();
     try {
       // Demo fallback for quick testing
-      if (email === 'demo@auracare.ai' && password === 'demo123') {
+      if (email === 'demo@mvpvrn.ai' && password === 'demo123') {
         setIsAuthenticated(true);
         return;
       }
@@ -360,7 +360,7 @@ export default function Home() {
               whileHover={{ rotate: 180, scale: 1.1 }}
               transition={{ duration: 0.5 }}
               src="/logo.jpg" 
-              alt="AuraCare Logo" 
+              alt="MVP VRN Logo" 
               className="w-12 h-12 rounded-full shadow-[0_0_25px_rgba(52,211,153,0.5)]" 
             />
             <h1 className="text-4xl font-bold tracking-tight">Aura<span className="text-emerald-500">Care</span></h1>
@@ -392,7 +392,7 @@ export default function Home() {
                   type="email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="doctor@auracare.ai" 
+                  placeholder="doctor@mvpvrn.ai" 
                   className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors"
                   required
                 />
@@ -469,8 +469,8 @@ export default function Home() {
             onClick={() => setActiveTab('Dashboard')}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.jpg" alt="AuraCare Logo" className="w-12 h-12 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.5)]" />
-            <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-200">AuraCare</h1>
+            <img src="/logo.jpg" alt="MVP VRN Logo" className="w-12 h-12 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.5)]" />
+            <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-200">MVP VRN</h1>
           </motion.div>
           
           <div className="space-y-3">

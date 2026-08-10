@@ -1,6 +1,6 @@
-# AI Agent Protocols - AuraCare
+# AI Agent Protocols - MVP VRN
 
-AuraCare uses a robust, production-grade agentic architecture to process IoT streams and trigger real-time actions.
+MVP VRN uses a robust, production-grade agentic architecture to process IoT streams and trigger real-time actions.
 
 ## 1. The Medical Triage Agent (Gemini 1.5 Pro)
 The core of our intelligence layer is the Medical Triage Agent, implemented in `src/lib/agents/gemini-multi-agent.ts`.
