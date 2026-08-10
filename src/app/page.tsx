@@ -363,7 +363,7 @@ export default function Home() {
               alt="MVP VRN Logo" 
               className="w-12 h-12 rounded-full shadow-[0_0_25px_rgba(52,211,153,0.5)]" 
             />
-            <h1 className="text-4xl font-bold tracking-tight">Aura<span className="text-emerald-500">Care</span></h1>
+            <h1 className="text-4xl font-bold tracking-tight">MVP <span className="text-emerald-500">VRN</span></h1>
           </div>
 
           <h2 className="text-2xl font-semibold mb-6 text-center text-neutral-200">Secure Access</h2>
