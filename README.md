@@ -4,7 +4,7 @@
 > A production-grade, real-time AI Agent dashboard monitoring elderly patients using IoT sensors, haptic wearables, multi-agent reasoning (ADK + A2A + MCP), and Google Vertex AI — deployed on Google Cloud Run.
 
 [![CI](https://github.com/rockerspace/AI-Agent-Series-Builder-Finale-2026/actions/workflows/ci.yml/badge.svg)](https://github.com/rockerspace/AI-Agent-Series-Builder-Finale-2026/actions)
-[![Deployed on Google Cloud Run](https://img.shields.io/badge/Live-Google%20Cloud%20Run-4285F4?logo=google-cloud&logoColor=white)](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)
+[![Deployed on Google Cloud Run](https://img.shields.io/badge/Live-Google%20Cloud%20Run-4285F4?logo=google-cloud&logoColor=white)](https://mvp-vrn-805096709254.us-central1.run.app)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.3%20Turbopack-black?logo=next.js)](https://nextjs.org)
 [![Vertex AI](https://img.shields.io/badge/AI-Gemini%201.5%20Pro-blue?logo=google)](https://cloud.google.com/vertex-ai)
 [![Firebase Auth](https://img.shields.io/badge/Auth-Firebase%20SMS%20OTP-orange?logo=firebase)](https://firebase.google.com)
@@ -15,7 +15,7 @@
 
 ## 🚀 Live Demo
 
-### **[▶ Launch MVP VRN on Google Cloud Run](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)**
+### **[▶ Launch MVP VRN on Google Cloud Run](https://mvp-vrn-805096709254.us-central1.run.app)**
 
 ### **[🧩 Install Chrome Extension](./chrome-extension)** — Sidebar dashboard in any Chrome tab
 
@@ -234,7 +234,7 @@ GCP_REGION="us-central1"
 
 ```bash
 # Visit the live application deployed on Google Cloud Run
-# https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app
+# https://mvp-vrn-805096709254.us-central1.run.app
 
 # Alternatively, to run the development server locally:
 npm run dev
