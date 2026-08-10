@@ -309,19 +309,4 @@ The platform also demonstrates **scalability through Haptic Wearable sensors**: 
 
 *Built with ❤️ using Google Cloud · Vertex AI · Firebase · Next.js · ADK · MCP · A2A*
 
-## 📱 Native iOS App (Companion)
 
-MVP VRN includes a fully native iOS Companion app built with React Native and Expo. It allows caregivers to receive real-time alerts and check patient vitals securely on the go.
-
-### Running the App on Your Phone
-1. Install **Expo Go** from the Apple App Store on your iPhone.
-2. In your terminal, navigate to the mobile app directory:
-   ```bash
-   cd ios
-   ```
-3. Start the Expo bundler:
-   ```bash
-   npx expo start
-   ```
-4. Open the Camera app on your iPhone and scan the QR code that appears in your terminal.
-5. The MVP VRN iOS app will load directly onto your device!
