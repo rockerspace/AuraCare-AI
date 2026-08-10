@@ -6,6 +6,7 @@ import { logTelemetryToBigQuery, runVertexAITriage, fetchDashboardMetrics } from
 import { auth, ConfirmationResult } from '@/lib/gcp/firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber, signInWithEmailAndPassword } from 'firebase/auth';
 import { motion, AnimatePresence } from 'framer-motion';
+import VitalsChart from '@/components/VitalsChart';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('Dashboard');
@@ -474,7 +475,7 @@ export default function Home() {
           </motion.div>
           
           <div className="space-y-3">
-            {['Dashboard', 'Patients', 'Alerts', 'Room View', 'Agent Chat', 'Family Chat', 'Settings'].map((item) => (
+            {['Dashboard', 'Analytics', 'Patients', 'Alerts', 'Room View', 'Agent Chat', 'Family Chat', 'Settings'].map((item) => (
               <motion.button 
                 whileHover={{ x: 5 }}
                 key={item} 
@@ -629,7 +630,37 @@ export default function Home() {
             </div>
           </motion.div>
         )}
-        </AnimatePresence>
+
+        {/* Analytics Tab */}
+        {activeTab === 'Analytics' && (
+          <motion.div
+            key="Analytics"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="space-y-6"
+          >
+            <div className="flex justify-between items-end">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight">Analytics & Trends</h2>
+                <p className="text-neutral-400 mt-1">Deep dive into historical patient data using BigQuery</p>
+              </div>
+            </div>
+
+            <VitalsChart />
+            
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              <div className="bg-black/40 border border-white/10 rounded-xl p-6">
+                <h3 className="text-sm font-semibold text-neutral-400 mb-2">30-Day Average Mobility</h3>
+                <div className="text-3xl font-bold text-white">76% <span className="text-sm text-red-500 font-normal ml-2">↓ 4%</span></div>
+              </div>
+              <div className="bg-black/40 border border-white/10 rounded-xl p-6">
+                <h3 className="text-sm font-semibold text-neutral-400 mb-2">Sleep Efficiency</h3>
+                <div className="text-3xl font-bold text-white">82% <span className="text-sm text-emerald-500 font-normal ml-2">↑ 2%</span></div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         {activeTab === 'Patients' && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
