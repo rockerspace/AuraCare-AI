@@ -1132,6 +1132,7 @@ export default function Home() {
             </div>
           </div>
         )}
+        </AnimatePresence>
       </main>
     </div>
   );
