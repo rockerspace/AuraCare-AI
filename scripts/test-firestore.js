@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 require('dotenv').config({ path: '.env.local' });
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, getDocs, addDoc } = require('firebase/firestore');

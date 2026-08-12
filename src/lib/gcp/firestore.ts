@@ -5,7 +5,7 @@ export interface Message {
   id?: string;
   role: string;
   text: string;
-  createdAt?: any;
+  createdAt?: unknown;
   source?: string;
   actions?: string[];
   author?: string;
