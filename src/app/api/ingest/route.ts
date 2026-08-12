@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { bigQuery } from '@/lib/gcp/bigquery';
+import { globalCache } from '@/lib/cache';
 
 export async function POST(req: Request) {
   try {
@@ -25,7 +26,6 @@ export async function POST(req: Request) {
     }]);
 
     // Store in global cache for real-time Next.js UI streaming
-    const { globalCache } = require('@/lib/cache');
     globalCache.latestPatientData = {
       patient_id,
       heart_rate,
