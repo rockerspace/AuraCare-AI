@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { patient_id, heart_rate, spO2, mobility, timestamp } = body;
+    const { patient_id, heart_rate, spO2, mobility, temp, timestamp } = body;
 
     if (!patient_id || !heart_rate || !spO2) {
       return NextResponse.json({ error: 'Missing required telemetry fields' }, { status: 400 });
@@ -23,6 +23,17 @@ export async function POST(req: Request) {
       timestamp: timestamp || new Date().toISOString(),
       event_type: 'IoT_INGESTION'
     }]);
+
+    // Store in global cache for real-time Next.js UI streaming
+    const { globalCache } = require('@/lib/cache');
+    globalCache.latestPatientData = {
+      patient_id,
+      heart_rate,
+      spO2,
+      mobility,
+      temp,
+      timestamp: timestamp || new Date().toISOString()
+    };
 
     // Check for critical anomalies to trigger alerts
     let anomalyDetected = false;

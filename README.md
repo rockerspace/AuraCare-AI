@@ -11,6 +11,10 @@
 [![HIPAA](https://img.shields.io/badge/Compliance-HIPAA%20Audit%20Logging-green)](https://cloud.google.com/audit-logs)
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension%20Ready-yellow?logo=google-chrome&logoColor=white)](./chrome-extension)
 
+<p align="center">
+  <img src="./public/poster.jpg" alt="MVP VRN Marketing Poster" width="100%">
+</p>
+
 ---
 
 ## 🚀 Live Demo

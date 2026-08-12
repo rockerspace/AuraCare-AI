@@ -52,33 +52,48 @@ export default function Home() {
   useEffect(() => {
     if (activeTab !== 'Patients') return;
     
-    // Simulate real-time streaming updates from IoT sensors every 4 seconds
+    // Fetch real-time streaming updates from IoT sensors every 4 seconds
     const interval = setInterval(() => {
-      setPatients(prev => prev.map(p => {
-        const r = Math.random();
-        
-        // Clone patient to mutate
-        const newPatient = { ...p, vitals: { ...p.vitals } };
-        
-        // 1. Simulate real-time fluctuating vitals (IoT streaming)
-        if (r > 0.3) {
-          newPatient.vitals.hr += Math.floor(Math.random() * 5) - 2; // fluctuate -2 to +2
-          newPatient.vitals.o2 = Math.min(100, Math.max(80, newPatient.vitals.o2 + (Math.floor(Math.random() * 3) - 1)));
-          newPatient.vitals.temp = parseFloat((newPatient.vitals.temp + (Math.random() * 0.4 - 0.2)).toFixed(1));
-        }
+      fetch('/api/latest-vitals')
+        .then(res => res.json())
+        .then(data => {
+          setPatients(prev => prev.map(p => {
+            const newPatient = { ...p, vitals: { ...p.vitals } };
+            
+            // 1. Inject REAL Apple Watch data into Patient 1 (Jane Doe)
+            if (p.id === 'p1' && data.success && data.data) {
+              newPatient.vitals.hr = data.data.heart_rate;
+              newPatient.vitals.o2 = data.data.spO2;
+              if (data.data.temp) {
+                newPatient.vitals.temp = data.data.temp;
+              }
+              newPatient.lastActive = 'Just now';
+              // You could also add steps/mobility if it was in the UI model
+              return newPatient;
+            }
 
-        // 2. Randomly update last active time
-        if (r > 0.6) {
-          newPatient.lastActive = `${Math.floor(Math.random() * 59) + 1} mins ago`;
-        } 
-        
-        // 3. Simulate Robert Smith having a sudden anomaly
-        if (r > 0.85 && p.id === 'p2') {
-          newPatient.status = p.status === 'Stable' ? 'Review' : 'Stable';
-        }
-        
-        return newPatient;
-      }));
+            // 2. Run simulation for the other mock patients (Robert, Mary, William)
+            const r = Math.random();
+            if (r > 0.3) {
+              newPatient.vitals.hr += Math.floor(Math.random() * 5) - 2; // fluctuate -2 to +2
+              newPatient.vitals.o2 = Math.min(100, Math.max(80, newPatient.vitals.o2 + (Math.floor(Math.random() * 3) - 1)));
+              newPatient.vitals.temp = parseFloat((newPatient.vitals.temp + (Math.random() * 0.4 - 0.2)).toFixed(1));
+            }
+
+            // 3. Randomly update last active time
+            if (r > 0.6) {
+              newPatient.lastActive = `${Math.floor(Math.random() * 59) + 1} mins ago`;
+            } 
+            
+            // 4. Simulate Robert Smith having a sudden anomaly
+            if (r > 0.85 && p.id === 'p2') {
+              newPatient.status = p.status === 'Stable' ? 'Review' : 'Stable';
+            }
+            
+            return newPatient;
+          }));
+        })
+        .catch(err => console.error("Error fetching real vitals:", err));
     }, 4000);
     
     return () => clearInterval(interval);

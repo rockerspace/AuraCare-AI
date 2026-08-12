@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "watch-client",
+    "slug": "watch-client",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "watchclient",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.mvpvrn.watchclient",
+      "infoPlist": {
+        "NSHealthShareUsageDescription": "MVP VRN needs access to your heart rate and SpO2 to monitor your health.",
+        "NSHealthUpdateUsageDescription": "MVP VRN needs access to save health data.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#208AEF",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 76
+        }
+      ],
+      [
+        "@kayzmann/expo-healthkit",
+        {
+          "healthShareUsageDescription": "MVP VRN needs access to your heart rate and SpO2 to monitor your health.",
+          "healthUpdateUsageDescription": "MVP VRN needs access to save health data."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "newArchEnabled": false
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
