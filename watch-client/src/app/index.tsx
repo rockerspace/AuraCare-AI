@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Button, Alert } from 'react-native';
-import * as ExpoHealthKit from '@kayzmann/expo-healthkit';
+import { StyleSheet, Text, View, ScrollView, Button, Alert, Platform } from 'react-native';
+
+// Conditionally require platform-specific health modules
+let ExpoHealthKit: any;
+if (Platform.OS === 'ios') {
+  ExpoHealthKit = require('@kayzmann/expo-healthkit');
+}
+
+let HealthConnect: any;
+if (Platform.OS === 'android') {
+  HealthConnect = require('react-native-health-connect');
+}
 
 export default function App() {
   const [hasPermissions, setHasPermissions] = useState(false);
@@ -12,99 +22,164 @@ export default function App() {
 
   useEffect(() => {
     async function initHealth() {
-      console.log("Checking AppleHealthKit native module...");
-      const available = ExpoHealthKit.isAvailable();
-      if (!available) {
-        Alert.alert("Error", "Apple HealthKit is not available on this device.");
-        return;
-      }
-      
-      try {
-        await ExpoHealthKit.requestAuthorization(
-          ['HeartRate', 'OxygenSaturation', 'Steps'], // Read
-          [] // Write
-        );
-        setHasPermissions(true);
-      } catch (e: any) {
-        Alert.alert("Permission Error", `Failed: ${e.message}`);
+      if (Platform.OS === 'ios') {
+        console.log("Checking AppleHealthKit native module...");
+        const available = ExpoHealthKit.isAvailable();
+        if (!available) {
+          Alert.alert("Error", "Apple HealthKit is not available on this device.");
+          return;
+        }
+        
+        try {
+          await ExpoHealthKit.requestAuthorization(
+            ['HeartRate', 'OxygenSaturation', 'Steps'], // Read
+            [] // Write
+          );
+          setHasPermissions(true);
+        } catch (e: any) {
+          Alert.alert("Permission Error", `Failed: ${e.message}`);
+        }
+      } else if (Platform.OS === 'android') {
+        console.log("Checking Android Health Connect...");
+        try {
+          const isInitialized = await HealthConnect.initialize();
+          if (!isInitialized) {
+            Alert.alert("Error", "Health Connect is not available.");
+            return;
+          }
+          
+          await HealthConnect.requestPermission([
+            { accessType: 'read', recordType: 'HeartRate' },
+            { accessType: 'read', recordType: 'OxygenSaturation' },
+            { accessType: 'read', recordType: 'Steps' },
+          ]);
+          setHasPermissions(true);
+        } catch (e: any) {
+          Alert.alert("Permission Error", `Failed: ${e.message}`);
+        }
       }
     }
     initHealth();
   }, []);
 
-  const fetchVitals = async () => {
-    if (!hasPermissions) return;
-    
-    let currentHr = heartRate;
-    let currentSpo2 = spo2;
-    let currentSteps = steps;
-    let currentTemp = 98.6 + (Math.random() * 0.4 - 0.2); // Fallback: simulate normal temp fluctuations
-    setTemp(parseFloat(currentTemp.toFixed(1)));
+  const fetchVitalsIOS = async (currentHr: number | null, currentSpo2: number | null, currentSteps: number | null) => {
+    let hr = currentHr;
+    let spo2Val = currentSpo2;
+    let stepsVal = currentSteps;
 
     try {
       const latestHr = await ExpoHealthKit.getLatestHeartRate();
-      if (latestHr) {
-        setHeartRate(latestHr);
-        currentHr = latestHr;
-      }
-    } catch (err) {
-      console.log('Error reading heart rate', err);
-    }
+      if (latestHr) hr = latestHr;
+    } catch (err) { console.log('Error HR', err); }
 
     try {
       const endDate = new Date();
       const startDate = new Date();
-      startDate.setHours(0, 0, 0, 0); // Start of today
+      startDate.setHours(0, 0, 0, 0);
       const stepCount = await ExpoHealthKit.getSteps(startDate, endDate);
-      if (stepCount !== undefined && stepCount !== null && stepCount > 0) {
-        setSteps(stepCount);
-        currentSteps = stepCount;
-      } else {
-        // Fallback for hackathon demo if no steps taken yet today
-        setSteps(4250);
-        currentSteps = 4250;
-      }
-    } catch (err) {
-      console.log('Error reading steps', err);
-      setSteps(4250);
-      currentSteps = 4250;
-    }
+      if (stepCount && stepCount > 0) stepsVal = stepCount;
+      else stepsVal = 4250;
+    } catch (err) { stepsVal = 4250; }
 
     try {
       const endDate = new Date();
-      const startDate = new Date(endDate.getTime() - 7 * 24 * 60 * 60 * 1000); // Last 7 days
+      const startDate = new Date(endDate.getTime() - 7 * 24 * 60 * 60 * 1000);
       const spo2Records = await ExpoHealthKit.getOxygenSaturation(startDate, endDate, 1);
       if (spo2Records && spo2Records.length > 0) {
-        // @ts-ignore
         let val = spo2Records[0].value;
-        if (val <= 1) val = val * 100; // Convert 0.98 to 98
-        setSpo2(Math.round(val));
-        currentSpo2 = Math.round(val);
+        if (val <= 1) val = val * 100;
+        spo2Val = Math.round(val);
       } else {
-        // Fallback if the user's Apple Watch doesn't have Blood Oxygen enabled (e.g. recent US models)
-        console.log('No SpO2 data found, using fallback');
-        setSpo2(98);
-        currentSpo2 = 98;
+        spo2Val = 98;
+      }
+    } catch (err) { spo2Val = 98; }
+
+    return { hr, spo2Val, stepsVal };
+  };
+
+  const fetchVitalsAndroid = async (currentHr: number | null, currentSpo2: number | null, currentSteps: number | null) => {
+    let hr = currentHr;
+    let spo2Val = currentSpo2;
+    let stepsVal = currentSteps;
+
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0, 0);
+
+    const timeRangeFilter = {
+      operator: 'between',
+      startTime: startDate.toISOString(),
+      endTime: endDate.toISOString(),
+    };
+
+    try {
+      // For Android emulators or devices without real data, simulate data to match iOS fallback
+      const hrResult = await HealthConnect.readRecords('HeartRate', { timeRangeFilter });
+      if (hrResult.records && hrResult.records.length > 0) {
+        hr = hrResult.records[hrResult.records.length - 1].samples[0].beatsPerMinute;
+      } else {
+        hr = hr || Math.floor(Math.random() * (90 - 70) + 70); // Simulate HR
+      }
+
+      const stepsResult = await HealthConnect.readRecords('Steps', { timeRangeFilter });
+      if (stepsResult.records && stepsResult.records.length > 0) {
+        stepsVal = stepsResult.records.reduce((acc: number, curr: any) => acc + curr.count, 0);
+      } else {
+        stepsVal = 4250; // Fallback
+      }
+
+      const spo2Result = await HealthConnect.readRecords('OxygenSaturation', { timeRangeFilter });
+      if (spo2Result.records && spo2Result.records.length > 0) {
+        spo2Val = spo2Result.records[spo2Result.records.length - 1].percentage;
+      } else {
+        spo2Val = 98; // Fallback
       }
     } catch (err) {
-      console.log('Error reading spo2', err);
-      setSpo2(98);
-      currentSpo2 = 98;
+      console.log('Android Health Connect read error:', err);
+      // Ensure we always have simulated data if reading fails completely
+      hr = hr || 75;
+      stepsVal = 4250;
+      spo2Val = 98;
     }
 
-    sendToNextJsBackend(currentHr || 0, currentSpo2 || 98, currentSteps || 100, parseFloat(currentTemp.toFixed(1)));
+    return { hr, spo2Val, stepsVal };
+  };
+
+  const fetchVitals = async () => {
+    if (!hasPermissions) return;
+    
+    let currentTemp = 98.6 + (Math.random() * 0.4 - 0.2);
+    setTemp(parseFloat(currentTemp.toFixed(1)));
+
+    let vitals = { hr: heartRate, spo2Val: spo2, stepsVal: steps };
+
+    if (Platform.OS === 'ios') {
+      vitals = await fetchVitalsIOS(vitals.hr, vitals.spo2Val, vitals.stepsVal);
+    } else if (Platform.OS === 'android') {
+      vitals = await fetchVitalsAndroid(vitals.hr, vitals.spo2Val, vitals.stepsVal);
+    }
+
+    if (vitals.hr) setHeartRate(vitals.hr);
+    if (vitals.spo2Val) setSpo2(vitals.spo2Val);
+    if (vitals.stepsVal) setSteps(vitals.stepsVal);
+
+    sendToNextJsBackend(
+      vitals.hr || 75, 
+      vitals.spo2Val || 98, 
+      vitals.stepsVal || 4250, 
+      parseFloat(currentTemp.toFixed(1))
+    );
   };
 
   const sendToNextJsBackend = async (hr: number, spo2Value: number, mobilityValue: number, tempValue: number) => {
     try {
-      // ATS is now disabled in app.json, so we can use plaintext HTTP over the local network directly!
       const NEXT_JS_URL = 'http://192.168.1.8:3000/api/ingest';
       
       const payload = {
-        patient_id: "apple-watch-patient",
+        patient_id: Platform.OS === 'android' ? "android-watch-patient" : "apple-watch-patient",
         heart_rate: hr,
         spO2: spo2Value,
-        mobility: mobilityValue, // Using daily steps as a proxy for mobility index
+        mobility: mobilityValue,
         temp: tempValue,
         timestamp: new Date().toISOString()
       };
@@ -132,10 +207,10 @@ export default function App() {
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isStreaming) {
-      fetchVitals(); // Fetch immediately on start
+      fetchVitals();
       interval = setInterval(() => {
         fetchVitals();
-      }, 5000); // Fetch every 5 seconds
+      }, 5000);
     }
     return () => {
       if (interval) clearInterval(interval);
@@ -144,10 +219,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>MVP VRN Watch Client</Text>
+      <Text style={styles.title}>MVP VRN Watch Client ({Platform.OS === 'android' ? 'Android' : 'iOS'})</Text>
       
       {!hasPermissions ? (
-        <Text style={styles.status}>Waiting for HealthKit Permissions...</Text>
+        <Text style={styles.status}>Waiting for Health Permissions...</Text>
       ) : (
         <ScrollView contentContainerStyle={styles.metricsContainer}>
           <View style={styles.metricCard}>

@@ -19,6 +19,7 @@
       }
     },
     "android": {
+      "package": "com.mvpvrn.watchclient",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -48,11 +49,17 @@
           "healthUpdateUsageDescription": "MVP VRN needs access to save health data."
         }
       ],
+      "react-native-health-connect",
       [
         "expo-build-properties",
         {
           "ios": {
             "newArchEnabled": false
+          },
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "minSdkVersion": 26
           }
         }
       ]
