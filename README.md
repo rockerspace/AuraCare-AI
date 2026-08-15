@@ -2,7 +2,7 @@
 
 A real-time, enterprise-grade Caregiving Dashboard built for Care Home Directors and Nurses. This platform centralizes patient vitals, automates family follow-ups via AI, and acts as a single pane of glass for hardware integrations.
 
-**🔴 Live Beta Environment:** [https://auracare-beta.vercel.app](https://auracare-beta.vercel.app)
+**🔴 Live Beta Environment:** [https://mvp-vrn-elderly-care-giving-app.vercel.app](https://mvp-vrn-elderly-care-giving-app.vercel.app)
 
 ## 🚀 Key Features
 
