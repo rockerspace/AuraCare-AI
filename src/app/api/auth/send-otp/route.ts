@@ -29,10 +29,11 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, hash: mockHash });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Twilio Error:", error);
     // Fallback for unverified trial accounts in Twilio
-    if (error.code === 21608) {
+    const twilioError = error as { code?: number };
+    if (twilioError.code === 21608) {
        return NextResponse.json({ 
          error: "Twilio Trial Limit: Number unverified. For the demo, use code: 123456",
          hash: Buffer.from(`123456-mvpvrn-secret`).toString('base64')

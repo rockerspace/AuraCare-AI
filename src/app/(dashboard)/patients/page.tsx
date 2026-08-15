@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PatientsPage() {
-  const [patients, setPatients] = useState<any[]>([]);
+  const [patients, setPatients] = useState<Record<string, unknown>[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   // Form State
