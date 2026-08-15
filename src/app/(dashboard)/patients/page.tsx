@@ -23,6 +23,24 @@ export default function PatientsPage() {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const res = await fetch('/api/patients');
+        if (res.ok) {
+          const data = await res.json();
+          setPatients(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch patients:', error);
+      }
+    };
+
+    fetchPatients();
+    const intervalId = setInterval(fetchPatients, 10000); // Poll every 10s
+    return () => clearInterval(intervalId);
+  }, []);
+
   // Form State
   const [newPatient, setNewPatient] = useState({ name: '', age: '', status: 'Stable' });
 

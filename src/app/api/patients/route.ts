@@ -1,0 +1,67 @@
+import { NextResponse } from 'next/server';
+import { db } from '@/db';
+import { patients, vitalsLog } from '@/db/schema';
+import { eq, desc } from 'drizzle-orm';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET() {
+  try {
+    const allPatients = await db.select().from(patients);
+
+    const patientsWithVitals = await Promise.all(
+      allPatients.map(async (patient) => {
+        const latestVitals = await db
+          .select()
+          .from(vitalsLog)
+          .where(eq(vitalsLog.patientId, patient.id))
+          .orderBy(desc(vitalsLog.timestamp))
+          .limit(1);
+
+        const initials = patient.name.split(' ').map((n: string) => n[0]).join('').toUpperCase();
+        
+        let lastActive = 'Unknown';
+        if (latestVitals.length > 0 && latestVitals[0].timestamp) {
+           const diff = Date.now() - new Date(latestVitals[0].timestamp).getTime();
+           const mins = Math.floor(diff / 60000);
+           if (mins < 1) lastActive = 'Just now';
+           else if (mins < 60) lastActive = `${mins}m ago`;
+           else lastActive = `${Math.floor(mins/60)}h ago`;
+        } else {
+           lastActive = 'Just now'; // Default for new patients without vitals
+        }
+        
+        let status = patient.status;
+        if (status === 'stable') status = 'Stable';
+        else if (status === 'review') status = 'Review';
+        else if (status === 'critical') status = 'Critical';
+        else status = status.charAt(0).toUpperCase() + status.slice(1);
+
+        return {
+          id: patient.id.toString(),
+          name: patient.name,
+          age: patient.age.toString(),
+          status,
+          room: patient.room || undefined,
+          initials,
+          image: initials,
+          lastActive,
+          vitals: latestVitals.length > 0 ? {
+            hr: latestVitals[0].heartRate || '--',
+            o2: latestVitals[0].spo2 || '--',
+            temp: latestVitals[0].temp || '--'
+          } : {
+            hr: '--',
+            o2: '--',
+            temp: '--'
+          }
+        };
+      })
+    );
+
+    return NextResponse.json(patientsWithVitals);
+  } catch (error) {
+    console.error('Error fetching patients:', error);
+    return NextResponse.json({ error: 'Failed to fetch patients' }, { status: 500 });
+  }
+}
