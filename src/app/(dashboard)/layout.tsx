@@ -11,7 +11,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authStep, setAuthStep] = useState<'method' | 'email' | 'phone' | 'otp'>('method');
   const [authMethod, setAuthMethod] = useState('');
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
   const [otp, setOtp] = useState('');
   const [userProfile, setUserProfile] = useState<{name: string, role: string} | null>(null);
 
@@ -33,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       const res = await fetch('/api/auth/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: inputValue })
+        body: JSON.stringify({ phone: authStep === 'phone' ? countryCode + inputValue : inputValue })
       });
       const data = await res.json();
       
@@ -61,7 +62,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       const res = await fetch('/api/auth/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: otp, hash: serverHash, phone: inputValue })
+        body: JSON.stringify({ code: otp, hash: serverHash, phone: authStep === 'phone' ? countryCode + inputValue : inputValue })
       });
       
       const data = await res.json();
@@ -128,7 +129,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 
                 {authStep === 'phone' ? (
                   <div className="flex gap-2">
-                    <select className="bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500 w-24">
+                    <select value={countryCode} onChange={(e) => setCountryCode(e.target.value)} className="bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500 w-24">
                       <option value="+1">🇺🇸 +1</option>
                       <option value="+44">🇬🇧 +44</option>
                       <option value="+91">🇮🇳 +91</option>
@@ -162,7 +163,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {authStep === 'otp' && (
               <motion.div key="otp" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
                 <label className="text-sm text-neutral-400 block text-center mb-1">
-                  Enter the code sent to {inputValue}
+                  Enter the code sent to {authStep === 'phone' ? countryCode : ""}{inputValue}
                 </label>
                 <input 
                   type="text" 
