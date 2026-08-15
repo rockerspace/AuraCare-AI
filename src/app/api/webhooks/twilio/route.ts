@@ -2,13 +2,24 @@ import { NextResponse } from 'next/server';
 import { db } from '@/db';
 import { messages, patients } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import twilio from 'twilio';
 
 // Twilio hits this URL as form-urlencoded data, not JSON.
 export async function POST(req: Request) {
   try {
     const text = await req.text();
     const params = new URLSearchParams(text);
-    
+    const twilioSignature = req.headers.get('x-twilio-signature');
+    const url = req.url;
+
+    // Convert URLSearchParams to a plain object
+    const paramsObject = Object.fromEntries(params.entries());
+
+    // Validate the request
+    if (!twilioSignature || !twilio.validateRequest(process.env.TWILIO_AUTH_TOKEN || '', twilioSignature, url, paramsObject)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     const fromPhone = params.get('From'); // e.g. +1234567890
     const body = params.get('Body'); // The actual text message
 
