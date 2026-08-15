@@ -62,6 +62,16 @@ chrome-extension/
 
 ---
 
+## 📱 Progressive Web App (PWA)
+
+With the removal of the heavy native iOS and Android apps, MVP VRN is now fully installable as a **Progressive Web App (PWA)** for on-the-go caregivers.
+
+- **iOS Safari / Android Chrome:** Tap **"Add to Home Screen"** to install the dashboard directly to your phone.
+- **Native Experience:** Runs in a standalone, full-screen mode (no URL bar) with a dark glassmorphic status bar.
+- **Offline Caching:** Service workers ensure the app shell loads instantly even on poor hospital Wi-Fi networks.
+
+---
+
 ## 📌 What Is MVP VRN?
 
 MVP VRN is a **proactive, AI-driven caregiving platform** for elderly patients. Rather than reacting to emergencies, MVP VRN's multi-agent network monitors **subtle real-time deviations** in daily routines — mobility, sleep, vitals, sentiment — and alerts caregivers before a crisis occurs.
