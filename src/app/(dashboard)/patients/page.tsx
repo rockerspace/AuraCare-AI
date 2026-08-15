@@ -3,8 +3,24 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+interface Patient {
+  id: string | number;
+  name: string;
+  age: string | number;
+  status: string;
+  room?: string;
+  initials?: string;
+  lastActive?: string;
+  image?: string;
+  vitals?: {
+    hr: number | string;
+    o2: number | string;
+    temp: number | string;
+  };
+}
+
 export default function PatientsPage() {
-  const [patients, setPatients] = useState<Record<string, unknown>[]>([]);
+  const [patients, setPatients] = useState<Patient[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   // Form State
@@ -172,15 +188,15 @@ export default function PatientsPage() {
                 <div className="grid grid-cols-3 gap-2 mb-6 relative z-10 text-center bg-black/20 rounded-xl p-3 border border-white/5">
                   <div className="flex flex-col">
                     <span className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1">Heart</span>
-                    <span className="font-mono font-medium text-sm text-white">{patient.vitals.hr} <span className="text-[10px] text-neutral-600">bpm</span></span>
+                    <span className="font-mono font-medium text-sm text-white">{patient.vitals?.hr} <span className="text-[10px] text-neutral-600">bpm</span></span>
                   </div>
                   <div className="flex flex-col border-l border-r border-white/5">
                     <span className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1">SpO2</span>
-                    <span className="font-mono font-medium text-sm text-white">{patient.vitals.o2}<span className="text-[10px] text-neutral-600">%</span></span>
+                    <span className="font-mono font-medium text-sm text-white">{patient.vitals?.o2}<span className="text-[10px] text-neutral-600">%</span></span>
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1">Temp</span>
-                    <span className="font-mono font-medium text-sm text-white">{patient.vitals.temp}°<span className="text-[10px] text-neutral-600">F</span></span>
+                    <span className="font-mono font-medium text-sm text-white">{patient.vitals?.temp}°<span className="text-[10px] text-neutral-600">F</span></span>
                   </div>
                 </div>
                 
