@@ -1,4 +1,4 @@
-# MVP VRN - Proactive Caregiving SaaS
+# MVP VRN - Proactive Caregiving App
 
 A real-time, enterprise-grade Caregiving Dashboard built for Care Home Directors and Nurses. This platform centralizes patient vitals, automates family follow-ups via AI, and acts as a single pane of glass for hardware integrations.
 
