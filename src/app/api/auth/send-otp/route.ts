@@ -12,7 +12,16 @@ export async function POST(req: Request) {
     // Generate a secure 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // Initialize Twilio
+    if (phone.includes('@')) {
+      // Mock email sending for the MVP demo
+      return NextResponse.json({ 
+        success: true, 
+        hash: Buffer.from(`123456-mvpvrn-secret`).toString('base64'),
+        message: "Email mock active. Use code: 123456" 
+      });
+    }
+
+    // Initialize Twilio for SMS
     const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
     // Send the SMS
