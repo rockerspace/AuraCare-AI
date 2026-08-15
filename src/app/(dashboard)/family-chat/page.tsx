@@ -8,7 +8,7 @@ export default function FamilyChatPage() {
   const [message, setMessage] = useState('');
 
   // Starting empty for real SaaS look
-  const [contacts, setContacts] = useState<any[]>([]);
+  const [contacts, setContacts] = useState<Record<string, unknown>[]>([]);
 
   return (
     <div className="font-outfit h-[calc(100vh-8rem)] flex flex-col">
