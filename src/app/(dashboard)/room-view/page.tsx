@@ -29,15 +29,15 @@ export default function RoomViewPage() {
       <header className="flex justify-between items-center mb-8">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <h2 className="text-4xl font-bold tracking-tight drop-shadow-lg text-white">Facility Floor Plan</h2>
-          <p className="text-neutral-400 mt-2">Nurses Station Command Center: Monitor physical room occupancy and environmental conditions.</p>
+          <p className="text-neutral-200 mt-2">Nurses Station Command Center: Monitor physical room occupancy and environmental conditions.</p>
         </motion.div>
         
         <div className="flex bg-black/40 border border-white/10 rounded-xl p-1 backdrop-blur-md">
-          <button onClick={() => setFilter('all')} className={`px-4 py-2 rounded-lg text-sm font-medium transition ${filter === 'all' ? 'bg-white/10 text-white shadow-lg' : 'text-neutral-500 hover:text-white'}`}>All Rooms</button>
-          <button onClick={() => setFilter('alerts')} className={`px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 ${filter === 'alerts' ? 'bg-red-500/20 text-red-400 shadow-lg' : 'text-neutral-500 hover:text-white'}`}>
+          <button onClick={() => setFilter('all')} className={`px-4 py-2 rounded-lg text-sm font-medium transition ${filter === 'all' ? 'bg-white/10 text-white shadow-lg' : 'text-neutral-300 hover:text-white'}`}>All Rooms</button>
+          <button onClick={() => setFilter('alerts')} className={`px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 ${filter === 'alerts' ? 'bg-red-500/20 text-red-400 shadow-lg' : 'text-neutral-300 hover:text-white'}`}>
             <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> Alerts
           </button>
-          <button onClick={() => setFilter('empty')} className={`px-4 py-2 rounded-lg text-sm font-medium transition ${filter === 'empty' ? 'bg-white/10 text-white shadow-lg' : 'text-neutral-500 hover:text-white'}`}>Empty</button>
+          <button onClick={() => setFilter('empty')} className={`px-4 py-2 rounded-lg text-sm font-medium transition ${filter === 'empty' ? 'bg-white/10 text-white shadow-lg' : 'text-neutral-300 hover:text-white'}`}>Empty</button>
         </div>
       </header>
 
@@ -65,7 +65,7 @@ export default function RoomViewPage() {
               <div className="flex justify-between items-start mb-4 relative z-10">
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">Room {room.id}</h3>
-                  <span className="text-xs text-neutral-500 uppercase tracking-wider">{room.type}</span>
+                  <span className="text-xs text-neutral-300 uppercase tracking-wider">{room.type}</span>
                 </div>
                 {room.status === 'occupied' ? (
                   <span className={`px-2 py-1 text-[10px] font-bold uppercase rounded border ${
@@ -76,7 +76,7 @@ export default function RoomViewPage() {
                     {room.condition}
                   </span>
                 ) : (
-                  <span className="px-2 py-1 text-[10px] font-bold uppercase rounded border bg-neutral-800 text-neutral-400 border-neutral-700">
+                  <span className="px-2 py-1 text-[10px] font-bold uppercase rounded border bg-neutral-800 text-neutral-200 border-neutral-700">
                     {room.status}
                   </span>
                 )}
@@ -89,24 +89,24 @@ export default function RoomViewPage() {
                       {room.patient?.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
-                      <div className="text-sm text-neutral-400">Patient</div>
+                      <div className="text-sm text-neutral-200">Patient</div>
                       <div className="font-bold text-white text-lg">{room.patient}</div>
                     </div>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center py-4 opacity-50">
-                    <svg className="w-8 h-8 text-neutral-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                    <span className="text-sm font-medium text-neutral-500">Ready for Admission</span>
+                    <svg className="w-8 h-8 text-neutral-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    <span className="text-sm font-medium text-neutral-300">Ready for Admission</span>
                   </div>
                 )}
               </div>
 
               <div className="mt-auto pt-4 border-t border-white/5 flex justify-between items-center relative z-10">
-                <div className="flex items-center gap-2 text-xs text-neutral-400">
+                <div className="flex items-center gap-2 text-xs text-neutral-200">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
                   Temp: {room.temp}
                 </div>
-                <button className={`text-xs font-bold transition ${room.status === 'occupied' ? 'text-emerald-400 hover:text-emerald-300' : 'text-neutral-500 hover:text-white'}`}>
+                <button className={`text-xs font-bold transition ${room.status === 'occupied' ? 'text-emerald-400 hover:text-emerald-300' : 'text-neutral-300 hover:text-white'}`}>
                   {room.status === 'occupied' ? 'View Camera' : 'Assign Room'}
                 </button>
               </div>

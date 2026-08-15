@@ -13,7 +13,7 @@ export default function AnalyticsPage() {
       <header className="flex justify-between items-center mb-8">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <h2 className="text-4xl font-bold tracking-tight drop-shadow-lg text-white">Analytics & Trends</h2>
-          <p className="text-neutral-400 mt-2">Enterprise intelligence powered by Looker Studio</p>
+          <p className="text-neutral-200 mt-2">Enterprise intelligence powered by Looker Studio</p>
         </motion.div>
         <button 
           onClick={() => {
@@ -33,7 +33,7 @@ export default function AnalyticsPage() {
           <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
           <div className="w-3 h-3 rounded-full bg-amber-500/50"></div>
           <div className="w-3 h-3 rounded-full bg-emerald-500/50"></div>
-          <span className="ml-4 text-xs font-mono text-neutral-500 uppercase tracking-widest">Looker Studio Integration</span>
+          <span className="ml-4 text-xs font-mono text-neutral-300 uppercase tracking-widest">Looker Studio Integration</span>
         </div>
 
         {/* The Actual Looker Embed or Empty State */}
@@ -55,7 +55,7 @@ export default function AnalyticsPage() {
                 <svg className="w-10 h-10 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">No Data Source Connected</h3>
-              <p className="text-neutral-400 text-center mb-8">
+              <p className="text-neutral-200 text-center mb-8">
                 Connect your BigQuery data warehouse or paste a public Looker Studio embed link to visualize your facility's historical trends.
               </p>
               <button 

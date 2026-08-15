@@ -107,7 +107,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <img src="/logo.jpg" alt="Logo" className="w-16 h-16 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.5)]" />
           </div>
           <h2 className="text-2xl font-bold text-white text-center mb-2">Sign in to MVP VRN</h2>
-          <p className="text-neutral-400 text-center text-sm mb-8">Secure access for authorized caregivers.</p>
+          <p className="text-neutral-200 text-center text-sm mb-8">Secure access for authorized caregivers.</p>
 
           <AnimatePresence mode="wait">
             {authStep === 'method' && (
@@ -123,7 +123,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             {(authStep === 'phone' || authStep === 'email') && (
               <motion.div key="input" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
-                <label className="text-sm text-neutral-400 block mb-1">
+                <label className="text-sm text-neutral-200 block mb-1">
                   {authStep === 'phone' ? 'Mobile Number' : 'Email Address'}
                 </label>
                 
@@ -156,13 +156,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <button onClick={handleSendOtp} className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition">
                   Send Verification Code
                 </button>
-                <button onClick={() => setAuthStep('method')} className="w-full py-2 text-neutral-500 text-sm hover:text-white transition">Back</button>
+                <button onClick={() => setAuthStep('method')} className="w-full py-2 text-neutral-300 text-sm hover:text-white transition">Back</button>
               </motion.div>
             )}
 
             {authStep === 'otp' && (
               <motion.div key="otp" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
-                <label className="text-sm text-neutral-400 block text-center mb-1">
+                <label className="text-sm text-neutral-200 block text-center mb-1">
                   Enter the code sent to {!inputValue.includes('@') ? countryCode : ""}{inputValue}
                 </label>
                 <input 
@@ -175,7 +175,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <button onClick={handleVerifyOtp} className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition">
                   Verify & Sign In
                 </button>
-                <button onClick={() => setAuthStep('method')} className="w-full py-2 text-neutral-500 text-sm hover:text-white transition">Cancel</button>
+                <button onClick={handleSendOtp} className="w-full py-2 text-emerald-400 text-sm hover:text-emerald-300 transition mt-2">Resend Code</button>
+                <button onClick={() => setAuthStep('method')} className="w-full py-2 text-neutral-300 text-sm hover:text-white transition">Cancel</button>
               </motion.div>
             )}
           </AnimatePresence>
@@ -212,7 +213,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <Link key={item.name} href={item.path} passHref className="block">
                   <motion.div 
                     whileHover={{ x: 5 }}
-                    className={`w-full text-left block px-5 py-3.5 rounded-2xl transition-all duration-300 font-medium ${isActive ? 'bg-gradient-to-r from-emerald-500/20 to-transparent text-emerald-400 border-l-2 border-emerald-500 shadow-[inset_0_0_20px_rgba(16,185,129,0.1)]' : 'text-neutral-400 hover:text-white hover:bg-white/5'}`}
+                    className={`w-full text-left block px-5 py-3.5 rounded-2xl transition-all duration-300 font-medium ${isActive ? 'bg-gradient-to-r from-emerald-500/20 to-transparent text-emerald-400 border-l-2 border-emerald-500 shadow-[inset_0_0_20px_rgba(16,185,129,0.1)]' : 'text-neutral-200 hover:text-white hover:bg-white/5'}`}
                   >
                     {item.name}
                   </motion.div>
@@ -225,7 +226,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex flex-col gap-4">
           <div className="p-5 bg-gradient-to-br from-neutral-900/80 to-black/80 rounded-2xl border border-white/5 backdrop-blur-md shadow-lg relative overflow-hidden">
             <div className="absolute -top-10 -right-10 w-20 h-20 bg-emerald-500/20 rounded-full blur-2xl"></div>
-            <div className="text-xs text-neutral-400 mb-3 uppercase tracking-widest font-semibold">Global Security</div>
+            <div className="text-xs text-neutral-200 mb-3 uppercase tracking-widest font-semibold">Global Security</div>
             <div className="flex flex-col gap-2">
               <div className="text-xs font-medium flex items-center gap-2 text-neutral-200">
                 <span className="relative flex h-2 w-2">
@@ -261,7 +262,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <div className="text-xs text-emerald-400">{userProfile?.role || 'Caregiver'}</div>
               </div>
             </div>
-            <button onClick={handleLogout} className="text-neutral-400 hover:text-white transition" title="Log out">
+            <button onClick={handleLogout} className="text-neutral-200 hover:text-white transition" title="Log out">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
             </button>
           </div>

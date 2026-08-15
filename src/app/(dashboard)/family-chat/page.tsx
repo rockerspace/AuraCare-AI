@@ -15,7 +15,7 @@ export default function FamilyChatPage() {
       <header className="flex justify-between items-center mb-8">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <h2 className="text-4xl font-bold tracking-tight drop-shadow-lg text-white">Family Communication</h2>
-          <p className="text-neutral-400 mt-2">Manage AI automated SMS updates and reply directly to family members.</p>
+          <p className="text-neutral-200 mt-2">Manage AI automated SMS updates and reply directly to family members.</p>
         </motion.div>
         
         <button 
@@ -35,10 +35,10 @@ export default function FamilyChatPage() {
             className="w-full h-full flex flex-col items-center justify-center p-20 border-dashed border border-white/5 m-4 rounded-2xl bg-black/20"
           >
             <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-6">
-              <svg className="w-10 h-10 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              <svg className="w-10 h-10 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
             </div>
             <h3 className="text-2xl font-bold text-white mb-2">No Family Contacts Linked</h3>
-            <p className="text-neutral-400 text-center max-w-md mb-8">
+            <p className="text-neutral-200 text-center max-w-md mb-8">
               Your communications inbox is empty. Once you add a patient and assign an emergency contact phone number, real-time SMS messages will ingest here.
             </p>
             <button 

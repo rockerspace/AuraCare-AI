@@ -35,7 +35,7 @@ export default function AgentChatPage() {
       <header className="flex justify-between items-center mb-8">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <h2 className="text-4xl font-bold tracking-tight drop-shadow-lg text-white">AI Agent Chat</h2>
-          <p className="text-neutral-400 mt-2">Ask questions about patient trends, generate handover reports, and analyze vitals.</p>
+          <p className="text-neutral-200 mt-2">Ask questions about patient trends, generate handover reports, and analyze vitals.</p>
         </motion.div>
       </header>
 

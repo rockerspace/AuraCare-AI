@@ -9,7 +9,7 @@ export default function SettingsPage() {
       <header className="flex justify-between items-center mb-8">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <h2 className="text-4xl font-bold tracking-tight drop-shadow-lg text-white">Platform Settings</h2>
-          <p className="text-neutral-400 mt-2">Configure integrations, webhooks, and facility preferences.</p>
+          <p className="text-neutral-200 mt-2">Configure integrations, webhooks, and facility preferences.</p>
         </motion.div>
         <button 
           onClick={() => alert("Settings Saved Successfully.")}
@@ -29,20 +29,20 @@ export default function SettingsPage() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">Twilio SMS Integration</h3>
-              <p className="text-sm text-neutral-400">Configure Webhooks for Family Chat</p>
+              <p className="text-sm text-neutral-200">Configure Webhooks for Family Chat</p>
             </div>
           </div>
           <div className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-neutral-400 mb-1 block">Twilio Account SID</label>
+              <label className="text-sm font-medium text-neutral-200 mb-1 block">Twilio Account SID</label>
               <input type="password" value="AC******************************" readOnly className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none" />
             </div>
             <div>
-              <label className="text-sm font-medium text-neutral-400 mb-1 block">Twilio Auth Token</label>
+              <label className="text-sm font-medium text-neutral-200 mb-1 block">Twilio Auth Token</label>
               <input type="password" value="********************************" readOnly className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none" />
             </div>
             <div>
-              <label className="text-sm font-medium text-neutral-400 mb-1 block">Webhook URL (For incoming replies)</label>
+              <label className="text-sm font-medium text-neutral-200 mb-1 block">Webhook URL (For incoming replies)</label>
               <div className="flex gap-2">
                 <input type="text" value="https://api.mvpvrn.com/webhooks/twilio" readOnly className="flex-1 bg-black/50 border border-emerald-500/50 rounded-xl p-3 text-emerald-400 font-mono text-sm focus:outline-none" />
                 <button className="px-4 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl text-white transition">Copy</button>
@@ -59,7 +59,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">Hardware & Devices</h3>
-              <p className="text-sm text-neutral-400">Manage wearable connections</p>
+              <p className="text-sm text-neutral-200">Manage wearable connections</p>
             </div>
           </div>
           <div className="space-y-4">
@@ -68,7 +68,7 @@ export default function SettingsPage() {
                 <span className="text-2xl">⌚️</span>
                 <div>
                   <h4 className="font-bold text-white">Apple HealthKit</h4>
-                  <p className="text-xs text-neutral-400">Active (Real-time polling)</p>
+                  <p className="text-xs text-neutral-200">Active (Real-time polling)</p>
                 </div>
               </div>
               <div className="w-12 h-6 bg-emerald-500 rounded-full relative cursor-pointer">
@@ -80,7 +80,7 @@ export default function SettingsPage() {
                 <span className="text-2xl">💍</span>
                 <div>
                   <h4 className="font-bold text-white">Oura Ring API</h4>
-                  <p className="text-xs text-neutral-400">Disconnected</p>
+                  <p className="text-xs text-neutral-200">Disconnected</p>
                 </div>
               </div>
               <div className="w-12 h-6 bg-neutral-700 rounded-full relative cursor-pointer">
@@ -92,7 +92,7 @@ export default function SettingsPage() {
                 <span className="text-2xl">🛏️</span>
                 <div>
                   <h4 className="font-bold text-white">Smart Bed Sensors</h4>
-                  <p className="text-xs text-neutral-400">Awaiting IP Configuration</p>
+                  <p className="text-xs text-neutral-200">Awaiting IP Configuration</p>
                 </div>
               </div>
               <div className="w-12 h-6 bg-neutral-700 rounded-full relative cursor-pointer">
@@ -110,7 +110,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">AI Automation Preferences</h3>
-              <p className="text-sm text-neutral-400">Configure how the AI agent acts on your behalf</p>
+              <p className="text-sm text-neutral-200">Configure how the AI agent acts on your behalf</p>
             </div>
           </div>
           
@@ -122,7 +122,7 @@ export default function SettingsPage() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white">Auto-generate Morning Reports</h4>
-                  <p className="text-xs text-neutral-400">Compile vitals at 8:00 AM daily.</p>
+                  <p className="text-xs text-neutral-200">Compile vitals at 8:00 AM daily.</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -131,7 +131,7 @@ export default function SettingsPage() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white">Draft SMS Replies</h4>
-                  <p className="text-xs text-neutral-400">AI proposes replies to family messages before sending.</p>
+                  <p className="text-xs text-neutral-200">AI proposes replies to family messages before sending.</p>
                 </div>
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function SettingsPage() {
                 <div className="w-5 h-5 border border-white/20 rounded bg-white/5 flex items-center justify-center"></div>
                 <div>
                   <h4 className="text-sm font-bold text-white">Fully Autonomous SMS</h4>
-                  <p className="text-xs text-neutral-400">WARNING: AI sends SMS without caregiver review.</p>
+                  <p className="text-xs text-neutral-200">WARNING: AI sends SMS without caregiver review.</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -150,7 +150,7 @@ export default function SettingsPage() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white">Escalate Critical Anomalies</h4>
-                  <p className="text-xs text-neutral-400">Automatically ping on-call doctor for SpO2 drops.</p>
+                  <p className="text-xs text-neutral-200">Automatically ping on-call doctor for SpO2 drops.</p>
                 </div>
               </div>
             </div>
