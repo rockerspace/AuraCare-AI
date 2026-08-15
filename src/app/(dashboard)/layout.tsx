@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       const res = await fetch('/api/auth/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: authStep === 'phone' ? countryCode + inputValue : inputValue })
+        body: JSON.stringify({ phone: !inputValue.includes('@') ? countryCode + inputValue : inputValue })
       });
       const data = await res.json();
       
@@ -62,7 +62,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       const res = await fetch('/api/auth/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: otp, hash: serverHash, phone: authStep === 'phone' ? countryCode + inputValue : inputValue })
+        body: JSON.stringify({ code: otp, hash: serverHash, phone: !inputValue.includes('@') ? countryCode + inputValue : inputValue })
       });
       
       const data = await res.json();
@@ -163,7 +163,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {authStep === 'otp' && (
               <motion.div key="otp" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
                 <label className="text-sm text-neutral-400 block text-center mb-1">
-                  Enter the code sent to {authStep === 'phone' ? countryCode : ""}{inputValue}
+                  Enter the code sent to {!inputValue.includes('@') ? countryCode : ""}{inputValue}
                 </label>
                 <input 
                   type="text" 
