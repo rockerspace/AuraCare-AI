@@ -29,7 +29,7 @@ export default function PatientsPage() {
       try {
         const res = await fetch('/api/patients');
         if (res.ok) {
-          const data = await res.json();
+          const data: any = await res.json();
           setPatients(data);
         }
       } catch (error) {
@@ -100,7 +100,7 @@ export default function PatientsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: targetPhone, patientName, status })
       });
-      const data = await res.json();
+      const data: any = await res.json();
       if(data.success) {
         alert("✅ AI SMS Sent successfully to " + targetPhone);
       } else {

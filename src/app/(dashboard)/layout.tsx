@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authStep, setAuthStep] = useState<'method' | 'email' | 'phone' | 'otp'>('method');
+  const [authStep, setAuthStep] = useState<'phone' | 'otp'>('phone');
   const [authMethod, setAuthMethod] = useState('');
   const [inputValue, setInputValue] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
@@ -83,7 +83,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const handleLogout = () => {
     localStorage.removeItem('mvp_vrn_session');
     setIsAuthenticated(false);
-    setAuthStep('method');
+    setAuthStep('phone');
     setInputValue('');
     setOtp('');
   };
@@ -110,53 +110,31 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <p className="text-neutral-200 text-center text-sm mb-8">Secure access for authorized caregivers.</p>
 
           <AnimatePresence mode="wait">
-            {authStep === 'method' && (
-              <motion.div key="method" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
-                <button onClick={() => setAuthStep('phone')} className="w-full py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white font-medium transition flex items-center justify-center gap-3">
-                  📱 Continue with Phone (SMS OTP)
-                </button>
-                <button onClick={() => setAuthStep('email')} className="w-full py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white font-medium transition flex items-center justify-center gap-3">
-                  ✉️ Continue with Email
-                </button>
-              </motion.div>
-            )}
-
-            {(authStep === 'phone' || authStep === 'email') && (
+            {authStep === 'phone' && (
               <motion.div key="input" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
                 <label className="text-sm text-neutral-200 block mb-1">
-                  {authStep === 'phone' ? 'Mobile Number' : 'Email Address'}
+                  Mobile Number
                 </label>
                 
-                {authStep === 'phone' ? (
-                  <div className="flex gap-2">
-                    <select value={countryCode} onChange={(e) => setCountryCode(e.target.value)} className="bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500 w-24">
-                      <option value="+1">🇺🇸 +1</option>
-                      <option value="+44">🇬🇧 +44</option>
-                      <option value="+91">🇮🇳 +91</option>
-                      <option value="+61">🇦🇺 +61</option>
-                      <option value="+49">🇩🇪 +49</option>
-                    </select>
-                    <input 
-                      type="tel" 
-                      placeholder="99309 12345"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      className="flex-1 bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500"
-                    />
-                  </div>
-                ) : (
+                <div className="flex gap-2">
+                  <select value={countryCode} onChange={(e) => setCountryCode(e.target.value)} className="bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500 w-24">
+                    <option value="+1">🇺🇸 +1</option>
+                    <option value="+44">🇬🇧 +44</option>
+                    <option value="+91">🇮🇳 +91</option>
+                    <option value="+61">🇦🇺 +61</option>
+                    <option value="+49">🇩🇪 +49</option>
+                  </select>
                   <input 
-                    type="email" 
-                    placeholder="name@hospital.org"
+                    type="tel" 
+                    placeholder="99309 12345"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500"
+                    className="flex-1 bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-emerald-500"
                   />
-                )}
+                </div>
                 <button onClick={handleSendOtp} className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition">
                   Send Verification Code
                 </button>
-                <button onClick={() => setAuthStep('method')} className="w-full py-2 text-neutral-300 text-sm hover:text-white transition">Back</button>
               </motion.div>
             )}
 
@@ -176,7 +154,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   Verify & Sign In
                 </button>
                 <button onClick={handleSendOtp} className="w-full py-2 text-emerald-400 text-sm hover:text-emerald-300 transition mt-2">Resend Code</button>
-                <button onClick={() => setAuthStep('method')} className="w-full py-2 text-neutral-300 text-sm hover:text-white transition">Cancel</button>
+                <button onClick={() => setAuthStep('phone')} className="w-full py-2 text-neutral-300 text-sm hover:text-white transition">Cancel</button>
               </motion.div>
             )}
           </AnimatePresence>
