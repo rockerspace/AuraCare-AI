@@ -45,7 +45,7 @@ export default function PatientsPage() {
     });
 
     const channel = pusher.subscribe('patients-channel');
-    channel.bind('vitals-update', (data: unknown) => {
+    channel.bind('vitals-update', (data: any) => {
       setPatients(prevPatients => {
         return prevPatients.map(p => {
           if (p.id.toString() === data.patientId.toString()) {
