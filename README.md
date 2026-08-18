@@ -15,7 +15,10 @@ A real-time, enterprise-grade Caregiving Dashboard built for Care Home Directors
 *   **Family Communications Hub:** A dedicated inbox to monitor automated AI updates and reply to family members directly via SMS.
 *   **Looker Studio Integration:** An enterprise analytics tab built to natively embed Google BigQuery Looker Studio reports.
 *   **Global Security Standards:** Designed with compliance in mind (HIPAA, SOC 2 Type II, GDPR, ISO 27001) and WCAG AA contrast accessibility.
-
+*   **Enterprise-Grade Security:** Field-level encryption for Patient Health Information (PHI) in PostgreSQL via Drizzle ORM, ensuring strict HIPAA compliance.
+*   **IoT API Authentication:** Secure IoT telemetry ingestion endpoints requiring robust API Keys.
+*   **Distributed Rate Limiting:** Database-backed distributed rate limiting for API routes, protecting against DDoS attacks in Serverless and Cloud Run environments.
+*   **Serverless Database Scaling:** Connection pooling limits established in `pg` to prevent Cloud SQL connection exhaustion during massive horizontally scaled traffic spikes.
 ## 🧠 Google AI-First Tech Stack
 
 Our entire architecture is deeply integrated into the Google Cloud ecosystem, prioritizing autonomous AI agents, massive event streaming, and edge hardware capabilities.

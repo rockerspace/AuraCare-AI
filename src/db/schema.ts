@@ -3,13 +3,20 @@ import { pgTable, serial, text, integer, timestamp, doublePrecision, varchar } f
 export const patients = pgTable('patients', {
   id: serial('id').primaryKey(),
   facilityId: integer('facility_id').notNull(),
-  name: varchar('name', { length: 255 }).notNull(),
+  // HIPAA Security: PHI fields are encrypted at the application level before insertion
+  encryptedName: varchar('encrypted_name', { length: 255 }).notNull(),
   age: integer('age').notNull(),
   status: varchar('status', { length: 50 }).notNull().default('stable'),
   room: varchar('room', { length: 50 }),
-  emergencyContactName: varchar('emergency_contact_name', { length: 255 }),
-  emergencyContactPhone: varchar('emergency_contact_phone', { length: 20 }),
+  encryptedEmergencyContactName: varchar('encrypted_emergency_contact_name', { length: 255 }),
+  encryptedEmergencyContactPhone: varchar('encrypted_emergency_contact_phone', { length: 255 }),
   createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const rateLimits = pgTable('rate_limits', {
+  ip: varchar('ip', { length: 255 }).primaryKey(),
+  requests: integer('requests').notNull().default(0),
+  resetAt: timestamp('reset_at').notNull(),
 });
 
 export const vitalsLog = pgTable('vitals_log', {

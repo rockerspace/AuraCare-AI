@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import { PubSub } from '@google-cloud/pubsub';
 import { db } from '@/db';
-import { vitalsLog, patients } from '@/db/schema';
+import { vitalsLog, patients, rateLimits } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import Pusher from 'pusher';
+import { sql } from 'drizzle-orm';
 
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID || '',
@@ -13,16 +14,40 @@ const pusher = new Pusher({
   useTLS: true,
 });
 
-const rateLimitMap = new Map<string, number>();
-
 export async function POST(req: Request) {
-  // 1. Enterprise DDoS Protection & API Rate Limiting
-  const ip = req.headers.get('x-forwarded-for') || 'unknown';
-  const requests = rateLimitMap.get(ip) || 0;
-  if (requests > 100) {
-    return NextResponse.json({ error: "Rate Limit Exceeded. Upgrade to Enterprise Plan." }, { status: 429 });
+  // Authentication: Require API Key for IoT devices
+  const apiKey = req.headers.get('x-api-key');
+  if (apiKey !== process.env.IOT_API_KEY) {
+    return NextResponse.json({ error: "Unauthorized. Invalid API Key." }, { status: 401 });
   }
-  rateLimitMap.set(ip, requests + 1);
+
+  // Enterprise DDoS Protection & Distributed Rate Limiting via Database
+  const ip = req.headers.get('x-forwarded-for') || 'unknown';
+  
+  try {
+    const rateLimit = await db.insert(rateLimits).values({
+      ip,
+      requests: 1,
+      resetAt: new Date(Date.now() + 60000), // 1 minute window
+    }).onConflictDoUpdate({
+      target: rateLimits.ip,
+      set: { 
+        requests: sql`${rateLimits.requests} + 1`,
+        resetAt: sql`CASE WHEN ${rateLimits.resetAt} < NOW() THEN NOW() + interval '1 minute' ELSE ${rateLimits.resetAt} END`
+      }
+    }).returning();
+
+    if (rateLimit[0].requests > 100 && rateLimit[0].resetAt > new Date()) {
+      return NextResponse.json({ error: "Rate Limit Exceeded. Upgrade to Enterprise Plan." }, { status: 429 });
+    }
+    
+    // Reset requests if window passed
+    if (rateLimit[0].resetAt < new Date()) {
+      await db.update(rateLimits).set({ requests: 1, resetAt: new Date(Date.now() + 60000) }).where(eq(rateLimits.ip, ip));
+    }
+  } catch (dbErr) {
+    console.error("Rate limiting DB error:", dbErr);
+  }
 
   try {
     const data = await req.json();
@@ -34,15 +59,13 @@ export async function POST(req: Request) {
     }
 
     // 1. Log the new telemetry data to the database
-    // (In a true production environment, Drizzle is fully wired up)
-    /*
     await db.insert(vitalsLog).values({
+      facilityId: 1, // default facility
       patientId: parseInt(patientId),
       heartRate: parseInt(heartRate),
       spo2: parseInt(spo2),
       temp: parseFloat(temp),
     });
-    */
 
     // 2. Telemetry Analyst Subagent Logic (Basic Anomaly Detection)
     let isCritical = false;

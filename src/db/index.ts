@@ -9,6 +9,7 @@ const globalForDb = globalThis as unknown as {
 
 const conn = globalForDb.conn ?? new Pool({
   connectionString: process.env.DATABASE_URL,
+  max: 1, // Limit connections per serverless instance to prevent Cloud SQL exhaustion
 });
 
 if (process.env.NODE_ENV !== 'production') globalForDb.conn = conn;
