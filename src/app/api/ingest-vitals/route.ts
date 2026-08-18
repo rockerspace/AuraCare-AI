@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { PubSub } from '@google-cloud/pubsub';
 import { db } from '@/db';
 import { vitalsLog, patients } from '@/db/schema';
 import { eq } from 'drizzle-orm';
@@ -58,7 +59,8 @@ export async function POST(req: Request) {
     }
 
     try {
-      await pusher.trigger('patients-channel', 'vitals-update', {
+      await await pubsub.topic('vitals-topic').publishMessage({ json: { patientId, heartRate, spo2, temp, anomalyDetected } });
+      pusher.trigger('patients-channel', 'vitals-update', {
         patientId,
         heartRate,
         spo2,

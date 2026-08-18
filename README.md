@@ -18,10 +18,11 @@ A real-time, enterprise-grade Caregiving Dashboard built for Care Home Directors
 
 ## 🛠 Tech Stack
 
-*   **Framework:** Next.js 14 (App Router)
+*   **Framework:** Next.js 14 (App Router) on Google Cloud Run Docker
 *   **Language:** TypeScript
 *   **Database:** Google Cloud SQL (PostgreSQL) + Drizzle ORM
 *   **Styling:** Tailwind CSS + Framer Motion (for fluid, glassmorphic UI)
+*   **Event Bus:** Google Cloud Pub/Sub
 *   **Communications API:** Twilio (Node.js SDK)
 *   **Analytics:** Looker Studio Iframes
 
