@@ -13,7 +13,17 @@ const pusher = new Pusher({
   useTLS: true,
 });
 
+const rateLimitMap = new Map<string, number>();
+
 export async function POST(req: Request) {
+  // 1. Enterprise DDoS Protection & API Rate Limiting
+  const ip = req.headers.get('x-forwarded-for') || 'unknown';
+  const requests = rateLimitMap.get(ip) || 0;
+  if (requests > 100) {
+    return NextResponse.json({ error: "Rate Limit Exceeded. Upgrade to Enterprise Plan." }, { status: 429 });
+  }
+  rateLimitMap.set(ip, requests + 1);
+
   try {
     const data = await req.json();
     
