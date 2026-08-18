@@ -59,7 +59,8 @@ export async function POST(req: Request) {
     }
 
     try {
-      await await pubsub.topic('vitals-topic').publishMessage({ json: { patientId, heartRate, spo2, temp, anomalyDetected } });
+      const pubsub = new PubSub({ projectId: process.env.GOOGLE_CLOUD_PROJECT });
+      await pubsub.topic('vitals-topic').publishMessage({ json: { patientId, heartRate, spo2, temp, anomalyDetected: isCritical } });
       pusher.trigger('patients-channel', 'vitals-update', {
         patientId,
         heartRate,
@@ -69,7 +70,7 @@ export async function POST(req: Request) {
         message: isCritical ? alertMessage : "Vitals stable."
       });
     } catch (err) {
-      console.error("Pusher trigger error:", err);
+      console.error("Pusher/PubSub trigger error:", err);
     }
 
     return NextResponse.json({ 

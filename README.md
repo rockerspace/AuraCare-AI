@@ -1,4 +1,4 @@
-# MVP VRN - Proactive Caregiving App
+# AuraCare AI - Proactive Caregiving App
 
 A real-time, enterprise-grade Caregiving Dashboard built for Care Home Directors and Nurses. This platform centralizes patient vitals, automates family follow-ups via AI, and acts as a single pane of glass for hardware integrations.
 
@@ -16,7 +16,17 @@ A real-time, enterprise-grade Caregiving Dashboard built for Care Home Directors
 *   **Looker Studio Integration:** An enterprise analytics tab built to natively embed Google BigQuery Looker Studio reports.
 *   **Global Security Standards:** Designed with compliance in mind (HIPAA, SOC 2 Type II, GDPR, ISO 27001) and WCAG AA contrast accessibility.
 
-## 🛠 Tech Stack
+## 🧠 Google AI-First Tech Stack
+
+Our entire architecture is deeply integrated into the Google Cloud ecosystem, prioritizing autonomous AI agents, massive event streaming, and edge hardware capabilities.
+
+*   **Event Bus (IoT Telemetry):** Google Cloud Pub/Sub (Massive horizontal scale for SpO2 anomaly detection)
+*   **Hardware Architecture:** Google ADK (Accessory Development Kit) for Android-based edge compute
+*   **Database:** Google Cloud SQL (PostgreSQL)
+*   **Enterprise Analytics:** Google Looker Studio & BigQuery
+*   **Compute:** Google Cloud Run (Dockerized Next.js)
+*   **AI Workforce:** A fully autonomous 18-agent organizational structure (CTO, CLO, CMO, CFO, CHRO)
+## 🛠 Base Framework
 
 *   **Framework:** Next.js 14 (App Router) on Google Cloud Run Docker
 *   **Language:** TypeScript
