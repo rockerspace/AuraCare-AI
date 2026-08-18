@@ -2,7 +2,7 @@
 
 A real-time, enterprise-grade Caregiving Dashboard built for Care Home Directors and Nurses. This platform centralizes patient vitals, automates family follow-ups via AI, and acts as a single pane of glass for hardware integrations.
 
-**🔴 Live Beta Environment:** [https://mvp-vrn-elderly-care-giving-app.vercel.app](https://mvp-vrn-elderly-care-giving-app.vercel.app)
+**🔴 Live Beta Environment:** [https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)
 
 ## 🚀 Key Features
 
