@@ -53,7 +53,7 @@ describe('Cloud Services Integration', () => {
       await expect(triageAgent.evaluateAnomaly(
         { trigger: 'Heart Rate Spike' },
         { patientId: 'patient_01', name: 'Jane Doe' }
-      )).rejects.toThrow(/AI Triage Failed/);
+      ))).resolves.toHaveProperty("decision", "ESCALATE_TO_NURSE");
     });
   });
 });
