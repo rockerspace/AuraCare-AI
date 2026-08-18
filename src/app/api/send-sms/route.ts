@@ -25,9 +25,9 @@ export async function POST(request: Request) {
 
     const client = twilio(accountSid, authToken);
     
-    let messageBody = `MVP VRN Update: ${patientName} is currently ${status}. Vitals are being monitored.`;
+    let messageBody = `AuraCare AI Update: ${patientName} is currently ${status}. Vitals are being monitored.`;
     if (status === 'Critical') {
-      messageBody = `URGENT MVP VRN Alert: ${patientName}'s vitals have dropped to Critical status. Caregivers have been notified.`;
+      messageBody = `URGENT AuraCare AI Alert: ${patientName}'s vitals have dropped to Critical status. Caregivers have been notified.`;
     }
 
     const message = await client.messages.create({

@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
     // Send the SMS
     await client.messages.create({
-      body: `Your MVP VRN login code is: ${otp}. Do not share this code.`,
+      body: `Your AuraCare AI login code is: ${otp}. Do not share this code.`,
       from: process.env.TWILIO_PHONE_NUMBER,
       to: phone
     });

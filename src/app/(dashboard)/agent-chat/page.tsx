@@ -9,7 +9,7 @@ export default function AgentChatPage() {
   const [message, setMessage] = useState('');
   
   const [chatLog, setChatLog] = useState([
-    { role: 'ai', content: "Hello! I am your MVP VRN AI Assistant. I have analyzed the real-time vitals for all patients currently in your facility workspace. How can I help you today?" }
+    { role: 'ai', content: "Hello! I am your AuraCare AI AI Assistant. I have analyzed the real-time vitals for all patients currently in your facility workspace. How can I help you today?" }
   ]);
 
   const handleSend = (e: React.FormEvent) => {

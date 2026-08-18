@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'MVP VRN Dashboard',
-    short_name: 'MVP VRN',
+    name: 'AuraCare AI Dashboard',
+    short_name: 'AuraCare AI',
     description: 'Proactive Elderly Care Dashboard',
     start_url: '/',
     display: 'standalone',

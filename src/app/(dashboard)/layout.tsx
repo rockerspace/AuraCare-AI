@@ -106,7 +106,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex justify-center mb-6">
             <img src="/logo.jpg" alt="Logo" className="w-16 h-16 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.5)]" />
           </div>
-          <h2 className="text-2xl font-bold text-white text-center mb-2">Sign in to MVP VRN</h2>
+          <h2 className="text-2xl font-bold text-white text-center mb-2">Sign in to AuraCare AI</h2>
           <p className="text-neutral-200 text-center text-sm mb-8">Secure access for authorized caregivers.</p>
 
           <AnimatePresence mode="wait">
@@ -201,8 +201,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-4 mb-14 cursor-pointer"
             >
-              <img src="/logo.jpg" alt="MVP VRN Logo" className="w-12 h-12 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.5)]" />
-              <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-200">MVP VRN</h1>
+              <img src="/logo.jpg" alt="AuraCare AI Logo" className="w-12 h-12 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.5)]" />
+              <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-200">AuraCare AI</h1>
             </motion.div>
           </Link>
           

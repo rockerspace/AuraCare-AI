@@ -43,5 +43,5 @@ export async function verifyEnkryptSignature(signature: string, nonce: string): 
  * Generates a challenge nonce for the client to sign using Enkrypt.
  */
 export function generateAuthChallenge(): string {
-  return `MVP VRN-Auth-${Date.now()}-${Math.random().toString(36).substring(7)}`;
+  return `AuraCare AI-Auth-${Date.now()}-${Math.random().toString(36).substring(7)}`;
 }
