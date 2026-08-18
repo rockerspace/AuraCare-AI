@@ -18,7 +18,7 @@ export async function GET() {
           .orderBy(desc(vitalsLog.timestamp))
           .limit(1);
 
-        const initials = patient.name.split(' ').map((n: string) => n[0]).join('').toUpperCase();
+        const initials = patient.encryptedName.split(' ').map((n: string) => n[0]).join('').toUpperCase();
         
         let lastActive = 'Unknown';
         if (latestVitals.length > 0 && latestVitals[0].timestamp) {
@@ -39,7 +39,7 @@ export async function GET() {
 
         return {
           id: patient.id.toString(),
-          name: patient.name,
+          name: patient.encryptedName,
           age: patient.age.toString(),
           status,
           room: patient.room || undefined,
