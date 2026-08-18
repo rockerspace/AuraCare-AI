@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Pusher from 'pusher-js';
 
 interface Patient {
   id: string | number;
@@ -37,8 +38,31 @@ export default function PatientsPage() {
     };
 
     fetchPatients();
-    const intervalId = setInterval(fetchPatients, 10000); // Poll every 10s
-    return () => clearInterval(intervalId);
+    
+    // Initialize Pusher for real-time updates
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY || '', {
+      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER || 'us2',
+    });
+
+    const channel = pusher.subscribe('patients-channel');
+    channel.bind('vitals-update', (data: unknown) => {
+      setPatients(prevPatients => {
+        return prevPatients.map(p => {
+          if (p.id.toString() === data.patientId.toString()) {
+            return {
+              ...p,
+              status: data.isCritical ? 'Critical' : p.status,
+              vitals: { hr: data.heartRate, o2: data.spo2, temp: data.temp }
+            };
+          }
+          return p;
+        });
+      });
+    });
+
+    return () => {
+      pusher.unsubscribe('patients-channel');
+    };
   }, []);
 
   // Form State

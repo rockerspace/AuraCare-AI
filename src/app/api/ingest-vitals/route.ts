@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server';
 import { db } from '@/db';
 import { vitalsLog, patients } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import Pusher from 'pusher';
+
+const pusher = new Pusher({
+  appId: process.env.PUSHER_APP_ID || '',
+  key: process.env.NEXT_PUBLIC_PUSHER_KEY || '',
+  secret: process.env.PUSHER_SECRET || '',
+  cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER || 'us2',
+  useTLS: true,
+});
 
 export async function POST(req: Request) {
   try {
@@ -46,6 +55,19 @@ export async function POST(req: Request) {
       
       // The Orchestrator would now ping the Communications Manager Subagent to dispatch an SMS
       console.log(`[ORCHESTRATOR] Anomaly detected for Patient ${patientId}: ${alertMessage}`);
+    }
+
+    try {
+      await pusher.trigger('patients-channel', 'vitals-update', {
+        patientId,
+        heartRate,
+        spo2,
+        temp,
+        isCritical,
+        message: isCritical ? alertMessage : "Vitals stable."
+      });
+    } catch (err) {
+      console.error("Pusher trigger error:", err);
     }
 
     return NextResponse.json({ 
