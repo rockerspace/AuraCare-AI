@@ -12,14 +12,7 @@ export async function POST(req: Request) {
     // Generate a secure 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    if (phone.includes('@')) {
-      // Mock email sending for the MVP demo
-      return NextResponse.json({ 
-        success: true, 
-        hash: Buffer.from(`123456-mvpvrn-secret`).toString('base64'),
-        message: "Email mock active. Use code: 123456" 
-      });
-    }
+
 
     // Initialize Twilio for SMS
     const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
@@ -40,14 +33,7 @@ export async function POST(req: Request) {
 
   } catch (error: unknown) {
     console.error("Twilio Error:", error);
-    // Fallback for unverified trial accounts in Twilio
-    const twilioError = error as { code?: number };
-    if (twilioError.code === 21608) {
-       return NextResponse.json({ 
-         error: "Twilio Trial Limit: Number unverified. For the demo, use code: 123456",
-         hash: Buffer.from(`123456-mvpvrn-secret`).toString('base64')
-       }, { status: 200 }); // Return 200 so UI doesn't crash during pitch
-    }
+
     return NextResponse.json({ error: "Failed to send SMS" }, { status: 500 });
   }
 }

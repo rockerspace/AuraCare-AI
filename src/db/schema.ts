@@ -2,6 +2,7 @@ import { pgTable, serial, text, integer, timestamp, doublePrecision, varchar } f
 
 export const patients = pgTable('patients', {
   id: serial('id').primaryKey(),
+  facilityId: integer('facility_id').notNull(),
   name: varchar('name', { length: 255 }).notNull(),
   age: integer('age').notNull(),
   status: varchar('status', { length: 50 }).notNull().default('stable'),
@@ -13,6 +14,7 @@ export const patients = pgTable('patients', {
 
 export const vitalsLog = pgTable('vitals_log', {
   id: serial('id').primaryKey(),
+  facilityId: integer('facility_id').notNull(),
   patientId: integer('patient_id').references(() => patients.id).notNull(),
   heartRate: integer('heart_rate'),
   spo2: integer('spo2'),
