@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
+import { SignJWT } from 'jose';
 
-export async function POST(req: Request) {
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback_secret_key');
+
+export async function POST(req) {
   try {
     const { code, hash, phone } = await req.json();
 
@@ -12,9 +15,15 @@ export async function POST(req: Request) {
     const expectedCode = Buffer.from(hash, 'base64').toString('ascii').split('-')[0];
 
     if (code === expectedCode) {
-      // Issue a mock session cookie for the Beta
+      // Issue a secure JWT session
+      const token = await new SignJWT({ phone, facilityId: 1 })
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setExpirationTime('7d')
+        .sign(JWT_SECRET);
+
       const response = NextResponse.json({ success: true, message: "Authentication successful" });
-      response.cookies.set('mvp_session', 'authenticated_beta_user', {
+      response.cookies.set('mvp_session', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',

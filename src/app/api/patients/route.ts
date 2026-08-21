@@ -5,9 +5,13 @@ import { eq, desc } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const allPatients = await db.select().from(patients);
+    const facilityIdHeader = req.headers.get('x-facility-id');
+    const userFacilityId = facilityIdHeader ? parseInt(facilityIdHeader, 10) : 1; // Default to 1 if missing for local dev
+
+    // Filter patients by facilityId to enforce multi-tenancy
+    const allPatients = await db.select().from(patients).where(eq(patients.facilityId, userFacilityId));
 
     const patientsWithVitals = await Promise.all(
       allPatients.map(async (patient) => {
