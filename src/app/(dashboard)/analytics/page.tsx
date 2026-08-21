@@ -10,7 +10,7 @@ export default function AnalyticsPage() {
   const [activeSourceIndex, setActiveSourceIndex] = useState(0);
 
   const addDataSource = () => {
-    const url = window.prompt("Enter your Looker Studio Embed URL:", "");
+    const url = window.prompt("Enter your Embed URL (Looker Studio, Google Sheets, PDF, etc):", "");
     if (!url) return;
     const name = window.prompt("Enter a name for this data source (e.g. 'Weekly Trends'):", "New Report");
     if (!name) return;
@@ -49,7 +49,7 @@ export default function AnalyticsPage() {
           <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
           <div className="w-3 h-3 rounded-full bg-amber-500/50"></div>
           <div className="w-3 h-3 rounded-full bg-emerald-500/50"></div>
-          <span className="ml-4 text-xs font-mono text-neutral-300 uppercase tracking-widest">Looker Studio Integration</span>
+          <span className="ml-4 text-xs font-mono text-neutral-300 uppercase tracking-widest">Data Sources Integration</span>
           
           {/* Tabs for Multiple Data Sources */}
           {dataSources.length > 0 && (
@@ -98,7 +98,7 @@ export default function AnalyticsPage() {
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">No Data Source Connected</h3>
               <p className="text-neutral-200 text-center mb-8">
-                Connect your BigQuery data warehouse or paste a public Looker Studio embed link to visualize your facility's historical trends.
+                Connect your BigQuery data warehouse, or paste an embed link (Looker Studio, Google Sheets, PDF) to visualize your facility's historical trends.
               </p>
               <button 
                 onClick={addDataSource}
