@@ -1,75 +1,64 @@
-# AuraCare AI - Proactive Caregiving App
+# AuraCare AI
 
-A real-time, enterprise-grade Caregiving Dashboard built for Care Home Directors and Nurses. This platform centralizes patient vitals, automates family follow-ups via AI, and acts as a single pane of glass for hardware integrations.
+AuraCare AI is an enterprise-grade, predictive health intelligence platform designed for remote patient monitoring. Built entirely on the Google Cloud AI and Data stack, it bridges the gap between modern IoT wearables and legacy hospital Electronic Health Records (EHR) through automated predictive analytics and seamless FHIR integrations.
 
-**🔴 Live Beta Environment:** [https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app](https://ai-agent-series-builder-finale-2026-805096709254.us-central1.run.app)
+## 🚀 The AI Moat
 
-## 🚀 Key Features
+Unlike traditional platforms that rely on hardcoded thresholds (e.g., alert if SpO2 < 90), AuraCare AI leverages a proprietary **Predictive Risk Engine**.
 
-*   **Custom OTP Authentication:** International SMS/Email passwordless login (🇺🇸, 🇬🇧, 🇮🇳, etc.) built natively without heavy third-party auth lock-in.
-*   **Real-time Vitals Command Center:** A sleek dark-mode dashboard to monitor patient heart rate, SpO2, and temperature with **real-time auto-polling**.
-*   **Twilio SMS Integration ("Follow up"):** A fully integrated Twilio backend allowing Caregivers to trigger instant, AI-summarized text messages to a patient's emergency contacts.
-*   **Cryptographic Webhook Security:** Fully secured inbound SMS webhooks validating X-Twilio-Signature to prevent spoofing.
-*   **Spatial Room View:** A Nurses Station interface mapping physical facility rooms, highlighting critical alerts in red and identifying empty rooms ready for admission.
-*   **Autonomous AI Executive Team:** A built-in multi-agent system featuring a CTO Agent, Product Agent, Growth Agent, and QA Agent that perform automated 7:00 AM daily standups, E2E testing, and weekly Friday scaling reports.
-*   **Family Communications Hub:** A dedicated inbox to monitor automated AI updates and reply to family members directly via SMS.
-*   **Looker Studio Integration:** An enterprise analytics tab built to natively embed Google BigQuery Looker Studio reports.
-*   **Global Security Standards:** Designed with compliance in mind (HIPAA, SOC 2 Type II, GDPR, ISO 27001) and WCAG AA contrast accessibility.
-*   **Enterprise-Grade Security:** Field-level encryption for Patient Health Information (PHI) in PostgreSQL via Drizzle ORM, ensuring strict HIPAA compliance.
-*   **IoT API Authentication:** Secure IoT telemetry ingestion endpoints requiring robust API Keys.
-*   **Distributed Rate Limiting:** Database-backed distributed rate limiting for API routes, protecting against DDoS attacks in Serverless and Cloud Run environments.
-*   **Serverless Database Scaling:** Connection pooling limits established in `pg` to prevent Cloud SQL connection exhaustion during massive horizontally scaled traffic spikes.
-## 🧠 Google AI-First Tech Stack
+By querying real-time time-series data, the engine calculates the mathematical velocity of a patient's vitals. If a subtle degradation trend is detected (e.g., dropping from 98% to 94% rapidly), the AI extrapolates the curve and dispatches an **Early Warning** with a calculated Predictive Risk Score—hours before the patient actually crashes.
 
-Our entire architecture is deeply integrated into the Google Cloud ecosystem, prioritizing autonomous AI agents, massive event streaming, and edge hardware capabilities.
+## 🏥 Enterprise Architecture
 
-*   **Event Bus (IoT Telemetry):** Google Cloud Pub/Sub (Massive horizontal scale for SpO2 anomaly detection)
-*   **Hardware Architecture:** Google ADK (Accessory Development Kit) for Android-based edge compute
-*   **Database:** Google Cloud SQL (PostgreSQL)
-*   **Enterprise Analytics:** Google Looker Studio & BigQuery
-*   **Compute:** Google Cloud Run (Dockerized Next.js)
-*   **AI Workforce:** A fully autonomous 18-agent organizational structure (CTO, CLO, CMO, CFO, CHRO)
-## 🛠 Base Framework
+### Google Cloud Infrastructure
+- **Serverless Compute**: Next.js application deployed seamlessly on **Google Cloud Run** for infinite horizontal scaling.
+- **Relational Database**: Telemetry logged to **Google Cloud SQL (PostgreSQL)**.
+- **Enterprise Data Warehousing**: Native integration pathways for **Google BigQuery** to store billions of IoT data points.
+- **Dynamic Analytics**: Live data visualization powered by dynamic **Looker Studio** iframes.
 
-*   **Framework:** Next.js 14 (App Router) on Google Cloud Run Docker
-*   **Language:** TypeScript
-*   **Database:** Google Cloud SQL (PostgreSQL) + Drizzle ORM
-*   **Styling:** Tailwind CSS + Framer Motion (for fluid, glassmorphic UI)
-*   **Event Bus:** Google Cloud Pub/Sub
-*   **Communications API:** Twilio (Node.js SDK)
-*   **Analytics:** Looker Studio Iframes
+### Interoperability & Integration
+- **Google Cloud Healthcare API**: AuraCare AI natively translates predictive risk alerts into strict **HL7 FHIR R4** `Observation` payloads. This allows the system to seamlessly push data directly into legacy hospital mainframes like **Epic** and **Cerner** without manual intervention.
+- **Real-Time WebSockets**: Powered by **Pusher**, ensuring the Next.js dashboard updates instantly when an anomaly is detected.
 
-## 📦 Local Development
+## 🛠 Tech Stack
+* **Framework**: Next.js 14, React, Tailwind CSS
+* **Database / ORM**: Drizzle ORM, PostgreSQL (Google Cloud SQL)
+* **Cloud Platform**: Google Cloud (Run, Pub/Sub, Healthcare API, Logging)
+* **Authentication**: NextAuth / JWT
+* **Real-time**: Pusher WebSockets
+
+## 💻 Local Development
 
 1. Clone the repository and install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-2. Configure your environment variables. Create a .env.local file:
-   ```env
-   TWILIO_ACCOUNT_SID=your_account_sid
-   TWILIO_AUTH_TOKEN=your_auth_token
-   TWILIO_PHONE_NUMBER=your_twilio_number
-   DATABASE_URL=postgresql://postgres:password@your_google_cloud_ip:5432/postgres
-   ```
+2. Set up your environment variables (`.env.local`):
+```env
+DATABASE_URL="postgresql://user:pass@localhost/dbname"
+IOT_API_KEY="your-secure-iot-key"
+PUSHER_APP_ID="your_pusher_app_id"
+NEXT_PUBLIC_PUSHER_KEY="your_pusher_key"
+PUSHER_SECRET="your_pusher_secret"
+NEXT_PUBLIC_PUSHER_CLUSTER="your_pusher_cluster"
+```
 
-3. Push the database schema:
-   ```bash
-   npx drizzle-kit push
-   ```
+3. Run the development server:
+```bash
+npm run dev
+```
 
-4. Start the Turbopack development server:
-   ```bash
-   npm run dev
-   ```
+## 📡 Testing the Ingestion Pipeline
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+You can test the Vertex AI Predictive Engine by sending a sequence of telemetry data that simulates a degrading health event:
 
-## 🤖 AI Multi-Agent Testing Suite
-To simulate the background QA Agent locally, run the included test-local.sh script to verify webhook security and IoT anomaly detection.
+```bash
+# 1. Normal
+curl -X POST http://localhost:3000/api/ingest-vitals -H "Content-Type: application/json" -H "x-api-key: your-secure-iot-key" -d '{"patientId": "1", "heartRate": 75, "spo2": 98, "temp": 98.6}'
 
-## 💼 Business Strategy & Monetization
-This application was architected specifically for B2B SaaS sales to Care Home facilities. The UI emphasizes automation (reducing nurse workload) and family communication (increasing facility reputation and client retention).
+# ... send multiple declining requests ...
 
-*Built for global scale.*
+# 5. The Predictive Trigger
+curl -X POST http://localhost:3000/api/ingest-vitals -H "Content-Type: application/json" -H "x-api-key: your-secure-iot-key" -d '{"patientId": "1", "heartRate": 90, "spo2": 94, "temp": 98.6}'
+```
