@@ -5,6 +5,7 @@ import { vitalsLog, patients, rateLimits } from '@/db/schema';
 import { eq, desc } from 'drizzle-orm';
 import Pusher from 'pusher';
 import { sql } from 'drizzle-orm';
+import { pushToFHIR } from '@/lib/fhir-client';
 
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID || '',
@@ -109,8 +110,18 @@ export async function POST(req: Request) {
       }
     }
 
-    if (isEarlyWarning) {
-      console.log(`[VERTEX AI PREDICTION] Early Warning dispatched for Patient ${patientId} - Risk Score: ${predictiveRiskScore}`);
+    if (isEarlyWarning || isCritical) {
+      if (isEarlyWarning) {
+        console.log(`[VERTEX AI PREDICTION] Early Warning dispatched for Patient ${patientId} - Risk Score: ${predictiveRiskScore}`);
+      }
+      
+      // Dispatch HL7 FHIR payload to the Hospital EMR
+      await pushToFHIR(
+        patientId, 
+        { spo2: parseInt(spo2), heartRate: parseInt(heartRate), temp: parseFloat(temp) }, 
+        predictiveRiskScore, 
+        alertMessage
+      );
     }
 
     if (isCritical) {
