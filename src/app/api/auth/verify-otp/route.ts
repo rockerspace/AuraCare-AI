@@ -3,7 +3,7 @@ import { SignJWT } from 'jose';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback_secret_key');
 
-export async function POST(req) {
+export async function POST(req: Request) {
   try {
     const { code, hash, phone } = await req.json();
 

@@ -32,7 +32,7 @@ export async function proxy(request: NextRequest) {
         
         // Pass the decoded facilityId to the downstream API routes
         const requestHeaders = new Headers(request.headers);
-        requestHeaders.set('x-facility-id', payload.facilityId.toString());
+        requestHeaders.set('x-facility-id', String((payload as { facilityId: string | number }).facilityId));
 
         return NextResponse.next({
           request: {

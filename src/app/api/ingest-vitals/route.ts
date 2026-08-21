@@ -96,7 +96,7 @@ export async function POST(req: Request) {
         const newestSpO2 = historicalVitals[0].spo2;
         
         // If SpO2 has dropped by 3% or more over the last 5 readings, extrapolate crash
-        const velocity = newestSpO2 - oldestSpO2;
+        const velocity = (newestSpO2 || 0) - (oldestSpO2 || 0);
         
         if (velocity <= -3) {
           isEarlyWarning = true;
