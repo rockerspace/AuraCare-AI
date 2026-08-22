@@ -95,7 +95,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       setIsAuthenticated(true);
     } catch (error) {
       console.error(error);
-      alert("Google Sign-In failed.");
+      alert("Google Sign-In failed: " + (error.message || error.code || "Unknown error"));
     }
   };
 
