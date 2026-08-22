@@ -69,25 +69,43 @@ export default function PatientsPage() {
   // Form State
   const [newPatient, setNewPatient] = useState({ name: '', age: '', status: 'Stable' });
 
-  const handleAddPatient = (e: React.FormEvent) => {
+    const handleAddPatient = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPatient.name) return;
     
-    const initials = newPatient.name.split(' ').map(n => n[0]).join('').toUpperCase();
-    
-    const patientObj = {
-      id: `p_${Date.now()}`,
-      name: newPatient.name,
-      age: parseInt(newPatient.age) || 0,
-      status: newPatient.status,
-      lastActive: 'Just now',
-      image: initials,
-      vitals: { hr: '--', o2: '--', temp: '--' }
-    };
-    
-    setPatients([...patients, patientObj]);
-    setIsModalOpen(false);
-    setNewPatient({ name: '', age: '', status: 'Stable' });
+    try {
+      const res = await fetch('/api/patients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPatient)
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        
+        const initials = data.encryptedName.split(' ').map((n: string) => n[0]).join('').toUpperCase();
+        
+        const patientObj = {
+          id: data.id.toString(),
+          name: data.encryptedName,
+          age: data.age.toString(),
+          status: data.status.charAt(0).toUpperCase() + data.status.slice(1),
+          lastActive: 'Just now',
+          image: initials,
+          initials: initials,
+          vitals: { hr: '--', o2: '--', temp: '--' }
+        };
+        
+        setPatients([...patients, patientObj]);
+        setIsModalOpen(false);
+        setNewPatient({ name: '', age: '', status: 'Stable' });
+      } else {
+        alert("Failed to save patient to database");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error saving patient");
+    }
   };
 
   const handleSmsDemo = async (patientName: string = "Demo Patient", status: string = "Stable") => {

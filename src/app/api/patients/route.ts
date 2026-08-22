@@ -69,3 +69,34 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'Failed to fetch patients' }, { status: 500 });
   }
 }
+
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { name, age, status, room } = body;
+    
+    if (!name || !age) {
+      return NextResponse.json({ error: 'Name and age are required' }, { status: 400 });
+    }
+
+    const facilityIdHeader = req.headers.get('x-facility-id');
+    const facilityId = facilityIdHeader ? parseInt(facilityIdHeader, 10) : 1;
+
+    // Insert into Drizzle DB
+    const newPatient = await db.insert(patients).values({
+      facilityId,
+      encryptedName: name,
+      age: parseInt(age, 10),
+      status: status.toLowerCase(),
+      room: room || null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }).returning();
+
+    return NextResponse.json(newPatient[0], { status: 201 });
+  } catch (error) {
+    console.error('Error creating patient:', error);
+    return NextResponse.json({ error: 'Failed to create patient' }, { status: 500 });
+  }
+}
