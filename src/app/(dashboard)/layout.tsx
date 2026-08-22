@@ -93,7 +93,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       localStorage.setItem('mvp_vrn_session', JSON.stringify(profile));
       setUserProfile(profile);
       setIsAuthenticated(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       alert("Google Sign-In failed: " + (error.message || error.code || "Unknown error"));
     }

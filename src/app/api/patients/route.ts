@@ -91,7 +91,6 @@ export async function POST(req: Request) {
       status: status.toLowerCase(),
       room: room || null,
       createdAt: new Date(),
-      updatedAt: new Date(),
     }).returning();
 
     return NextResponse.json(newPatient[0], { status: 201 });
