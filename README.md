@@ -20,11 +20,18 @@ By querying real-time time-series data, the engine calculates the mathematical v
 - **Google Cloud Healthcare API**: AuraCare AI natively translates predictive risk alerts into strict **HL7 FHIR R4** `Observation` payloads. This allows the system to seamlessly push data directly into legacy hospital mainframes like **Epic** and **Cerner** without manual intervention.
 - **Real-Time WebSockets**: Powered by **Pusher**, ensuring the Next.js dashboard updates instantly when an anomaly is detected.
 
+
+## 🔒 Enterprise Security & Authentication
+
+AuraCare AI enforces strict access control through a robust multi-option authentication layer:
+- **Google Enterprise SSO**: One-click secure login powered by **Firebase Authentication** (OAuth 2.0).
+- **Mobile OTP**: Secure, 6-digit SMS verification powered by **Twilio** for staff members without linked Google Workspace accounts.
+
 ## 🛠 Tech Stack
 * **Framework**: Next.js 14, React, Tailwind CSS
 * **Database / ORM**: Drizzle ORM, PostgreSQL (Google Cloud SQL)
 * **Cloud Platform**: Google Cloud (Run, Pub/Sub, Healthcare API, Logging)
-* **Authentication**: NextAuth / JWT
+* **Authentication**: Firebase (Google OAuth SSO) & Twilio (SMS OTP)
 * **Real-time**: Pusher WebSockets
 
 ## 💻 Local Development
